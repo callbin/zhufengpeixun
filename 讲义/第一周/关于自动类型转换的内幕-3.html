@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+
+<script>
+Array.prototype.toString=function(){//方法重写，就把原来的那个toString覆盖了
+	return 88;	
+}
+88===[];
+Array.prototype.abcdefg=function(){
+	console.log("逗你玩");
+	}
+
+
+var a=[];
+a.abcdefg()
+a.toString()
+![]==false;//这样![]，不会自动转换为字符串
+[]==true;
+//对象和值类型的做比较
+//首先把对象
+[]==![]
+//以下这两个题，三观被摧毁不了，再有布尔比较的题就没问题了
+;[]==false;
+null-3;//结果是多少？ 空字符串，false,null它们在做自动类型转换的时候都是0
+![]==false;
+
+[]==![]
+
+function fn(){///自动n个数求和的方法
+	var count=null;	
+	for(var i=0;i<arguments.length;i++){
+		count+=arguments[i];	
+	}
+	return count;
+}
+
+[1]==1;
+[1,2,3]==1
+fn();
+
+
+
+
+//基本数据类型和对象数据类型的本质区别在于内存的分配方式不同
+
+var a=9;//
+a.length=99;
+
+//销毁
+alert(a.length);
+var obj={};
+
+
+document.getElementsByTagName("div");
+
+
+document.createElement("div");//错的
+body.appendChild("div");//错的
+
+document.body
+document.getElementsByTagName("body")[0].appendChild(document.createElement("div"));
+
+document.body.appendChild(document.createElement("div"));
+
+
+var div=document.createElement("div");
+div.innerHTML="开始的";
+document.body.appendChild(div);
+var newDiv=div.cloneNode(true);
+newDiv.innerHTML="clone的";
+document.body.insertBefore(newDiv,div);
+
+//获取浏览器的高和宽，一般情况下用
+document.documentElement.clientHeight,document.documentElement.clientWidth
+document.documentElement.clientHeight||document.body.clientHeight;
+ 
+
+
+
+</script>

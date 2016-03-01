@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+	#div1{ width:200px; height:20px; line-height:20px; text-align:center; color:white; background:black;}
+	
+</style>
+</head>
+
+<body>
+
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var div1=document.getElementById("div1");
+var timer=null;
+function getTime(){
+	var now=new Date();
+	var old=new Date("2016/3/1 17:59:59");
+	var spanTime=old.getTime()-now.getTime();
+	var hour=Math.floor(spanTime/(60*60*1000));
+	var spanTime=spanTime-hour*60*60*1000;
+	var mintu=Math.floor(spanTime/(60*1000));
+	var spanTime=spanTime-mintu*60*1000;
+	var secd=Math.floor(spanTime/1000);
+	div1.innerHTML=hour+"时"+mintu+"分"+secd+"秒";
+	
+	//如果用setTimeout来实现无限次的执行getTime，则需要把setTimeout写在本方法里边（其实就是一个递归）
+	timer=window.setTimeout(getTime,1000);
+	console.log(timer);
+}
+/* var timer=window.setInterval(getTime,1000);//1,如果用setInterval则在getTime方法的外边来驱动getTime这个方法
+function fn(){
+	
+		if(timer){
+			window.clearInterval(timer);//清除的是编号为1的队列，而并非是把timer变量里保存这个1给清掉了
+			timer=null;//这一步才是真正的把timer这个变量的值清掉
+		}else{
+			timer=window.setInterval(getTime,1000)}
+}
+
+*/
+
+function fn(){
+	if(timer){
+			window.clearInterval(timer);//clearInterval和clearTimeout通用
+			timer=null;//这一步才是真正的把timer这个变量的值清掉
+		}else{
+			getTime()
+		}
+}
+div1.onclick=fn;
+</script>

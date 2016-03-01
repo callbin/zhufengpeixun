@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+git是JavaScript没有关系
+git 代码托管、管理工具，平台
+先简单的可以理解为一个可以共享的U盘
+它有项目管理的功能
+
+
+
+先用自己的用户名登录，
+访问https://github.com/zhufengpeixun/
+然后去这个网址里fork
+
+再去自己的gitHub地址里去找这个仓库m
+$ git clone https://github.com/zhufengpeixun/Java
+Script_2016_01.git
+
+
+git add -A
+git commit -m"提交xx第一个练习" //提交到本地仓库
+git push origin master  //提交到远程仓库
+发起一个pullrequest
+由我来合并你们的pullrequest
+
+第二次提交
+
+先更新代码，然后合并代码 git remote add teacher https://github.com/zhufengnodejs/node201509_homework.git 
+
+git remote add abc https://github.com/zhufengpeixun/JavaScript_2016_01.git
+
+git pull teacher master
+添加你的新的文件
+git add -A
+git commit -m"提交xx第一个练习"
+git push origin master
+发起一个pullrequest
+由我来合并你们的pullreqeust
+
+第一次 git clone git地址
+
+git add -A
+git commit -m"本次提交的提示"
+
+git push origin master (origin是默认的仓库的变量名， master是仓库的分枝名，这是提交给自己)  
+
+如果想和老师的同步，则再连上老师的仓库
+git remote add 变量名(比如叫teacher)  都是远程git仓库的名字
+
+git pull teacher master //表示从teacher代表的那个仓库的master分支同步代码
+
+如果想断开一个活动连接，则如下
+git remote rm teacher 
+
+下面再连上，再连上后的名字叫abcd
+git remote add abcd https://github.com/zhufengpeixun/JavaScript_2016_01.git
+
+</body>
+</html>
