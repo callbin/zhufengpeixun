@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //1.方法作为值存在时,是不预解释的
+    //f();//在定义之前执行,就报错了
+    var f = function(){console.log(1)}; //函数表达式
+
+    //sum();//自执行函数的方法也是作为值存在的
+    ~(function sum(){
+        console.log(22);
+    })()
+
+    //自执行函数是声明+赋值+执行一起做了
+    ~(function(){
+        console.log("自动执行了");
+    })()
+
+    var num = 20;
+    function fn(){
+        //console.log(sum);
+        console.log(num);//从自己的作用域里找到num这个变量的存在,则不会往上找
+        return function sum(){};//return 后面的方法不预解释(既不会声明也不会赋值)
+        var num = 10; //return 下面的代码不再执行了,但是会预解释
+    }
+   // fn();
+
+
+    function fn2(){console.log("我是在全局作用域下")};
+    function fn(){
+        //fn2();
+        console.log(fn2);
+        fn2 = 3;
+        console.log(fn2);
+        return function fn2(){console.log("我在fn作用域下的")};
+        function fn2(){alert("我在return下面")};
+    }
+   // fn()
+
+    //2.不管条件是否成立,都要预解释
+    // var obj = {age:18,height:165,weight:130};
+    //console.log("age" in obj)
+    if(!("a" in  window)){//a是否是window的属性
+        var a = "珠峰培训";
+    }
+    console.log(a);//undefined 只要定义在全局下的变量,全是window的属性
+    //var  num = "aa";
+    //window.num = "aa";
+
+    fn();
+    if(9==8){
+        function fn(){alert("aa")}
+    }
+
+    //一道超级变态坑爹的面试题
+    f = function (){return true};
+    g = function(){return false};
+    (function (){
+        if(g()&&[]==![]){ //(g()&&true)
+            f = function f(){return false};//如果没写var,并且在当前作用域下没找到这个变量,则这个变量就是全局的
+            function g(){return true};
+        }
+    })()//预解释发生在这个私有作用域里面跟其他的作用域没有关系
+    //自执行函数是个闭包,上级作用域是没法访问闭包里的变量和函数,但是闭包可以访问上级作用域的变量和函数
+
+    alert(f());//false
+    alert(g());//false  这个g就是全局下的,跟闭包的g没有关系,全局下是不能访问私有作用域里的内容的
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

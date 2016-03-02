@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var sum ="a";
+    //作用域:全局作用域和私有作用域
+    //在全局作用域下声明的变量就称为全局变量
+    //方法运行的时候,会开辟一个私有的空间,我们称为私有作用域,"别名"(闭包),私有作用域中的变量就称为私有变量
+    //作用域链的概念:代码执行的时候能够保证作用域中变量或者函数有次序访问
+
+    //1.当前作用域下有没有声明这个变量,如果有,则和其他作用域就没有关系了
+    //2.如果当前作用域下没有声明这个变量,则往上级作用域查找,如果没有找到,则一级一级的往上找,找到的话就停止查找,如果在全局作用域下也没有找到的话则报错
+    //上级作用域是指当前函数是在哪个作用域下定义的
+//
+//    function  fn(){
+//        console.log(num);
+//    }
+//    fn();
+
+    var oneColor = "red";
+    function outer(){
+        var oneColor = "blue";
+        function inner(){
+            //console.log(oneColor);
+
+        }
+        inner();
+    }
+    outer();
+    //当前的作用域总是作用域链的前端
+    //全局作用域总是最外围的作用域
+
+    //inner作用域(内部环境) outer作用域(外部环境) 全局作用域(全局环境)
+    //通过作用域链查找变量值时,可以通过从内部环境->外部环境->全局环境(从里到外是对的)
+    //不可以从全局环境->外部环境->内部环境(从外到里是错的)
+
+    var anotherColor = "blue";
+    function fn(){
+        var anotherColor = "yellow";
+        function sum(){
+            var anotherColor = "orange";
+        }
+        return function(){
+            console.log(anotherColor);
+//            var anotherColor = "pink";
+        }
+    }
+    fn()();
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //全局作用域下定义的变量是不销毁的,关闭浏览器的时候才被销毁(但是可以认为的销毁)
+    //利用浏览器的垃圾回收机制,可以人为的销毁这个变量
+    var obj = {name:"lily",age:18,gender:"female"}
+    obj = null;//解除引用
+    //作用域内存释放分为这三种:立即销毁,不销毁,不立即销毁
+    //1.立即销毁
+    //方法运行时开辟一个内存空间,如果方法里的内容没有被其他作用域占用,这样方法运行完了之后,作用域就被释放了
+//    function sum(){
+//        var total = 10+20;
+//        return total;
+//    }
+//    sum();
+//    sum()
+    //2.不销毁
+    //方法内部的内容被外部环境的变量或者方法所占有,这样这个方法就释放不掉了(不销毁)
+    function fn(){
+        var num = 10;
+        return function(){
+            num++;
+            console.log(num);
+        }
+    }
+
+    var f = fn();
+    console.log(f());//11
+    console.log(f());//12
+    console.log(f());//13
+    f = null
+    //不立即销毁
+    //fn方法返回的引用地址并没有被其他作用域占有,按理说应该销毁,但是后面有让这个返回的方法运行,所以fn暂时不能销毁,得让返回的匿名方法运行完了之后fn才销毁
+    function fn(){
+        var num = 10;
+        return function(){
+        num++;
+        console.log(num);
+        }
+    }
+    fn()();
+
+
+
+
+</script>
+</body>
+</html>

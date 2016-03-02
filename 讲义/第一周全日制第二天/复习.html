@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body style="background: rgb(255,255,255)">
+
+<script>
+   // var time1 = new Date().getTime();
+    function getRandomColor() {
+        var winW = document.documentElement.clientWidth || document.body.clientWidth;//获取屏幕的宽度
+        var winH = document.documentElement.clientHeight || document.body.clientHeight;
+        var of = document.createDocumentFragment();//文档碎片 (相当于仓库)
+        var boxWidth = winW / 10;//每个方块的宽度
+        var boxHeight = winH / 10;//每个方块的高度
+        for (var j = 0; j < 10; j++) { //行的索引
+            for (var i = 0; i < 10; i++) { //列的索引
+                var oDiv = document.createElement("div");
+                oDiv.style.width = boxWidth + "px";
+                oDiv.style.height = boxHeight + "px";
+                //安排每个方块的位置(通过绝对定位,设置left和top的偏移量)
+                oDiv.style.position = "absolute";
+                oDiv.style.top = j * boxHeight + "px";
+                oDiv.style.left = i * boxWidth + "px"; //每个盒子的横向的索引*盒子的宽度
+                //style="background: rgb(255,255,255)"
+                //随机的获取r,g,b的值(0-255之间的整数)
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                oDiv.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+                //document.body.appendChild(oDiv);
+                of.appendChild(oDiv); //把创建的元素先别添加到页面上,而是存在文档碎片里,等全部创建完了之后再添加到页面上去
+            }
+        }
+        document.body.appendChild(of);//把文档碎片(相当于把文档碎片里的元素全部)添加到页面上去,这样浏览器只会渲染一次,性能上提高很多
+
+    }
+    getRandomColor();
+//    var time2 = new Date().getTime();
+//   alert(time2-time1);
+
+
+</script>
+</body>
+</html>

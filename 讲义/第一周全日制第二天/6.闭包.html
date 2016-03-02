@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //闭包是方法运行的机制 ,可以保护变量或方法不受污染
+    //在js当中,没有块级作用域的概念的,可以通过闭包来模拟块级作用域
+    var str = "陈旭";
+    var num = 25;
+//    ~(function(){
+//        var str = "郭军贺";
+//        var num = 20;
+//        console.log(str,num)
+//    })()
+//    console.log(str,num)
+//    function fn(){
+//        (function(){
+//            for(var  i = 0;i<10;i++){
+//                i++;
+//            }
+//        })()
+//        console.log(i);
+//    }
+//    fn();
+    //
+    //
+    //
+
+    //可以通过传参的方式,将外部作用域中的变量或方法传到私有作用域里
+   ~(function(str,num){
+       var str = str;
+       var num = num;
+       function fn(){
+          console.log("我是在私有作用域下定义的方法")
+       }
+       window.fn1 = fn;
+    })(str,num)
+    fn1()
+    //方法能够访问上级作用域中的变量和函数,这个方法就是一个闭包中一种
+//    function outer(){
+//        var oneColor = "blue";
+//        function inner(){
+//            //console.log(oneColor);
+//        }
+//        inner();
+//    }
+
+//    function fn(){
+//        var anotherColor = "yellow";
+//        return function(){
+//            console.log(anotherColor);
+//            var anotherColor = "pink";
+//        }
+//    }
+</script>
+
+</body>
+</html>
