@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function clothesFactory(material){
+        var obj = new Object();
+        obj.material = material;
+        obj.width = "";
+        obj.height = "";
+        obj.size = "XXL";
+        return obj;
+    }
+    //批量生产出来仅仅是多件衣服,但是不知道是哪个品牌的衣服(没法做到产品识别)
+    var cloth = clothesFactory();
+    var cloth2 = clothesFactory("棉");
+
+   //console.log(cloth == cloth2);
+//    for(var i = 0;i<1000;i++){
+//        clothesFactory();
+//    }
+
+    //通过工厂模式返回的这个对象是个对象类型的,但是不知道是对象类型里的具体的哪个类型
+    //没法确定具体是对象类型里细分出的哪个类型
+    //缺点:没法产品识别
+</script>
+
+</body>
+</html>

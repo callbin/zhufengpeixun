@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>计数器</title>
+    <style type="text/css">
+        #div1 {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /*圆*/
+            border: 1px solid green;
+            background: orange;
+            cursor: pointer;
+            text-align: center;
+            line-height: 100px;
+            font-size: 30px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">0</div>
+<!--<ul>-->
+    <!--<li>11</li>-->
+    <!--<li>22</li>-->
+    <!--<li>333</li>-->
+<!--</ul>-->
+<script>
+   var oDiv = document.getElementById("div1");
+    //    var i = 0;
+    //    oDiv.onclick = function(){
+    //        oDiv.innerHTML = ++i;
+    //    } //不推荐,把变量定义在全局下是会变量污染的
+
+    ~(function () {
+        var i = 0;
+        oDiv.onclick = function () {  //匿名方法被元素的onclick所占用,因此自执行函数的作用域就释放不掉了
+            oDiv.innerHTML = ++i;
+        }
+    })()
+    console.dir(oDiv);
+    oDiv.onclick = (function(){
+         var  i = 0;
+        return function(){
+            oDiv.innerHTML = ++i;
+        }
+    })()
+
+   oDiv.onclick = (function(){
+       var  i = 0;
+       return function(){
+         fn(i);
+       }
+   })()
+   function fn(i){
+       oDiv.innerHTML = ++i; //这个++i改变的仅仅是形参i的值,和上面自执行函数里定义的i没有关系
+   }
+
+
+    oDiv.onclick = (function(){
+        var  i = 0;
+        var arr  = [];
+        return function(){
+            fn(i,arr);
+            i = arr[0];
+        }
+    })();
+
+    function fn(i,arr){
+        //形参仅仅在当前这个作用域有值,跟其他作用域都没有关系
+        //方法的私有变量(形参,带var关键字的变量,方法里定义方法也是私有变量)
+        oDiv.innerHTML = ++i;
+        arr[0] = i;
+    }
+
+    //方法运行的步骤
+    //1.形参赋值
+    //2.预解释
+    //3.代码执行
+
+    var oLis = document.getElementsByTagName("li");
+    for(var i = 0; i<oLis.length;i++){
+        ~(function(n){
+            oLis[n].onclick = function(){
+                alert(n) ;
+            }
+        })(i)
+    }
+</script>
+</body>
+</html>

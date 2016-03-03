@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>1111</li>
+    <li>2222</li>
+    <li>3333</li>
+    <li>4444</li>
+</ul>
+<script>
+    //this表示方法运行的上下文(contexts)(当前调用这个方法的主体) ,this表示谁去运行这个方法的
+    //this跟方法在哪里定义没有关系
+    //this跟方法在哪里运行也没有关系
+    //1.自执行函数里的this永远是window
+    var innerHTML = "window";
+    var obj = {
+        innerHTML:"obj里的属性",
+        fn: (function () {
+            console.log(this.innerHTML) //window.innerHTML
+        })()//定义+执行一起做了,打开浏览器的时候就自动执行了
+    }
+    //2.元素绑定事件驱动方法运行,方法里的this表示当前绑定的元素
+    var oLis = document.getElementsByTagName("li");
+    var  i = 0; //i定义在全局作用域下的
+    for(;i<oLis.length;i++){
+        oLis[i].index = i;
+        oLis[i].onclick = function(){
+               alert(this.index);//this表示当前点击的元素,这个匿名方法运行的主体是当前的这个元素
+        }
+    }
+    //3.方法名(fn).前面是谁,this就是谁,如果方法名前面没有.说明this是window
+    var innerHTML = "window";
+    function fn(){
+        console.log(this.innerHTML);
+    }
+    var obj = {
+        innerHTML:"obj里的属性",
+        fn:fn
+    }
+    fn();//window
+    obj.fn();//"obj里的属性"
+
+
+    //思考题:点击每个li弹出相应的索引,我们用闭包两种方式实现下,并用作用域,闭包,作用域销毁,this的相关知识说出其原理(为什么可以拿这么写法来实现-用画图+文字的方式描绘)
+
+
+
+</script>
+</body>
+</html>

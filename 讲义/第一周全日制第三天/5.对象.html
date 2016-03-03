@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //值类型还是对象类型的取决于你看待事物的角度
+//    var price = 1;
+//    var material = "paper";
+//    var width = "10cm";
+//    var height = "5cm";
+//    var obj = new Object();
+//    obj.price = 1;
+//    obj.material = "paper";
+
+    var obj = {price:1,material:"paper",width:"10cm",height:"5cm"};
+    //对象字面量的方式
+
+    function checkEmail(){
+        //验证邮箱
+    }
+    function checkUser(){
+        //验证用户名
+    }
+    function checkPassword(){
+        //验证密码
+    }
+    //oop (面向对象的编程 ,在其他语言中通过class(类)来实现,但是js当中没有class(类)来实现,因此我们需要自己模拟)
+    //object oriented programming
+    //以对象数据类型为导向的编程
+    //一个人的寂寞:单例模式(只能返回一个实例)
+    //开辟一个命名空间,在命名空间里井井有序的管理这个实例里的属性和方法
+    //对象(地球) -类 (人类,植物类,动物类)- 实例(类中包含的具体一个事物)
+    //1.可以起到分组的作用 2.防止冲突
+    var checkObj = {};
+    checkObj.checkEmail = function(){};
+    checkObj.checkUser = function(){};
+    checkObj.checkPassword = function(){};
+
+    var checkObj = {
+        checkEmail:function (){},
+        checkUser:function(){} ,
+        checkPassword : function(){}
+    }
+    //上面的这种模式如果拿生产衣服来讲,只能生产一件衣服,如果要生产n多件,得去工厂里批量加工
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

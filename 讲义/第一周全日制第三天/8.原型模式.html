@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //解决复用问题(原型模式和构造函数一起用)
+    function Nike(material) {
+        //构造函数就是初始化数据,写在这边的属性和方法都是实例私有
+        this.material = material;
+        this.width = "";
+        this.height = "";
+        this.size = "";
+         this.b  = "";
+    }
+    Nike.prototype.price = function () {
+        console.log("太贵了~")
+    };
+    Nike.prototype.a = ["a","b","c"];
+    var cloth = new Nike;
+    var cloth2 = new Nike;
+
+   // console.log(cloth.price == cloth2.price); //true;
+    //所有的方法都有prototype这个属性,但是只有是构造函数的时候才有意义
+    //prototype指向实例的原型对象(cloth.prototype)
+    //原型对象上有个constructor属性指向构造函数
+    //实例对象上自带__proto__属性,指向原型对象(cloth.prototype)
+    //prototype上保存所有实例共享的属性和方法
+    cloth.a.push("d");
+    cloth.b.push("cc");
+    console.log(cloth2.a);//["a","b","c","d"]
+    console.log(cloth2.b);//
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

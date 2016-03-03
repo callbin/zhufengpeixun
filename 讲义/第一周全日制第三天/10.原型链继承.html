@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function Nike(material) {//子类
+        this.material = material;
+        this.width = "";
+        this.height = "";
+        this.size = "";
+        this.name  = "Lily";
+    }
+    Nike.prototype.price = function(){
+        console.log("太贵了~")
+    };
+
+    function superNike(){ //父类
+        this.style = "old";
+        this.size = "老年人尺寸";
+    }
+    superNike.prototype.holdWarm = function(){
+        console.log("保暖");
+    }
+    Nike.prototype = new superNike();
+    //原型链机制是实现继承的途径
+    var cloth = new Nike();
+    console.log(cloth.style)
+</script>
+
+</body>
+</html>

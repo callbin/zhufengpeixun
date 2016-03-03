@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function Nike(material) {
+        this.material = material;
+        this.width = "";
+        this.height = "";
+        this.size = "";
+        this.name  = "Lily";
+    }
+    Nike.prototype.name = "Lucy";
+    Nike.prototype.a = [11,2,3];
+//    Nike.prototype.toString = function(){
+//        return "nike";
+//    }
+    var cloth = new Nike();
+    //console.log(cloth.a[0]);//1
+    //console.log(cloth.toString());
+    cloth.a = 1; //
+    console.log(cloth.a[0]);//undefined
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //实例识别
+    function Nike(material){ //自定义创建的类(创建了一个Nike类)
+        this.material = material;
+        this.width = "";
+        this.height = "";
+        this.size = "";
+        this.price = function(){console.log("太贵了~")}
+    }//这边的this就是cloth
+    //Nike() //就是一个普通方法;
+    var cloth =  new Nike("棉");//通过new 运算符去执行这个函数,这个函数就是类(class),这边称之为构造函数  --js机制
+    var cloth2 = new Nike;
+    console.log(cloth.price == cloth2.price);//false
+    //1.首先创建一个实例,就是cloth实例
+    //2.以cloth这个实例为上下文,运行Nike这个方法
+    //3.自动的把这个创建的实例返回 ,不用再写return
+   new Nike("皮");//也是返回实例,匿名实例
+   // console.log(cloth.material);
+
+    //构造函数 不管属性还是方法都是写在自己的实例的,都是实例私有的属性和方法
+    //构造函数是没法实现复用
+
+    //Array  --内置类
+    //var a = new Array("111",2,3);
+    var a = ["111",2,3]
+    //[2,4,5,6]
+    a[0]
+    //new Array;
+    //new Array();
+    a.push()
+
+
+    function Array(){
+        this.length = ""
+    }
+    var a=  new Array()
+    a.length
+
+</script>
+
+</body>
+</html>
