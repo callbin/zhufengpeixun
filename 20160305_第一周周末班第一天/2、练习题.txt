@@ -1,0 +1,27 @@
+//window下的预解释:var num; var a; fn=xxxfff000;
+    //window下的代码执行:
+        //num = 13
+        //a=20;
+
+        //fn(100); //形成一个新的私有作用域A:
+           //形参赋值:num=100 num是A私有的
+           //预解释:var a;  a是A私有的
+           //代码执行:
+                //console.log(num, a); ->100 undefined
+                //a = 16
+                //a = 17
+                //b = 18  ->b不是私有的,找window,window下也没有b,此处相当于让window下增加一个叫做b的属性名,值是18 ->window.b=18;
+                //console.log(num, a, b); 100,17,18(全局)
+        //console.log(num, a, b); 13,20,18
+
+    var num = 13;
+    var a = 20;
+    fn(100);
+    function fn(num) {
+        console.log(num, a);
+        var a = 16;
+        a = 17;
+        b = 18;
+        console.log(num, a, b);
+    }
+    console.log(num, a, b);

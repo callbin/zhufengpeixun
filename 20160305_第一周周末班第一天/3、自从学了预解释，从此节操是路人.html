@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+    var ary = [12, 23, 34, 45];
+    function fn(ary) {
+        ary.length--;//->ary.pop()
+        ary = [];
+        ary[ary.length] = 100;//->ary.push(100)
+        console.log(ary);
+    }
+    fn(ary);
+    console.log(ary);
+
+
+</script>
+</body>
+</html>
