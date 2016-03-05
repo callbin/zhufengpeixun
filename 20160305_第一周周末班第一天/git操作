@@ -1,0 +1,43 @@
+假设老师的讲义地址是：https://github.com/zhufengpeixun/JavaScript_2016_01.git [HTTPS]
+
+GIT HUB 老师的URL地址：https://github.com/zhufengpeixun/JavaScript_2016_01
+
+1、先把老师的讲义仓库fork到自己的gitHub仓库一份 (克隆一份一模一样的fork)
+   通过输入老师的GIT仓库网址,找到老师的仓库,点击右上角的fork即可
+
+2、把自己fork老师的那个仓库(自己的仓库)克隆到本地一份
+   1)打开Git Bash Here
+   2)$ git clone 自己的仓库地址(fork老师的之后,自己的仓库中就有一个和老师的一模一样的仓库了)
+     https://github.com/自己的用户名/diyiqi.git
+   3)关掉当前的GIT窗口
+
+3、把老师的远程仓库和自己的本地进行关联
+    1)在当前项目文件夹中，打开Git Bash Here
+    2)$ git remote -v  查看本地目前关联的远程仓库都有什么
+
+      origin  https://github.com/自己的用户名/diyiqi.git (fetch)
+      origin  https://github.com/自己的用户名/diyiqi.git (push)
+
+      origin是一个名字，代表和自己的远程仓库关联的名字
+      我们是通过$ git clone 自己的远程仓库地址 克隆下来的,默认的就已经和自己的仓库关联到一起了
+
+    3)增加和老师远程仓库的连接
+      $ git remote add zhufeng(这个名字自己可以随便的起,但是不要叫origin了) 老师的远程仓库地址
+      ->$ git remote add zhufeng https://github.com/zhufengpeixun/diyiqi.git
+
+前三部只需要操作一次，以后更新讲义都不需要重新操作了
+
+4)把老师远程仓库上的最新的讲义更新到自己的本地
+  $ git remote update zhufeng  ->更新自己本地和老师远程仓库链接的那个通道
+  $ git pull zhufeng master  ->把老师的远程仓库的讲义更新到自己的本地
+
+5)在把本地最新的讲义更新到自己的远程仓库上
+  $ git add -A    ->把自己本地更新的文件添加到本地的暂存区
+  $ git commit -m"备注信息"  ->把本地暂存区提交到本地的历史区
+  $ git push origin master ->把自己本地历史区的内容推送到自己的远程仓库上
+
+切记，自己本地拉取的老师的讲义项目文件夹中的所有内容只能查看不能修改
+
+
+
+

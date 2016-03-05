@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //如何区分当前作用域的上一级作用域?
+    //->上级作用域是谁和函数在哪执行的没有关系，只和在哪定义的有关系
+    //->当前作用域B,想知道B的上级作用域是谁,只需要看B对应的堆内存空间是在哪个作用域下定义的,那么B的上级作用域就是谁
+
+    var num = 13;
+    function fn() {
+        var num = 100;
+        return function () {
+            console.log(num);
+        }
+    }
+    var f = fn();//->首先先把fn这个函数执行,然后在把fn执行的返回结果(return后面跟的是啥,返回结果就是啥,没有return,默认的返回值是undefined)赋值给f
+    f();
+</script>
+</body>
+</html>

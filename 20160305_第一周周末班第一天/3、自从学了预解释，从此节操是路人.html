@@ -6,18 +6,69 @@
 </head>
 <body>
 <script type="text/javascript">
-
-    var ary = [12, 23, 34, 45];
-    function fn(ary) {
-        ary.length--;//->ary.pop()
-        ary = [];
-        ary[ary.length] = 100;//->ary.push(100)
-        console.log(ary);
-    }
-    fn(ary);
-    console.log(ary);
+    //1)不管条件是否成立,里面出现的所有带var和function关键字的都要进行预解释
+    //预解释:var num; ->window.num=undefined;
+    //    console.log(num);//->undefined
+    //    if (!("num" in window)) {//->"num" in window ->true 取反为false，条件不成立，所以13行不在执行
+    //        var num = 13;
+    //    }
+    //    console.log(num);//->undefined
 
 
+    //2)"="是赋值,等号左边是变量,等号右边是常量(值)，所以在预解释的时候，只对左边的变量进行预解释，右边的是值，是不进行预解释的
+    //    fn(); ->"ok"
+    //    function fn() {
+    //        console.log("ok");
+    //    }
+    //    fn(); ->"ok"
+    //函数表达式:把一个函数定义的部分当做一个值赋值给一个变量或者一个元素的某个事件
+    //oDiv.onclick=function(){};
+
+    //预解释:var fn1; ->undefined
+    //    fn1();//->undefined() ->Uncaught TypeError: fn1 is not a function
+    //    var fn1 = function () {};
+    //    fn1();
+
+
+    //3)在私有作用域中,虽然return下面代码不会在执行了,但是要进行预解释；return后面是返回给函数外面的值,所以不进行预解释
+    //    var n=10;
+    //    function fn(){
+    //        //形参赋值：无
+    //        //预解释：var n; ->私有作用域中出现的n都是自己私有的
+    //        n=12;
+    //        console.log(n);//->12 而且n是私有的
+    //
+    //        return function(){};//->这个函数是当做值返回的，是不进行预解释的
+    //        var n=100;//->函数体中return下面的代码都不在执行了
+    //    }
+    //    fn();
+    //    console.log(n);//->10
+
+    //4)在预解释阶段，如果变量或者函数名已经声明过了，那么不会重新的进行声明；但是在预解释阶段，需要重新的赋值；
+    //->预解释:
+    // function fn=xxxfff111  声明+定义
+    // var fn;  声明
+    // function fn=xxxfff222 声明+定义
+    fn();
+    function fn() {console.log(1);}
+    fn();
+    var fn = 13;
+    fn();
+    function fn() {console.log(2);}
+    fn();
+
+    //注意：在全局作用域下声明的变量或者函数都是相当于给window增加了一个属性名，例如：var fn ->window.fn   function fn ->window.fn；但是JS中规定一个对象的属性名是不能重复的，所以函数名字如果和变量的名字一样，也算是冲突了；
+
+
+    //1、in
+    //var obj = {name: "珠峰"};
+    //console.log("name" in obj);//->true in:检测当前某一个属性名是否属于这个对象,如果属于这个对象的话,返回true,不属于返回false
+
+    //在“全局作用域中”我们声明的全局变量,也相当有是window的一个属性名
+    //    var num = 13;
+    //    console.log("num" in window);//->true
+    //    var num2;
+    //    console.log("num2" in window);//->true
 </script>
 </body>
 </html>

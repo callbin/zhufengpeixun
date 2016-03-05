@@ -1,0 +1,19 @@
+1、
+
+var ary = [12, 23, 34, 45];
+function fn(ary) {
+    ary.length--;//->ary.pop()
+    ary = [];
+    ary[ary.length] = 100;//->ary.push(100)
+    console.log(ary);
+}
+fn(ary);
+console.log(ary);
+
+2、
+var i=10;
+console.log(10+(++i)+(i++)+(i++)+(++i));
+console.log(i);
+
+3、
+教材的第13页，最后一道题，今天晚上回家，分析出来并且画图

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var i = 10;
+    function fn() {
+        var i = 5;
+        return function (n) {
+            console.log(n + (++i));
+        }
+    }
+    var f = fn();
+    f(20);
+    f(30);
+    fn()(20);//->fn()让fn这个函数执行,然后在把fn这个函数执行完成的返回结果xxxfff222紧接着在执行
+    fn()(30);
+    console.log(i);
+
+
+    //++i和i++的区别:
+    //->都是在自身的值的基础上加1
+    //->在和其他值进行运算的时候顺序不一样:
+    //    var i = 10;
+    //    console.log(10 + (++i));//->21 先自己+1,拿加完最新的结果和10进行运算 ->++i让i=11,然后10+11=21
+    //
+    //    i = 10;
+    //    console.log(10 + (i++));//->20 先拿自己之前的值和10运算,然后运算完成后本身在+1 ->首先让10+10=20,然后在i++,让i变为11
+    //    console.log(i);//->11
+</script>
+</body>
+</html>

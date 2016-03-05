@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        .box {
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        .box h2 {
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px dashed red;
+        }
+
+        .box div {
+            margin-top: 20px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: lightblue;
+            cursor: pointer;
+        }
+
+        .box div span {
+            color: red;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>1、认为郭军贺长得丑的请猛烈投票~</h2>
+
+    <div id="voteBtn">我肯定要投票 [ <span id="voteNum">0</span> ]</div>
+</div>
+
+<script type="text/javascript">
+    var voteBtn = document.getElementById("voteBtn"), voteNum = document.getElementById("voteNum");
+
+    //    voteBtn.onclick = function () {
+    //        var i = 0;
+    //        i++;
+    //        voteNum.innerHTML = i;
+    //    };
+    //->不行,不行的原因在于每一次点击都是从新开辟新的作用域,i每次都从0开始
+
+    //->我们借用全局作用域不销毁的原理,把需要保存下来的i定义成全局变量,每一次点击其实都是相当于把全局中的i进行累加,这样保证下一次使用的值是上一次保留下来的值
+    //    var i = 0;
+    //    voteBtn.onclick = function () {
+    //        i++;
+    //        voteNum.innerHTML = i;
+    //    };
+    //->不建议过多使用全局变量
+
+
+    //->在给voteBtn.onclick绑定点击事件的时候:首先执行一个自执行函数,形成一个私有的作用域A，然后把A的返回结果赋值给onclick；A中的返回结果是一个函数的引用地址,被外面的onclick占用了,所以A这个作用域不销毁,里面的私有变量i也不销毁
+    voteBtn.onclick = (function () {
+        var i = 0;
+        return function () {
+            i++;
+            voteNum.innerHTML = i;
+        }
+    })();
+</script>
+</body>
+</html>
