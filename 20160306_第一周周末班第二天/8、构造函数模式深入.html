@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function Fn() {
+        var num = 100;//->num是构造函数模式执行的时候,按照普通函数执行创建的一个私有的变量,和我们类的实例没有啥必然的联系；能和实例关联在一起的只有this.xxx=xxx，因为this是当前实例,this.xxx=xxx相当于手动的给实例增加的属性名；
+        this.x = 100;
+        this.getX = function () {
+
+        };
+//        return {
+//            name:"哈哈哈"
+//        };
+        //5、浏览器会在代码执行结束把当前实例默认返回,不需要自己写return；但是如果我们写了return，将分为两种情况处理：
+        //1)手动返回的是基本数据类型值，那么我们返回的结果不能覆盖原有的实例
+        //2)手动返回的是引用数据类型的值，那么返回的结果会把浏览器默认返回的实例给覆盖掉，导致f1和f2就不在是Fn的一个实例了
+    }
+    var f1 = new Fn();
+    console.log(f1);
+
+    var f2 = new Fn;//->在使用new执行函数的时候,如果Fn不需要传递参数的话,我们后面的小括号可以加也可以不加
+
+    //4、
+    //console.log(f1.num);//->num是函数Fn的私有的变量和实例没关系,所以f1没有这个属性名,在JS中如果一个对象没有这个属性名的话,默认的属性值是undefined
+
+
+    //3、如何检测某一个属性名是否属于这个对象(这个实例)的私有属性
+    //->f1/f2都是Fn这个类的一个实例,f1/f2都拥有x和getX两个属性,但是每一个实例都是单独的,所有他们拥有的属性也是自己单独的
+    //console.log(f1.getX === f2.getX);//->false 每一个实例虽然拥有的属性名看上去是一样的,但是你的还是你的,我的还是我的 我们把x或者getX称之为每一个的实例的私有的属性
+
+    //in:检测某一个属性名是否属于这个对象(不管属性名是自己私有的,还是公有的,只要有就会返回true)
+    //    var obj = {name: "珠峰"};
+    //    console.log("name" in obj);//->true
+    //    console.log("age" in obj);//->false
+
+    //hasOwnProperty:检测某一个属性名是否属于这个对象的私有属性 (只有是自己私有的,不管公有上有没有,只要私有的没有,返回false,同理只要私有的有,返回true)
+    //console.log(f1.hasOwnProperty("getX"));//->true
+
+    //思考题：回去研究一下,自己编写一个方法hasPubProperty:检测是否为自己公有的属性?
+
+
+    //1、
+    //类:所有的类都是函数数据类型的 typeof Fn->"function"  Array(数组类) typeof Array->"function"   typeof Object->"function"
+    //实例:所有的实例都是对象数据类型的 typeof f1->"object"  ary它是Array这个类的实例 typeof ary->"object"
+
+    //2、使用instanceof检测某一个实例是否属于这个类
+    //var ary = [];
+    //    console.log(f1 instanceof Fn);//->true
+    //    console.log(ary instanceof Fn);//->false
+    //    console.log(ary instanceof Array);//->true
+    //
+    //    ary = [];
+    //    console.log(ary instanceof Array);//->true
+    //    console.log(ary instanceof RegExp);//->false
+    //    var reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?$/;
+    //    console.log(reg instanceof Array);//->false
+    //
+    //    console.log(ary instanceof Object);//->true ?
+
+
+</script>
+</body>
+</html>

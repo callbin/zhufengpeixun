@@ -1,0 +1,36 @@
+编程语言:C++、VB、Java、PHP、.net(dot net)、ruby、python、C#、Object C、GO...JavaScript
+
+->因为以上这些语言是基于面向对象的编程思想开发的
+
+对象:它是一个泛指,万物皆对象
+类:把对象具体的细分
+实例:某一个类别中具体的事物
+
+自然界中万物都是对象,想要认知自然界,我们需要把自然界中的万物按照特征分为不同的类别：人类、动物类、植物类...，每一个人都是人类中的一个实例，我们想学到知识，还需要拿具体的某个实例进行研究
+
+
+面向对象(JavaScript)：把JS分成几个类,然后在每一个类中分别的拿出一个具体的实例去学习研究,当这个实例研究清楚后,我们就可以认为当前类的其他实例也拥有这些知识(特点)
+->学习面向对象的编程思想,其实就是在学习类的继承、封装、多态
+
+
+内置类(JS中天生自带的一些类)
+  Number(数字类,每一个数字都是这个类的一个实例)、String、Boolean、Null、Undefined、Object(对象类,每一个对象数据类型都是这个类的一个实例)、Array(数组类)、RegExp(正则类)、Date(时间类)、Function(函数类,每一个函数都是它的一个实例)
+
+  想自己扩展一些知识：dir(Array.prototype)、dir(String.prototype)...
+
+  HTMLCollection(元素集合类,通过getElementsByTagName这些方法获取到的类数组集合都是这个类的一个实例)
+  NodeList(节点集合类,通过getElementsByName获取到的节点集合都是这个类的一个实例)
+
+  #div1 -> HTMLDivElement(每一个元素标签都有一个自己所属的类,对于HTMLDivElement来说,每一个div元素对象都是它的一个实例) ->HTMLElement ->Element ->Node ->EventTarget ->Object
+
+
+
+
+
+
+
+
+
+
+
+

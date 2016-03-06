@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //在工厂模式批量生产的基础上,我们既要实现批量生产,也要实现品牌的区分->在JS中我们把品牌的区分叫做“实例识别” ->"构造函数模式"
+
+    //使用构造函数模式可以自己创建类
+    function CreateJsPerson(name, age) {
+        //->this是浏览器默认创建的那个实例：在构造函数模式执行的时候,方法体中的this就是当前这个类的一个实例
+        this.name = name;//->相当于给当前的实例增加一个叫做name的属性名
+        this.age = age;
+        this.writeCss = function () {
+            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write css 啦~~");
+        };
+        this.writeJs = function () {
+            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write javascript 啦~~");
+        };
+    }
+    var jsPerson1 = new CreateJsPerson("姜章涛", 76);
+    var jsPerson2 = new CreateJsPerson("王梦缘", 67);
+
+    //普通函数和构造函数的区别:
+    //1、执行的时候
+    //普通函数:方法名()
+    //构造函数:new 方法名()
+    //通过加一个new来执行的话,此时的CreateJsPerson就不是普通的函数了,而是变为了一个类(自定义的类)；同样,返回的jsPerson1,也不在是一个变量了,而是当前CreateJsPerson这个类的一个实例；
+
+    //2、运行的时候
+    //->当用new CreateJsPerson()执行后,首先它还是会按照普通函数执行那样,先给形参赋值,然后进行私有作用域中的预解释,最后代码从上到下执行 (说明了,它虽然叫做类,但是也存在普通函数的那一面)
+    //->但是使用new执行,在普通函数执行的基础上多加了一些操作:
+    //在JS代码执行之前,浏览器会自动创建一个对象数据类型的值(这个值就是当前这个类的一个实例)
+    //在接下来的代码执行过程中,以创建的实例为执行的主体(this就是当前的实例),分别的把需要增加的属性名和属性值赋值给当前的实例
+    //代码执行完成后,浏览器会自动的把创建的实例返回到类的外面
+</script>
+</body>
+</html>

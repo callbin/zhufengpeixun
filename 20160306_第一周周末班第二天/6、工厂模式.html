@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    //    var jsPerson1 = {
+    //        name: "姜章涛",
+    //        age: 76,
+    //        writeCss: function () {
+    //            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write css 啦~~");
+    //        },
+    //        writeJs: function () {
+    //            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write javascript 啦~~");
+    //        }
+    //    };
+    //    jsPerson1.writeCss()
+    //
+    //    var jsPerson2 = {
+    //        name: "冀彦瑞",
+    //        age: 17,
+    //        writeCss: function () {
+    //            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write css 啦~~");
+    //        },
+    //        writeJs: function () {
+    //            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write javascript 啦~~");
+    //        }
+    //    };
+
+    //工厂模式：不用像之前的单例模式一个个的写了,只需要开一个工厂，实现批量化的生产即可
+    //->把实现一个功能的代码封装到一个函数中,以后再想实现这个功能,不需要重新的编写这些代码了,只需要执行这个函数即可 ->"类(函数)的封装"：低耦合高内聚 ->减少页面中的冗余代码,提高代码的重复利用率
+    function createJsPerson(name, age) {
+        var obj = {};
+        obj.name = name;
+        obj.age = age;
+        obj.writeCss = function () {
+            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write css 啦~~");
+        };
+        obj.writeJs = function () {
+            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write javascript 啦~~");
+        };
+        return obj;
+    }
+    var jsPerson1 = createJsPerson("姜章涛", 76);
+    jsPerson1.writeCss();
+    jsPerson1.writeJs();
+
+    var jsPerson2 = createJsPerson("冀彦瑞", 17);
+    jsPerson2.writeCss();
+    jsPerson2.writeJs();
+
+
+    //类的多态:
+    //->"后台语言"中的多态是一个类的多种形态,包含了：重载和重写
+    //[重载]
+    //->多个方法,他们的方法名相同,但是参数(多少个、类型、顺序)或者返回值不同,那么我们说这就是重载
+    //    public void sum(int num1,int num2){
+    //
+    //    }
+    //    public void sum(int num1){
+    //
+    //    }
+    //    sum(12,13) sum(12)
+
+    //JS中严格意义上来说不存在重载
+    //    function sum(num1){
+    //
+    //    }
+    //    function sum(num1,num2){
+    //
+    //    }
+    //    sum(12);
+    //但是放松来说,有一个模式和重载类似:一个方法通过传递参数的不同,方法最后处理的结果也不一样,我们也可以把它理解为重载
+    function sum(num1, num2) {
+        if (typeof num2 === "undefined") {
+            //定义了num2没有传递值
+            alert("no");
+        } else {
+            alert("ok");
+        }
+    }
+    sum(12);
+    sum(12, 13);
+
+    //[重写]
+    //JS中也有重写：子类重写父类的方法
+</script>
+</body>
+</html>

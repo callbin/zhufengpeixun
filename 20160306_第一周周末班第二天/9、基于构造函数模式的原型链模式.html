@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    function CreateJsPerson(name, age) {
+    //        this.name = name;
+    //        this.age = age;
+    //        this.writeJs = function () {
+    //            console.log("my name is " + this.name + "，my age is " + this.age + "，i can write javascript 啦~~");
+    //        };
+    //    }
+    //    var jsPerson1 = new CreateJsPerson("姜章涛", 76);
+    //    var jsPerson2 = new CreateJsPerson("王梦缘", 67);
+    //    console.log(jsPerson1.writeJs === jsPerson2.writeJs);//->false writeJs是每一个实例私有的属性，但是生活中一个老师教的，应该两个人学的JS是一套内容，这就需要我们把writeJs从私有变为公有，实现对每一个实例的共享
+
+
+    function CreateJsPerson(name, age) {
+        //this->当前类的实例
+        this.name = name;
+        this.age = age;
+    }
+    CreateJsPerson.prototype.writeJs = function () {
+        console.log("my name is " + this.name + "，my age is " + this.age + "，i can write javascript 啦~~");
+    };
+
+    var jsPerson1 = new CreateJsPerson("姜章涛", 76);
+    var jsPerson2 = new CreateJsPerson("王梦缘", 67);
+    //console.log(jsPerson1.writeJs === jsPerson2.writeJs);//->true
+
+    //->我们构造函数某一个属性值如果是个函数,函数中的this是谁,需要看方法执行"."前面是谁
+    jsPerson1.writeJs();//this->jsPerson1
+    jsPerson1.__proto__.writeJs();//this->jsPerson1.__proto__ / CreateJsPerson.prototype
+
+
+    //1、所有的函数数据类型(普通函数、类)都天生自带一个属性:prototype(原型)，这个属性对应的值是一个对象数据类型的值，浏览器会给这个属性值默认开辟一个新的堆内存。
+    //2、在浏览器默认给这个原型属性值开辟的堆内存中，有一个天生自带的属性：constructor(构造函数)，它的属性值是当前这个类本身。
+    //3、每一个对象数据类型(普通的对象、数组、正则、实例、prototype值)都天生自带一个属性:__proto__，这个属性的值指向了当前这个对象所属类的prototype
+    //IE浏览器中不允许我们使用__proto__这个属性
+
+
+    //原型链模式:当我们通过"实例.属性"(jsPerson1.writeJs)进行操作的时候,首先到实例的私有属性中进行查找,看在私有中是否存在:
+    //->存在的话,我们接下来操作的都是自己当前实例私有的
+    //->不存在的话,通过实例的__proto__找到所属类的原型上看有没有:
+    //->>>原型上有：我们接下来操作的都是原型上这些公有的
+    //->>>原型上没有：则继续通过原型上的__proto__找到Object.prototype,看基类原型上是否存在
+    //->>> ->>>基类原型上有：用的是基类原型上的
+    //->>> ->>>基类原型上没有：获取到的属性值是undefined
+    //这样一级级的查找模式->"原型链模式"
+
+    //    console.log(jsPerson1.writeJs === jsPerson2.writeJs);//->true
+    //    console.log(jsPerson1.writeJs === CreateJsPerson.prototype.writeJs);//->true
+    //    console.log(jsPerson1.__proto__.writeJs === jsPerson2.writeJs);//->true
+    //    //jsPerson1.__proto__.writeJs直接到原型上查找
+    //
+    //    console.log(jsPerson1.constructor);//->CreateJsPerson
+    //    //jsPerson1.hasOwnProperty===jsPerson1.__proto__.__proto__.hasOwnProperty ->true
+
+
+
+
+</script>
+</body>
+</html>
