@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var num = 10;
+    var obj = {
+        num: 20,
+        fn: (function (num) {
+            this.num *= 2;
+            num += 10;
+            return function () {//->xxxfff111
+                this.num *= 3;
+                num += 1;
+                console.log(num);
+            }
+        })(num)//->把window下的num的值赋值给形参
+    };
+    var fn = obj.fn;
+    fn();
+    obj.fn();
+    console.log(window.num, obj.num);
+
+    //思考题：教材中的最后一道题自己回去画图分析
+</script>
+</body>
+</html>

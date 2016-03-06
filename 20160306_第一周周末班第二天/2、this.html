@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->我们研究this一般都研究函数里面的this指向问题,函数外面的this,一般都是window
+    //->context上下文:当前方法执行的范围
+    //->this执行的主体:谁来执行的这个方法
+    //->有一个方法叫做吃饭function eat(){}
+    //张瑞去北京饭店吃鸡蛋灌饼 ->张瑞去吃饭,所以张瑞是当前吃饭这个行为的this,她在北京饭店吃饭,所以上下文是北京饭店
+
+
+    //->fn=xxxfff000
+    function fn() {
+        console.log(this);
+    }
+
+    var obj = {
+        name: "珠峰培训",
+        fn: fn //->obj.fn=xxxfff000
+    };
+
+    fn();
+    obj.fn();
+
+    ~function () {
+        fn();
+    }();
+
+    function sum() {
+        fn();
+    }
+    sum();
+
+    //你以为你以为的就是你以为的
+
+    //->函数中的this是谁,和函数在哪定义的,和函数在哪执行的,都没有半毛钱的关系
+
+    //1)只要是自执行函数执行,那么方法中的this就是window
+    //    ~function () {
+    //        console.log(this); //->window
+    //    }();
+    //
+    //    var obj = {
+    //        fn: (function () {
+    //            console.log(this);//->window
+    //            return function () {
+    //
+    //            }
+    //        })()
+    //    };
+
+    //2)给元素的某一个事件绑定方法,方法执行的时候,里面的this是当前元素本身
+    //    oDiv.onclick = function () {
+    //        console.log(this);//->oDiv
+    //    }
+
+    //    oDiv.onclick = (function () {
+    //        console.log(this);//->window
+    //        return function () {
+    //            console.log(this);//->oDiv
+    //        }
+    //    })();
+
+    //3)方法名()->这个是在执行方法,想知道方法中的this是谁,只需要看方法名前面是否有".",有的话,"."前面是谁this就是谁,没有的话this就是window
+    fn();//fn中的this->window
+    obj.fn();//fn中的this->obj
+
+    f.__proto__.proto__.hasOwnProperty();//hasOwnProperty中的this->f.__proto__.proto__
+
+    fn.call.call.call.call.call();//最后一个call方法中的this-> fn.call.call.call.call
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var name = "中国";
+    //    var age = 5000;
+    //    (function (name, age) {
+    //        console.log(name, age);//->"中国",5000  但是这里的name和age是私有的变量,因为他们是形参
+    //        name = "珠峰";
+    //        age = 7;
+    //        console.log(name, age);//->"珠峰",7
+    //    })(name, age);//->函数执行的时候,小括号中的内容都是给形参赋的值 ->把全局作用域中的name和age的值传递给函数的形参("中国",5000)
+    //    console.log(name, age);//->"中国",5000
+
+
+    //->把全局下的name和age在私有作用域中把它也修改了
+    //    var name = "中国";
+    //    var age = 5000;
+    //    (function (name, age) {
+    //        name = "珠峰";
+    //        age = 7;
+    //        console.log(name, age);//->"珠峰",7
+    //
+    //        window.name = name;//->在私有作用域中直接通过前缀window修改window下的变量的值
+    //        this.age = age;//->自执行函数中的this是window
+    //
+    //    })(name, age);
+    //    console.log(name, age);//->"珠峰",7
+
+
+    (function () {
+        var jQuery = function (selector, context) {
+            return new jQuery.fn.init(selector, context);
+        };
+
+        window.jQuery = window.$ = jQuery;
+    })();
+
+    jQuery();
+    $();
+</script>
+</body>
+</html>

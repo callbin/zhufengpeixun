@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var name = "王丝雨";
+    //    var age = 15;
+    //
+    //    var name = "常青";
+    //    var age = 80;
+
+    //JS->把描述同一件事物特征的属性放在同一个分组中,避免两个事物属性的冲突->"单例模式"
+    //->在单例模式中,我们的person1/person2叫做命名空间 ->我们防止名字相同时候的冲突,我们把每一个事物都看成一个单独的个体,把描述这件事物的属性放在同一个命名空间下,以后通过不同的命名空间来区分不同的实例
+    //    var person1 = {
+    //        name: "王丝雨",
+    //        age: 15
+    //    };
+    //
+    //    var person2 = {
+    //        name: "常青",
+    //        age: 80
+    //    };
+    //
+    //    console.log(person2.age);
+
+    //->单例模式是我们以后项目开发中组常用的一种实现模块化开发的模式
+
+    //utils或者tool等命名空间下封装的一般都是我们每一个模块都要使用的公用方法
+    var utils = {
+        getCss: function () {
+
+        }
+    };
+
+    var loginModel = {
+        submit: function () {
+            //在自己的某个方法中调用自己的某个其他方法
+            this.check();//->this是loginModel
+        },
+        check: function () {
+
+        }
+    };
+    loginModel.submit();
+
+    var searchModel = {
+        submit: function () {
+            utils.getCss();//->在自己的命名空间下调取公共模块中的方法
+        }
+    };
+</script>
+</body>
+</html>

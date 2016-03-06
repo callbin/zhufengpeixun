@@ -1,0 +1,77 @@
+﻿->我们一般只研究函数执行的时候里面的this
+->this是谁和当前的函数在哪执行和在哪定义没有半毛钱的关系
+
+1)看函数执行的时候,函数名之前是否有".",有的话"."前面是谁this就是谁,没有的话this就是window
+  oDiv.onclick=function(){
+      //匿名函数中的this->oDiv
+      fn();//fn函数中的this->window
+  };
+
+  [].slice(0);//->slice中的this是[]
+  [].__proto__.slice(0);//->slice中的this是Array.prototype
+  -->我们自己在数组原型中编写的方法,一般情况下我们函数中的this就是当前我们要操作的这个元素
+  Array.prototype.distinct=function(){
+     //this->我们当前要操作的这个数组
+  };
+  [1,2,2,3,1,2,3,2,1].distinct();
+
+
+2)自执行函数中的this永远是window
+  (function(){ //this->window })();
+  ~function(){ //this->window }();
+
+  window.setTimeout(function(){
+     //this->window
+  },10);
+
+  ary.sort(function(a,b){
+     //第一个匿名函数(参数)在执行的时候里面的 this->window
+  });
+
+  ary.forEach(function(){
+     //第一个匿名函数(参数)在执行的时候里面的 this->window
+     //但是如果context传递了值(第二个参数传递值了)那么这个方法中的this就是context
+  },context);
+
+  str.replace(reg,function(){
+     //this->window
+  });
+
+3)给元素的某一个事件绑定方法,当事件触发的时候,方法中的this是当前元素本身
+  [DOM零级事件绑定]
+  oDiv.onclick=function(){
+     //this->oDiv
+  };
+
+  [DOM二级事件绑定]
+  oDiv.addEventListener("click",function(){
+     //this->oDiv
+  },false);
+
+  //在IE6~8下使用attachEvent
+  oDiv.attachEvent("click",function(){
+       //this->window
+  });
+
+4)在构造函数模式中,我们的this.xxx=xxx中的this是当前的类的一个实例
+  function Fn(){
+     this.x=100;//this->f x是给当前实例f增加的私有的属性
+  }
+  Fn.prototype.getX=function(){
+      console.log(this.x);
+  };
+  var f=new Fn;
+  f.getX();//getX中的this->f
+  f.__proto__.getX();//getX中的this->Fn.prototype
+
+5)call和apply强制改变this的指向->以上所有的this情况在遇到call/apply的时候都不好使,都已强制改变的为主
+  obj.fn.call(1);//this->1
+
+  一般情况下,我们执行call方法第一个传递的参数值是谁,那么fn中的this就是谁
+  [在非严格模式下]
+  第一个参数没有传递值、传递的是null、传递的是undefined fn中的this都是window
+  [严格模式下]
+  第一个参数传递的是谁this就是谁,传递null/undefined,fn中的this都是对应的null/undefined,不传递值默认也是undefined
+
+
+一定要切记周老师的一句话：你以为 你以为的 就是你以为的

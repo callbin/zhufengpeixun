@@ -1,0 +1,45 @@
+window下的预解释:
+	var num; var obj; var fn;
+window下的代码执行:
+	num = 10; (20) (60)
+	obj = xxxfff000
+		首先开辟一个新的堆内存xxxfff000
+		给堆内存中存储属性名和属性值
+		obj.num=20; (60)
+		obj.fn=自执行函数执行的返回结果
+			自执行函数执行形成一个不销毁的私有作用域A
+			    A下的形参赋值:num=10
+				A下的预解释:无
+				A下的代码执行:
+					this.num *= 2; ->window.num=20
+					num += 10; ->A中的num=20 (21) (22)
+					return xxxfff111;
+		obj.fn=xxxfff111;
+
+	fn = obj.fn = xxxfff111;
+
+	fn() ->形成一个私有的作用域B
+		B下的形参赋值和预解释:无
+		B下的代码执行:
+			this.num *= 3; ->window.num=60
+			num += 1; ->让A中的num变为21
+			console.log(num); ->21
+
+	obj.fn() ->形成一个私有的作用域C
+		C下的形参赋值和预解释:无
+		C下的代码执行:
+			this.num *= 3; ->obj.num=60
+			num += 1; ->让A中的num变为22
+			console.log(num); ->22
+
+	console.log(window.num, obj.num);->60 60	
+
+
+
+
+
+
+
+
+
+
