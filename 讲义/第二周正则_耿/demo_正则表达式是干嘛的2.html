@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//正则是一个模式、模型，它是用来表示字符串格式的模型（模式，或叫规则）
+var reg=/\d+/;//定义了一个模式：一个字符串中，出现一到多个数字的模式
+//\d表示数字，+表示前边的字符出现1到多次
+//\d是原字符，就是用来表示特定字符或有特殊含意的特殊符号
+//+也是原字符，量词（即表示数量的原字符）
+var str="a9c";//"9"
+var str1="abc2r8si94";
+var str2="12345";//str1和str2都满足reg这个正则模式的描述。满足正则的描述，叫匹配
+var str3="abcde";
+
+var reg=new RegExp("\\d+");//构造函数方式定义正则
+
+//正则的方法，正则类一共就两个方法：test,exec
+alert(reg.test(str3));//test负责验证和参数字符串是否匹配
+
+//把匹配的结果拿到，叫捕获
+
+alert(reg.exec(str1));//exec的返回值是数组
+
+
+
+
+
+
+
+
+
+
+</script>
