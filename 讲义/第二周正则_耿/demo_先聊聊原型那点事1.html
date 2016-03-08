@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+
+document.body //1、随便给你一个实例，让你想办法找到这个实例对应的类。
+//2、还要找到这个实例对应类的各级父类（找到这个类所有的祖先类）
+	
+console.dir(document.body.constructor);
+//HTMLBodyElement
+
+
+//DOM模型的实现，是最典型的原型和原型链的应用。可以完整的看到DOM实现的过程
+
+// div,p,a,h1,body,span
+//HTML标签名Element<---HTMLElement<----Element----Node---EventTarget---Object
+
+document.addEventListener("click",fn1,false);
+//Node
+//上下级之间有关联，减少了代码的重写，实现复用，
+//继承上一级的属性和分类的作用
+//每继承一次优化一次
+//继承是自上而下的管理方式
+
+//EventTarget类上定了所有的节点的事件处理的方法和属性
+//Node类上定义了所有的DOM节点共有的属性
+//appendChild,insertBefore定义在Element类上
+
+
+
+
+
+
+
+
+
+
+</script>
+
