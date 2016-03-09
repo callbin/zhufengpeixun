@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div >
+<div id="outer" >
+    <div  id="content">
+    	10万字的文字，
+           。，.,abcd
+          
+
+    </div>
+    可能还有文字
+</div>
+可能还有文字
+</div>
+</body>
+</html>
+<script>
+var innerHTML=document.body.innerHTML;
+
+var reg=/<div +id=(["'])content\1 *>([\w\W]+?)<\/div>/
+console.log(reg.exec(innerHTML));
+
+
+
+
+</script>

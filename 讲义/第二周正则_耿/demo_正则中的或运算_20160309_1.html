@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//-9.89,+9.89,9.89,9,
+
+//(\.\d+)?
+var reg=/^(\+|-)?\d+(\.\d+)?$/;
+//0.88
+//88
+//在正则中有两种表示或运算的方式| ,[]
+
+var reg1=/ab|cd/;
+var reg2=/[abcd]/;
+var str1="abcd";//和以上两个正则做匹配，都为true;
+var str2="12ab34";//也都为true;
+var str3="12a34";//reg1.test(str3);是false;
+
+
+//[]可以表示在ASCII中连续出现的字符
+var reg=/[0-9]/;//减号-表示连字符，表示从0到9的这10个数字
+var reg=/[A-z]/;
+//var reg=/[a-Z]/;//这是错误的正则，字符的顺序只能从小到大，不到倒着来
+var reg=/[a-z-]/;//表示小写的a到z和-这些字符中选一个
+
+//可以16进制来表示字符
+var reg=/[\u0041-\u007A]/;
+
+var reg=/^[\u4e00-\u9fa5]+$/;//严格匹配中文字符串
+var str="珠峰培训";
+var str="zhufengpeixun";
+
+var reg=/[.+*?]/;//单字符的元字符放在[]里，不再是元字符的意义，只表示它的本意
+
+//如果想用正则表达所有的字符怎么写？
+var reg=/[.\r\n]/;//这是错的
+reg=/[\b\B]/;
+reg=/[\d\D]/;
+reg=/[\s\S]/;
+reg=/[\w\W]/;
+
+
+//\s的非集是\S
+//在[]中第一个位置加^,表示取非集
+var reg=/[^0-9]/;//相当于/\D/，所有的非数字
+
+
+
+
+
+
+
+
+</script>

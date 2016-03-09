@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//正则有两个特征：贪婪，懒惰
+var reg=/\d+/;
+var str="abcd99887xyz";
+
+//下面两个方法功能一样（都会返回一个数组），但不是同一个类上的方法
+//console.log(reg.exec(str));//会返回一个数组，把捕获到的结果放到数组中，还会给这个数组添加两个自定义属性，分别是index（捕获到的字符串在输入字符串中的起始索引位置）和input(输入字符串)。如果正则中没有分组，则这个数组只有一项（length为0）
+//console.log(str.match(reg));//同上
+
+
+var reg=/\d+?/;//非贪婪匹配
+var str="abcd99887xyz";
+//console.log(str.match(reg));//同上
+
+//懒惰特征
+var reg=/\d+/g;//正则后边的符号叫模式修正符，g--global全局找查,i--ignore,m--mutiple
+reg.ignoreCase//如果设置了i修正符，则正则实例的这个属性值为true
+reg.global;//同理可得设置了g，
+reg.multiline;//同理可得设置了m，
+
+var str="abcd99887xyz37833adlk747dkk777";
+console.log(str.match(reg));//同上
+
+//关于g的一个坑
+
+var reg1=/\w+/g;
+var str1="abcd12"
+var str2="ab1234"
+
+reg1.test(str1);//正则方式一但运算，则会修改reg的lastIndex属性的值
+
+reg1.test(str2);//所以此次匹配为false,然后把lastIndex的属性归0
+reg1.test(str2);//则本次匹配从0开始，为true
+
+//为了避免上边的坑，应该注意多次使用同一个正则表达式的时候，在使用之前把lastIndex设为0，reg.lastIndex=0;
+
+//不加修正符g的正则，每一次匹配,lastIndex属性的值都是0
+
+</script>

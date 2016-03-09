@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//分组，匹配不捕获，分组的引用
+var reg=/^(\+|-)\d+(\.\d+)?$/;
+
+//var reg1=/(a|b)xyz/;//axyz或bxyz匹配为true
+
+//var reg1=/a|bxyz/;//a或bxyz匹配为true;
+
+var str="-39.99";
+alert(reg.exec(str));
+RegExp.$1
+RegExp.$2;
+
+var reg2=/(\d)(\d)(\d)/
+reg2.test("399");
+RegExp.$1;
+RegExp.$2;
+RegExp.$3;
+
+
+var reg=/^(?:\+|-)\d+(?:\.\d+)?$/;//匹配不捕获
+alert(reg.exec(str));
+
+//?三个用法，量词0-1，非贪婪匹配用在量词的后边，匹配不捕获用在括号的前边和冒号连用?:
+
+
+
+
+
+</script>
