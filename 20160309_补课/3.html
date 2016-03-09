@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    function b(x, y, z) {
+    //        //console.log(arguments.callee);//->arguments.callee 代表的是当前函数本身
+    //        //console.log(arguments.callee.caller);//->fn 当前函数是在哪个函数下执行的,我们的arguments.callee.caller就是那个函数,例如：当前函数b是在fn这个函数下执行的,所以获取的结果是fn; 如果当前函数是在全局作用域中执行的,获取的结果是null; ==>console.log(b.caller);
+    //
+    //        x = 100;
+    //        console.log(arguments[0]);//->100 形参的值发生改变,我们的arguments中对应的项的值也会跟着发生变化
+    //
+    //        arguments[1] = 1000;
+    //        console.log(y);//->1000 arguments把传递进来的参数值修改了,形参的值也会跟着改变
+    //
+    //        //->形参和arguments的映射机制
+    //    }
+    //
+    //    function fn() {
+    //        b(1, 2, 3);
+    //    }
+    //    fn();
+
+
+    "use strict";//->使用JS的严格模式
+
+    function b(x, y, z) {
+        //->严格模式下是禁止使用arguments.callee/arguments.callee.caller
+        //console.log(arguments.callee);//->Uncaught TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them
+        //console.log(arguments.callee.caller);
+
+        //->严格模式下,我们的形参和arguments是不存在映射关系的
+        x = 100;
+        console.log(arguments[0]);//->1
+
+        arguments[1] = 1000;
+        console.log(y);//->2
+    }
+
+    function fn() {
+        b(1, 2, 3);
+    }
+    fn();
+
+
+</script>
+</body>
+</html>

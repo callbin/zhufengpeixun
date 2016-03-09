@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //-> ||逻辑或  &&逻辑与
+    //    if(1>1 || 2==2){//->true
+    //
+    //    }
+    //    if(1>1 && 2==2){//->false
+    //
+    //    }
+
+    //->||: value1||value2  首先把value1转换为布尔类型(遵循的规律是只有0、NaN、null、undefined、""为假,其余的都为真)看真假,如果为真,整体的结果是value1,如果为假,整体的结果是value2
+    //    console.log(1 || 2);//->1
+    //    console.log(0 || 2);//->2
+    //    console.log(0 || false);//->false
+
+    //->&&: value1&&value2 首先看value1是真还是假,如果为真,返回的是value2的值,如果为假返回的是value1的值
+
+    //如果&&和||同时出现的话,&&优先级高于||
+    //console.log(0 || 1 && 2 || 3);
+    //1 && 2 ->2
+    //0 || 2 ->2
+    //2 || 3 ->2
+
+
+    function sum(num1, num2) {
+//        if (typeof num2 === "undefined") {
+//            num2 = 0;
+//        }
+        num2 = num2 || 0;//->我们经常使用||进行默认值的设定
+        console.log(num1 + num2);
+    }
+    sum(100, 200);//->300
+    sum(100);//->100 如果想传递一个值,结果不是NaN,而是当前100就可以了 ->num2不传递值,让num2=0即可
+</script>
+</body>
+</html>
