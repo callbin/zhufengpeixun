@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //JSON格式是一种数据类型,严格的对象类型
+    var obj = [{"name":"刘莹","age":"18px"},
+        {"name":"刘影",age:20},
+        {"name":"樊东亮",age:21},
+        {"name":"彦子贤",age:15}];
+    //window下提供了一个JSON属性-->stringify ,parse
+    //stringify -->能把JSON格式的对象转变JSON的字符串
+    //parse -->能把JSON格式的字符串转变成JSON格式的对象
+   //console.log( JSON.stringify(obj))
+    var str = '[{"name":"刘莹","age":"18px"},{"name":"刘影","age":20},{"name":"樊东亮","age":21},{"name":"彦子贤","age":15}]';
+ // var obj2 =  JSON.parse(str);
+    //console.log(obj2);
+    //stringify和parse 这两个方法在ie6-ie7不兼容
+
+
+    //封装下JSON格式的字符串转换成JSON格式的对象
+    function toJSON(str){
+        try{
+            return JSON.parse(str)
+        }catch(e){
+           return eval("("+str+")");
+        }
+    }
+    console.log(toJSON(str));
+
+
+</script>
+</body>
+</html>

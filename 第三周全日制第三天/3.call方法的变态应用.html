@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function fn1(){
+        console.log(1);
+        console.log(this)//function fn2(){}
+    }
+    function fn2(){
+        console.log(2);
+    }
+
+    fn1.call(fn2);//1
+    //fn1.call  = fn1.__proto__.call = Function.prototype.call
+    var fn3 = fn1.call;
+    fn3.call(fn2);
+    fn1.call.call.call.call(fn2);
+    Function.prototype.call.call.call.call(fn2);
+    Function.prototype.call();
+
+    //1.方法运行的时候.前面的主体是谁,this就是谁
+    //2.fn1里的this和call里的this是没关系
+    //3.call是function类型,也可以调用call
+
+</script>
+
+</body>
+</html>

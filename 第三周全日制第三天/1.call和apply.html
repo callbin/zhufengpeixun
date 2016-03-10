@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //所有的方法都是Function类上的实例,可以访问Function类原型上的所有的属性和方法
+    //所有的对象都是Object类上的实例,可以访问Object类原型上的属性和方法
+//    console.log(typeof Object.prototype);//"object"
+//    console.log(typeof Function.prototype) //"function"
+//    console.log(Function.prototype) //空的方法
+//    //Function类的实例可以共同访问的方法:call,apply,bind(不兼容),toString....
+//    console.dir(Function.prototype)
+//
+    function fn(){
+        console.log(this);
+    }
+    var obj = {fn:fn};
+
+    fn()//window
+    obj.fn()//obj
+    fn.call()//如果call没有传参数,fn里的this就是window
+    obj.fn.call()//window
+    fn.call(obj)//obj
+    obj.fn.call("aa")//如果第一参数传的是null/undefined,fn里的this也是window
+
+    //call的作用
+    //1.让当前的函数(fn)运行
+    //2.call方法的第一个参数是用来改成当前函数(fn)的this指向,传的第一个参数是什么,当前函数的this就是谁
+    fn.call([this],parameter1,parameter2,parameter3)
+//    function fn(num1,num2){
+//        var total = null
+//        total = num1+num2;
+//        console.log(total);
+//        console.log(this)
+//    }
+//    fn.call("aaa",10,20);
+
+    //apply方法的作用
+    //1.让当前的函数运行
+    //2.apply第一个参数也是用来改变当前函数的this指向,第二个从参数是个数组或者是类数组
+    //fn.apply([this],[parameter1,parameter2...])
+    function fn(num1,num2){
+            var total = null;
+            total = num1+num2;
+            console.log(total);
+            console.log(this)
+        }
+        fn.apply(1,[10,20]);//把num1 = 10,num2 = 20
+
+    //call和apply第一个参数表达的含义是一样的,从第二个开始,call是一个一个的传给fn的(散列式的),而apply是把这些参数都放在数组里传给fn的(打包式的)
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

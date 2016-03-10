@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+//    var ary = [12,34,45,45]
+//    ary.sort(function(a,b){
+//        return a-b;
+//    })
+//    console.log(ary);
+
+    var ary = [{"name":"刘莹","age":"18px",},
+                {"name":"刘影",age:20,},
+                {"name":"樊东亮",age:21,},
+                {"name":"彦子贤",age:15,}]
+//    ary.sort(function(a,b){
+//        //a表示前一项  b表示后一项
+//        return parseInt(a.age) - parseInt(b.age)
+//    })
+    //localeCompare 每个字符的首字母按照在26个字母表里的排列顺序排列的
+    ary.sort(function(a,b){
+        return a.name.localeCompare(b.name)
+    })
+    console.log(ary);
+
+
+
+
+</script>
+</body>
+</html>

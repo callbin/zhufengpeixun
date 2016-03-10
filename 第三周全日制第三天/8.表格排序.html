@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #oTab {
+            border:1px solid green;
+            -webkit-border-radius:10px ;/*兼容谷歌*/
+            -moz-border-radius: 10px;/*兼容火狐浏览器*/
+            border-radius: 10px;/*标准浏览器支持*/
+         /*  box-shadow: inset 0 0 5px 2px rgba(0,0,0,0.6);边框阴影*/
+           /* /!*第一个参数:x轴方向偏移,第二个参数是y轴方向偏移,第三个表示模糊度,第四个表示阴影的深度 第五个参数就是颜色 inset可写可不写如果写的话可以第一个位置或者最后一个位置,表示内阴影,如果没写默认的设置的是外阴影*/
+            -webkit-box-shadow:   0 0 5px 2px rgba(0,0,0,0.6);
+            -moz-box-shadow:   0 0 5px 2px rgba(0,0,0,0.6);
+            box-shadow:   0 0 5px 2px rgba(0,0,0,0.6);
+            overflow: hidden;
+            
+        }
+        #oTab table{
+            border-collapse: collapse;
+
+        }
+        #oTab table tr td{
+            height: 40px;
+            line-height: 40px;
+            border-bottom:1px dashed yellow;
+            text-align: center;
+        }
+        #oTab table tbody tr:nth-child(even){/*tbody标签下的子元素是偶数行*/
+            background: pink;
+        }
+        #oTab table tbody tr:nth-child(odd){/*tbody标签下的子元素是奇数上*/
+            background: orange;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="oTab">
+    <table width="100%">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>成绩</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>陈旭</td>
+            <td>18</td>
+            <td>74</td>
+        </tr>
+        <tr>
+            <td>张旭</td>
+            <td>25</td>
+            <td>90</td>
+        </tr>
+        <tr>
+            <td>王梦缘</td>
+            <td>19</td>
+            <td>54</td>
+        </tr>
+        <tr>
+            <td>姜章涛</td>
+            <td>28</td>
+            <td>65</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>
+
+<script>
+    function listToArray(likeArray){
+        try{
+            return [].slice.call(likeArray,0);
+        }catch(e){
+            var ary = [];
+            for(var i = 0;i<likeArray.length;i++){
+                ary[ary.length] = likeArray[i];
+            }
+            return ary;
+        }
+    }
+    var oTab = document.getElementById("oTab");
+    var oThead = oTab.getElementsByTagName("thead")[0];
+    var oTbody = oTab.getElementsByTagName("tbody")[0];
+    var rows = oTbody.rows;//获得的是行的集合
+    function tableSort(n){
+        //把元素集合转换成数组
+        var ary  = listToArray(rows);
+        //console.log(ary);
+        ary.sort(function(a,b){
+            //a表示前一行(tr) b表示后一行(tr)
+            //a.cells表示一行里的列的集合
+            var prev = a.cells[n].innerHTML;
+            var next = b.cells[n].innerHTML;
+            if(isNaN(prev)){//判断下是否是有效数字
+                return prev.localeCompare(next);
+            }
+            return prev - next;
+        });
+        //console.log(ary);
+        //把排序完后的tr添加到oTbody中
+        for(var i = 0 ;i<ary.length;i++){
+            oTbody.appendChild(ary[i]);//如果页面上已经存在了,就不会再添加,而是移动
+        }
+    }
+
+    var hRows = oThead.rows[0];//获得tHead标签下的第一行
+    var cells = hRows.cells;
+    for(var i = 0;i<cells.length;i++){
+        cells[i].index = i;
+        cells[i].onclick = function(){
+            tableSort(this.index);//把点击的th的索引传给tableSort
+        }
+    }
+
+
+</script>

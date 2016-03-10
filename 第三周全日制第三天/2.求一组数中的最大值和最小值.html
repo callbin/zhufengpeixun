@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var ary = [10, 23, 4, 45, 6, 73, 2];
+    //    ary.sort(function (a, b) {
+    //        return a - b;
+    //    })
+    //    console.log(ary[0]);
+    //    console.log(ary[ary.length - 1]);
+
+    //通过假设法求出最大值和最小值
+    function fn(ary) {
+        var max = ary[0];
+        var min = ary[0];
+        for (var i = 1; i < ary.length; i++) {
+            var cur = ary[i]
+            max < cur ? max = cur : null;
+            min > cur ? min = cur : null;
+
+        }
+        return [max,min];
+    }
+    //var a = fn(ary);
+    //console.log(a[0],a[1]);
+
+    console.log(Math.min.apply(null,ary));
+    console.log(Math.max.apply(null,ary));
+
+
+</script>
+</body>
+</html>

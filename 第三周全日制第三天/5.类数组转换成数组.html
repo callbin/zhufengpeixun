@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script>
+//    try{
+//       [].slice.call(ele,0)//如果不支持则不会报错而是走到catch语句里
+//    }catch(e){
+//       console.log(e.message); //捕获出错的信息
+//    }finally{
+//       不管支持不支持都走到finally语句这边
+//    }
+//[].slice.call(likeArray,0)IE6-7不兼容
+    function listToArray(likeArray){
+        try{
+            return [].slice.call(likeArray,0);
+        }catch(e){
+            var ary = [];
+            for(var i = 0;i<likeArray.length;i++){
+                ary[ary.length] = likeArray[i];
+            }
+            return ary;
+        }
+    }
+    var oLis = document.getElementsByTagName("li");
+    console.log(listToArray(oLis));
+
+
+</script>
+</body>
+</html>

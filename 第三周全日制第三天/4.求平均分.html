@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+<script>
+    //求平均分:去掉一个最高分,去掉一个最低分,求平均分
+    //sort方法是数组的方法.arguments是一个类似数组的对象,所以不能直接用sort这个方法
+    //1.能通过数字索引获取到每一项
+    //2.有length这个属性
+    //    function avgFn() {
+    //        //arguments
+    //        //1.把arguments转换成数组
+    //        var ary = [];
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            var cur = arguments[i]
+    //            ary[ary.length] = cur;
+    //        }
+    //        //2.排序得到最大值和最小值
+    //        ary.sort(function (a, b) {
+    //            return a - b;
+    //        });
+    //        //3.掐头去尾
+    //        ary.shift();
+    //        ary.length--;
+    //        //4.求平均分
+    //       return (eval(ary.join("+"))/ary.length).toFixed(2)
+    //    }
+    //    var result= avgFn(12, 4, 5, 3, 2, 23, 4, 3)
+    //    console.log(result);
+
+    //模拟Array类的原型上的slice克隆方法
+    //    Array.prototype.slice = function(){
+    //        var ary = [];
+    //        for(var i = 0;i<this.length;i++){
+    //            ary[ary.length] = this[i];
+    //        }
+    ////        for(var i = 0;i<arguments.length;i++){
+    ////            ary[ary.length] = arguments[i]
+    ////        }
+    //        return ary;
+    //    }
+    //    var a = [1,2,3,4,5];
+    //var a = new Array(1,2,3,4,5,6)
+    //slice克隆数组的实现思路和arguments转换成数组的实现思路是一样,因此就可以利用数组的slice把arguments转换成数组
+    //Array.prototype.slice.call(arguments,0)
+
+
+    //    function avgFn(){
+    //        //利用数组的slice方法把arguments(类数组)转换成数组
+    //        var ary  = Array.prototype.slice.call(arguments,0);
+    //        ary.sort(function(a,b){
+    //            return a-b;
+    //        })
+    //        ary.shift();
+    //        ary.length--;
+    //        return (eval(ary.join("+"))/ary.length).toFixed(2)
+    //    }
+    //    console.log(avgFn(3,5,33,4,5,6));
+
+    //直接利用arguments去操作
+
+    function avgFn() {
+        //var a =  Array.prototype.slice.call(arguments,0)
+        // console.log( Array.prototype.pop.call(arguments))
+        Array.prototype.sort.call(arguments, function (a, b) {
+            return a - b
+        })
+        Array.prototype.shift.call(arguments);
+        // Array.prototype.pop.call(arguments);
+        [].pop.call(arguments);
+        return (eval(Array.prototype.join.call(arguments, "+")) / arguments.length).toFixed(1);
+    }
+    console.log(avgFn(3, 5, 33, 41, 5, 6, 6, 0.44));
+
+    //在Number类的原型上扩展下面两个方法
+    //plus(3).minus(5)
+
+    //    Number.prototype.plus = function(n){
+    //        return this+n;
+    //    }
+    //    Number.prototype.minus = function(m){
+    //        return this - m;
+    //    }
+    //  var a = (5).plus(3).minus(5);
+    //    console.log(a);
+
+
+    //通过call/apply方法可以改变this指向,如果是类数组可以通过改变数组方法的this指向,从而来间接的调用的数组的方法
+
+    var oLis = document.getElementsByTagName("li");
+    var a = [].slice.call(oLis, 0)
+    console.log(a);
+
+
+</script>
+</body>
+</html>
