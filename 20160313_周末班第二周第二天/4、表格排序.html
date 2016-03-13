@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训表格排序</title>
+    <link type="text/css" rel="stylesheet" href="css/tab.css"/>
+</head>
+<body>
+<div class="box">
+    <table id="tab" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th class="cursor">年龄</th>
+            <th class="cursor">武力</th>
+            <th class="cursor">性别</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--<tr>
+            <td>令狐冲</td>
+            <td>25</td>
+            <td>99</td>
+            <td>男</td>
+        </tr>
+        <tr class="bg">
+            <td>令狐冲</td>
+            <td>25</td>
+            <td>99</td>
+            <td>男</td>
+        </tr>-->
+        </tbody>
+    </table>
+</div>
+
+<!--引入JS是有顺序限制的:根据JS之间的依赖关系,我们按照顺序依次引入,顺序一但出现问题,就会发生错误 require.js-->
+<script type="text/javascript" charset="utf-8" src="js/utils.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/tab.js"></script>
+</body>
+</html>
