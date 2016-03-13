@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>模板引擎实现原理</title>
+</head>
+<body>
+<script type="text/javascript">
+    var ary = ["冀彦瑞", "18", "china", "javascript"];
+    var str = "my name is {0}，my age is {1}，i com from {2}，i can do {3}~~";
+    //->"my name is 冀彦瑞，my age is 18，i com from china，i can do javascript~~";
+
+    var reg = /\{(\d)\}/g;
+    str = str.replace(reg, function () {
+        //第一次->["{0}", "0", 11, "my name is {0}，my age is {1}，i com from {2}，i can do {3}~~"]  ->return ary[0]
+        //第二次->["{1}", "1", 25, "my name is {0}，my age is {1}，i com from {2}，i can do {3}~~"] ->return ary[1]
+        return ary[arguments[1]];
+    });
+    console.log(str);
+</script>
+</body>
+</html>

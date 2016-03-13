@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->1、我们使用exec进行正则的捕获
+    //->首先判断字符串和正则是否匹配,不匹配的话,捕获到的结果为null
+    //->匹配的话,把和正则匹配的内容都捕获到
+    //    var reg = /\d+/;
+    //    var str = "zhufengpeixun";
+    //    console.log(reg.exec(str));//->null
+
+    //2、正则的捕获是存在懒惰性的:一个字符串中有多个都和正则匹配,但是我们执行一次exec只能捕获到第一个匹配的,再次执行exec还是只能捕获到和第一个匹配的...
+
+    //->reg.lastIndex:上一次正则捕获的结束位置/下一次捕获的起始查找位置
+    //->懒惰性:每一次执行exec后并没有改变它的lastIndex的值，但是即使我们自己通过reg.lastIndex = 11把其修改了,发现最后的结果并没有改变；
+
+    //    str = "zhufeng2015peixun2016";
+    //    console.log(reg.lastIndex);//->0
+    //    console.log(reg.exec(str));//->["2015", index: 7, input:...]
+    //
+    //    console.log(reg.lastIndex);//->0
+    //    console.log(reg.exec(str));//->["2015", index: 7, input:...]
+
+
+    //    str = "zhufeng2015peixun2016";
+    //    console.log(reg.lastIndex);//->0
+    //    console.log(reg.exec(str));//->["2015", index: 7, input:...]
+    //
+    //    reg.lastIndex = 11;//->手动改变为11
+    //
+    //    console.log(reg.lastIndex);//->11
+    //    console.log(reg.exec(str));//->["2015", index: 7, input:...]
+
+    //3、解决正则的懒惰性->给正则增加修饰符g
+    //->正则的修饰符:i(ignoreCase 忽略字母的大小写)、m(multiline 多行匹配)、g(global 全局匹配)
+
+    //    reg = /\d+/g;
+    //    str = "zhufeng2015peixun2016";
+    //    console.log(reg.exec(str));//->["2015", index: 7, input:...]
+    //
+    //    console.log(reg.lastIndex);//->11 只需要加上修饰符g,默认第一次捕获完成后,lastIndex会自己跟着修改
+    //
+    //    console.log(reg.exec(str));//->["2016", index: 17, input:...]
+
+    //->即使我们把正则的懒惰解决了,但是想要把所有匹配的内容都得到,我们还需要执行多次exec才可以,这样的话我们自己编写一个while循环,不管有多少匹配的,最后都得到
+    //    reg = /\d+/g;
+    //    str = "zhufeng2015peixun2016yangfan2017";
+    //    var ary = [];
+    //    var res = reg.exec(str);
+    //    while (res) {
+    //        ary.push(res[0]);
+    //        res = reg.exec(str);
+    //    }
+    //    console.log(ary);
+
+    //->在字符串中提供了一个叫做match的方法,可以执行一次就把所有匹配的内容捕获到
+    //    reg = /\d+/g;
+    //    str = "zhufeng2015peixun2016yangfan2017";
+    //    console.log(str.match(reg));//->["2015", "2016", "2017"]
+
+
+    //4、正则的贪婪性:每一次捕获的时候,是按照匹配的最长结果进行捕获的
+    //    reg = /\d+/g;
+    //    str = "zhufeng2015";
+    //    console.log(reg.exec(str));//->["2015"...]
+    //
+    //    //->解决办法:在量词元字符后面,添加一个?即可
+    //    reg = /\d+?/g;
+    //    str = "zhufeng2015";
+    //    console.log(reg.exec(str));//->["2"...]
+
+
+    //5、match的局限性:在分组捕获中,我们的match不能捕获到小分组匹配的内容
+    //    var reg = /\[\d+\]/g;
+    //    var str = "珠峰培训[2015]杨帆起航[2016]";
+    //    console.log(str.match(reg));//->["[2015]", "[2016]"]
+
+    //    var reg = /\[(\d+)\]/g;
+    //    var str = "珠峰培训[2015]杨帆起航[2016]";
+    //
+    //    console.log(reg.exec(str));//->["[2015]", "2015"...]
+    //    console.log(reg.exec(str));//->["[2016]", "2016"...] ->虽然执行的次数多一点,但是不见能把大正则匹配的捕获到,而且每一个小分组匹配的也能捕获到
+    //
+    //    console.log(str.match(reg));//->["[2015]", "[2016]"] ->只能捕获到大正则匹配的,小分组匹配的捕获不到
+
+</script>
+</body>
+</html>

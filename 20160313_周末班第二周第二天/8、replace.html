@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->1、replace:字符串中字符替换的方法
+    //    var str = "zhufeng2015zhufeng2016";
+
+    //->在不使用正则的情况下,执行一次replace只能替换一个
+    //    str = str.replace("zhufeng", "珠峰");
+    //    console.log(str);
+    //
+    //    str = str.replace("zhufeng", "珠峰");
+    //    console.log(str);
+
+    //->zhufeng替换为zhufengpeixun
+    //    str = str.replace("zhufeng", "zhufengpeixun");
+    //    //->"zhufengpeixun2015zhufeng2016"
+    //
+    //    str = str.replace("zhufeng", "zhufengpeixun");
+    //    //->zhufengpeixunpeixun2015zhufeng2016 ->此时在不使用正则的情况下,第二次还是从最开始的位置进行查找替换的
+
+    //    str = str.replace(/zhufeng/g, "zhufengpeixun");
+    //    console.log(str);//->"zhufengpeixun2015zhufengpeixun2016"
+
+
+    //->2、replace的原理
+
+    //->思路：首先需要使用replace方法，把字符串中的每一个数字字符都获取到
+    //"1" ->ary[1]
+    //"2" ->ary[2]
+    //"8" ->ary[8]
+    //"0" ->ary[0] ->我们获取到的数字字符是N 我们就替换为ary[N]
+
+    var str = "128003";//->"壹贰捌零零"
+    var ary = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+    var reg = /\d+?/g;
+    str = str.replace(reg, function () {
+        //第一次执行：arguments[0] ->"1" 本次捕获的内容  return ary[1]
+        //第二次执行:arguments[0] ->"2" 本次捕获的内容 return ary[2]
+        return ary[arguments[0]];
+    });
+    console.log(str);//->"壹贰捌零零叁"
+
+    //->字符串.replace(正则,匿名函数)
+    //1)匿名函数执行的次数取决于:正则和字符串进行匹配,有多少项进行匹配的,匹配到几项匿名函数就执行几次,当前案例中,匹配六次,所以匿名函数会执行六次
+
+    //2)不仅仅执行了匿名函数,而且还给匿名函数传递了参数值:每一次捕获到的结果(和每一次执行exec得到的结果一模一样)
+    //["1"(大正则捕获的内容), 0(捕获的起始索引 index), "128003"(捕获的原始字符串 input)] 第一次
+    //["2", 1, "128003"] 第二次
+    //...
+
+    //3)在匿名函数中return后面写啥,都相当于把当前正则匹配的内容替换成啥
+
+</script>
+</body>
+</html>
