@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            font-family: "Microsoft yahei";
+        }
+        .box{
+            width: 200px;
+            height: 200px;
+            border:1px solid palegreen;
+        }
+        .box ul{
+            overflow: hidden;
+            list-style: none;
+        }
+        .box ul li{
+            padding: 5px;
+            margin: 5px;
+            float: left;
+        }
+        .box1 ul li:first-child{
+            background: palegreen;
+            font-weight: bold;
+        }
+        .box1 ul li:last-child{
+            background: palegreen;
+            font-weight: bold;
+        }
+        .box1 ul li:nth-last-child(3){
+            background: purple;
+        }
+
+        /*.box1 ul :nth-child(n)//n是从1开始的
+          .box1 ul :nth-child(2n+1)
+            .box ul :nth-child(2n)
+            n是从0开始
+        */
+        .box1 ul :nth-child(3){/*没有限定范围*/
+            background: orange;
+            font-weight: bold;
+        }
+        .box1 ul li:nth-of-type(3){/*限定范围了*/
+            background: pink;
+        }
+        /*.box2 ul li:nth-child(2n){/!*偶数 n是从0开始后*!/
+            background: orange;
+        }
+        .box2 ul li:nth-child(2n+1){/!*奇数 n是从0开始后*!/
+            background: palegreen;
+        }*/
+        .box2 ul li:nth-child(even){/*偶数 n是从0开始后*/
+            background: orange;
+        }
+        .box2 ul li:nth-child(odd){/*奇数 n是从0开始后*/
+            background: palegreen;
+        }
+        .box3 :only-child{
+            background: blue;
+        }
+        .box4{
+            width: 100px;
+            height: 100px;
+        }
+        .box4 :only-child{
+            background: blue;
+        }
+        .box4 :empty{
+            background: orange;
+        }
+       /* div[class|="wel"]{
+            width: 100px;
+            height: 100px;
+            background: purple;
+        }*/
+       /* div[class~="wel"]{
+            width: 100px;
+            height: 100px;
+            background: pink;
+            margin-bottom: 10px;
+        }
+*/
+       /* div[class*="wel"]{
+            width: 100px;
+            height: 100px;
+            background: pink;
+            margin-bottom: 10px;
+        }*/
+
+        div[class$="wel"]{
+            width: 100px;
+            height: 100px;
+            background: pink;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box box1">
+    <h3>指定某一个变色</h3>
+    <!--ul>li{$}*21-->
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <!--<p>3434</p>-->
+        <!--<p>222</p>-->
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>20</li>
+        <li>21</li>
+    </ul>
+
+</div>
+
+<div class="box box2">
+    <!--ul>li{$}*21-->
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <!--<p>3434</p>-->
+        <!--<p>222</p>-->
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>20</li>
+        <li>21</li>
+    </ul>
+
+</div>
+
+<div class="box box3">
+    <p>111</p>
+    <p>2222</p>
+</div>
+<div class="box box4 ">
+
+</div>
+<!--<div class="wel"></div>-->
+<div class="wel aa"></div>
+<div class="welcomewel"></div>
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            margin: 30px auto;
+            width: 100px;
+            height: 100px;
+            border: 1px solid orange;
+        }
+        .menu1 {
+
+            /*box-shadow: 5px 3px 5px 2px rgba(0,0,0,0.5) ;*/
+            /*box-shadow: 5px 3px 5px 2px rgba(249,213,12,0.5) inset;*/
+            /*box-shadow:  5px 0 5px -3px rgba(249,213,12,0.5)  ;*/
+            /*box-shadow:  0 0 0 10px rgba(249,213,12,0.5)  ;*/
+            box-shadow:
+            1px 2px 2px 2px rgba(249,213,12,0.5),
+            2px 2px 5px 2px rgba(196,249,12,0.5),
+            3px 3px 5px 2px rgba(134,213,12,0.5) ,
+            4px 4px 5px 2px rgba(67,38,12,0.5) ;
+
+
+            /*默认是外阴影:
+            第一个参数:x轴的偏移  正值(右) 负值(左)
+            第二个参数:y轴的偏移  正值(下) 负值(上)
+            第三个参数:模糊半径(模糊度)
+            第四个参数:扩展半径(深度)
+            如果是内阴影(inset),刚好相反
+            第四个参数如果是正的值,阴影会扩展,如果是负值,阴影会收缩
+            */
+
+        }
+        .menu4{
+            width: 300px;
+            font-size: 30px;
+            color: #0483a0;
+            text-shadow: 2px 2px 5px rgba(255,23,12,0.5),
+            5px 3px 2px  rgba(249,213,12,0.5),
+            7px 4px 5px  rgba(196,249,12,0.5),
+            8px 6px 5px  rgba(134,213,12,0.5) ,
+            9px 7px 5px  rgba(67,38,12,0.5) ;;
+        }
+
+    </style>
+</head>
+<body>
+<div class="menu1"></div>
+<div class="menu2"></div>
+<div class="menu3"></div>
+<div class="menu4">珠峰培训</div>
+</body>
+</html>

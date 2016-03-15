@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        p ~ span {
+            background: red;
+        }
+        button{
+            width: 100px;
+            height: 40px;
+            background: palegreen;
+            border: 0;
+        }
+        button:active{
+            background: red;
+        }
+        /*button:focus{*/
+            /*background: red;*/
+            /*outline: none;*/
+        /*}*/
+    input:focus{
+        border:2px solid green;
+    }
+
+
+    </style>
+</head>
+<body>
+<div class="div1">
+    <span>3333</span>
+    <p>
+        <span>1111</span>
+    </p>
+    <span>22222</span>
+    <span>44444</span>
+    <div></div>
+    <span>5555</span>
+
+</div>
+<button>确认</button>
+<input type="text" value="1111"/><br/>
+兴趣爱好:<input type="checkbox" checked/> 睡觉 <br/> <input type="checkbox" disabled/> 打豆豆
+
+<div><a href="a.jpg"></a></div>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+     div{
+           height: 300px;
+        }
+      .center{
+          width: 1000px;
+          float: left;
+      }
+      .left{
+          width: 800px;
+          background: red;
+          float: left;
+          padding: 10px;
+          border:2px solid palegreen;
+          box-sizing: border-box;/*内容的宽度+padding+border*/
+          /*-webkit-box-sizing: border-box;*/
+          /*box-sizing: content-box;/*内容的宽度(box-sizing默认的值)*/
+          /*box-sizing: padding-box;/!*只是火狐浏览器兼容 内容的宽度+padding的值*!/*/
+
+      }
+      .right{
+          width: 200px;
+          background: green;
+          float: left;
+      }
+        /*
+        标准浏览器中:盒子所占据的空间大小 = width+padding+border+margin
+        怪异的模式(不写文档申明,在ie6-7会变成怪异模式)  width包含了(padding和border和内容的宽度)
+        */
+
+    </style>
+</head>
+<body>
+    <div class="center">
+        <div class="left"></div>
+        <div class="right"></div>
+
+    </div>
+</body>
+</html>

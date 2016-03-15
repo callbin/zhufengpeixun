@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>transition</title>
+    <style type="text/css">
+        div{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        div:hover{
+            width: 300px;
+            transition: width 1s linear ;
+            -webkit-transition: width 1s linear 1s;
+            /*
+            第一个参数 :transition-property:设置的css属性,不写的话默认是all
+            第二个参数:transition-duration 动画执行的时间
+            第三个参数:transition-timing-function:linear/ease-in/ease-out/ease-in-out 动画的类型
+            第四个参数: transition-delay:动画延迟的时间
+            */
+        }
+    </style>
+</head>
+<body>
+<!--
+    transition过渡的动画,只能设置起始值和结束的值
+    控制css属性值在一定时间内,有一个css属性值向另一个css属性值变化
+-->
+<div></div>
+</body>
+</html>

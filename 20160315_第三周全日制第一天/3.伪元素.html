@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        /*伪元素*/
+        /*::first-letter 首字符*/
+       /* p::first-letter{
+            font-size: 2em;
+            padding: 5px;
+            margin-top: 10px;
+        }*/
+        /*p::first-line{ /!*首行*!/
+            background: red;
+        }*/
+        /*::before  ::after  得利用content特性,能够将写在Css中的内容在页面显示出来 */
+        p{
+            background-color: orange;
+        }
+        p::before{
+            content:"" ;
+            background: url("a.png") no-repeat 0 -50px;
+            display: block;
+            width: 20px;
+            height: 20px;
+        }
+        p::after{
+            content: "222";
+            background-color: blue;
+        }
+    </style>
+
+</head>
+<body>
+<p id="p1">中ellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+</body>
+</html>
+<script>
+    var p1 = document.getElementById("p1");
+    console.log(window.getComputedStyle(p1,":before")["background-color"])
+
+</script>
