@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul>
+<li class="select">一</li>
+<li class="abc a-b-c a_b_c">二</li>
+<li class="a b c ">三</li>
+<li class="select a b c ">一</li>
+<li>二</li>
+<li>三</li>
+<li class="a b c d select">一</li>
+<li class="a b c d">二</li>
+<li>三</li>
+<li class="select          a-b-c">一</li>
+<li class="a b select c d e">二</li>
+<li>三</li>
+<li class="select a b c d">一</li>
+<li>二</li>
+<li>三</li>
+<li class="select">一</li>
+<li  class="a b c d">二</li>
+<li>三</li>
+<li class="aselectb a-select-b">三</li>
+</ul>
+</body>
+</html>
+<script>
+//找到所有的类名叫select的元素
+var selects=document.querySelectorAll(".select");
+var selects=document.getElementsByClassName("select");
+"select a b c d"
+alert(selects.length);
+
+//第一步：获得所有的元素
+var eles=document.getElementsByTagName("*");
+//第二步：以每个元素的className属性做为过滤的依据
+var a=[];
+var reg=/\bselect\b/;//写一个可以验证元素className属性的正则
+var reg=/(^| )select( |$)/
+for(var i=0;i<eles.length;i++){
+	var ele=eles[i];
+		if(reg.test(ele.className)){//就是类名里包括select这个独立的单词
+			a.push(ele)
+		}
+}
+alert(a.length);
+
+//把上面总结的逻辑归纳成一个方法
+function byClass(className){
+	var reg=new RegExp("(?:^| )"+className+"(?: |$)");
+	var eles=document.getElementsByTagName("*");
+	var a=[];
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(reg.test(ele.className)){
+			a.push(ele);			
+		}
+	}
+	return a;
+	
+}
+
+//以下是测试代码
+var a=byClass("a");
+for(var i=0;i<a.length;i++){
+	a[i].style.backgroundColor="red";	
+}
+
+</script>

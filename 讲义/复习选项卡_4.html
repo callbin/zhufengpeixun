@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+*{
+	margin:0;
+	padding:0;
+	}
+
+.box{
+	width:400px;
+    border:1px solid red;
+	
+}
+.box ul{
+    list-style:none;
+}
+.box ul li{
+	float:left;
+	 width:40px;
+	 background:green;
+	 color:white;
+}
+.box ul li.select{
+	background:red;
+}
+	
+.box div{
+	width:400px;
+	height:100px;
+	display:none;
+}
+.box div.select{
+	display:block}
+	
+
+
+</style>
+</head>
+
+<body>
+<div class="box">
+	<ul><li class="select">一</li><li>二</li><li>三</li></ul>
+    
+    	<div class="select">内容一</div>
+        <div>内容二</div>
+        <div>内容三</div>
+
+</div>
+<script type="text/javascript">
+var oBox=document.getElementsByClassName("box").item(0);
+var oLis=document.getElementsByTagName("li");
+var oDivs=oBox.getElementsByTagName("div");
+
+for(var i=0;i<oLis.length;i++){
+	oLis[i].onclick = changeTab;
+	
+}
+function changeTab(){
+	this;
+	var n=getIndex(this,n);
+	var oLis=this.parentNode.children;
+	//可以完善一个可以获得指定标签名的子元素的方法
+	
+	var oDivs=nextSiblings(this.parentNode);//获得当前被点击的元素父节点下边的所有元素（div）
+	
+	for(var i=0;i<oLis.length;i++){
+		oLis[i].className="";	
+		oDivs[i].className="";
+	}
+	
+	this.className="select";
+	oDivs[n].className="select";
+		
+	}
+	
+	//获得ele元素的所有的元素弟弟节点
+	function nextSiblings(ele){
+		var a=[];
+		var n=ele.nextSibling;
+		for(;n;){
+			if(n.nodeType===1){
+				a.push(n)	
+			}
+			n=n.nextSibling;
+		}
+		return a;
+		
+	}
+function getIndex(elem){
+	
+	/*var index=0;//假定elem的索引是0
+	//接下来数它有多少个元素哥哥节点
+	var p=elem.previousSibling;
+	
+	while(p){
+		if(p.nodeType===1){
+			index++;//则让index累加
+		}
+		p=p.previousSibling;
+	}
+	return index;*/
+	//把上边的while循环改成for循环
+	
+	for(var index=0,p=elem.previousSibling;p;p=p.previousSibling)
+	{
+		if(p.nodeType===1){
+			index++;//则让index累加
+		}
+		
+	}
+	return index;
+}
+
+</script>
+</body>
+</html>
+
+
