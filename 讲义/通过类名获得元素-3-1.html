@@ -51,27 +51,27 @@ for(var i=0;i<eles.length;i++){
 alert(a.length);
 
 //把上面总结的逻辑归纳成一个方法
-function byClass(className){
-	var reg=new RegExp("(?:^| )"+className+"(?: |$)");
-	//reg=/(?:^| )className(?: |$)/;//这是错的
-	var eles=document.getElementsByTagName("*");
+function byClass(className,eles){
+	var reg=new RegExp("(?:^| )"+className+"(?: |$)")
 	var a=[];
 	for(var i=0;i<eles.length;i++){
 		var ele=eles[i];
 		if(reg.test(ele.className)){
-			a.push(ele);			
+			a.push(ele);
 		}
 	}
-	return a;
-	
+	return a;	
 }
 
 //以下是测试代码
-var a=byClass("a");
-for(var i=0;i<a.length;i++){
-	a[i].style.backgroundColor="red";	
-}
+var a1=document.getElementsByTagName("*");
+a2=byClass("a",a1);
 
-// 找出类名是a,b,select
-a
+// 找出类名是a,b,select,c
+a3=byClass("b",a2);
+a4=byClass("select",a3);
+
+for(var i=0;i<a4.length;i++){
+	a4[i].style.backgroundColor="red";	
+}
 </script>

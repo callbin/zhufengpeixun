@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div class="a b c"></div>
+</body>
+</html>
+<script>
+var oDiv=document.getElementsByTagName("div").item(0);
+oDiv.className="d";
+var className="d";
+oDiv.className+=" "+className;
+function addClass(ele,str){//添加类名
+	var reg=new RegExp("(^| )"+str+"( |$)");
+	//下面这个判断只是为了更严谨，不做这个判断也可以
+	if(!reg.test(ele.className)){
+		//reg.test(ele.className)
+		
+		ele.className+=" "+str;//注意前边有一个空格
+	}
+}
+
+function removeClass(ele,str){//移除类名的方法
+	var reg=new RegExp("(^| )"+str+"( |$)","g");
+	
+	ele.className=ele.className.replace(reg,"");
+	//以上写法会有bug，请测出此bug并修正
+	
+}
+addClass(oDiv,"f");
+</script>

@@ -51,15 +51,15 @@ for(var i=0;i<eles.length;i++){
 alert(a.length);
 
 //把上面总结的逻辑归纳成一个方法
-function byClass(className){
+function byClass(className,eles){
 	var reg=new RegExp("(?:^| )"+className+"(?: |$)");
 	//reg=/(?:^| )className(?: |$)/;//这是错的
-	var eles=document.getElementsByTagName("*");
+	//var eles=document.getElementsByTagName("*");
 	var a=[];
 	for(var i=0;i<eles.length;i++){
 		var ele=eles[i];
 		if(reg.test(ele.className)){
-			a.push(ele);			
+			a.push(ele);	
 		}
 	}
 	return a;
@@ -67,11 +67,17 @@ function byClass(className){
 }
 
 //以下是测试代码
-var a=byClass("a");
+var a=document.getElementsByTagName("*");
+a=byClass("a",a);//这里面虽然有两个变量a，但等号后边的a是被筛选的集合，先把这个a传给byClass方法去做筛选（也就是说等号右边先执行），然后把筛选的结果再赋给左边的a（这样a就被更新了）
+//这里用的变量虽然都是a这个同名变量，但它一直在被更新
+
+
+// 找出类名是a,b,select
+document.getElementsByClassName("  a b   select   ");
+a=byClass("b",a);
+a=byClass("select",a);
+
 for(var i=0;i<a.length;i++){
 	a[i].style.backgroundColor="red";	
 }
-
-// 找出类名是a,b,select
-a
 </script>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul>
+<li class="select">一</li>
+<li class="abc a-b-c a_b_c">二</li>
+<li class="a b c ">三</li>
+<li class="select a b c ">一</li>
+<li>二</li>
+<li>三</li>
+<li class="a b c d select">一</li>
+<li class="a b c d">二</li>
+<li>三</li>
+<li class="select          a-b-c">一</li>
+<li class="a b select c d e">二</li>
+<li>三</li>
+<li class="select a b c d">一</li>
+<li>二</li>
+<li>三</li>
+<li class="select">一</li>
+<li  class="a b c d">二</li>
+<li>三</li>
+<li class="aselectb a-select-b">三</li>
+</ul>
+</body>
+</html>
+<script>
+
+var eles=document.getElementsByTagName("*");
+
+function byClass(className,eles){
+	var reg=new RegExp("(^| )"+className+"( |$)");
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(reg.test(ele.className)){
+			a.push(ele);	
+		}
+	}
+	return a;
+	
+}
+//"   a    b  select  d   ";
+function getElesByClass(str){
+	var regTrim=/^ +| +$/g;
+	str=str.replace(regTrim,"");
+	var aClassName=str.split(/ +/);
+	var eles=document.getElementsByTagName("*");
+	for(var i=0;i<aClassName.length;i++){
+		eles=byClass(aClassName[i],eles);
+	}
+	return eles;
+}
+
+for(var i=0;i<eles.length;i++){
+	eles[i].style.backgroundColor="red";	
+}
+</script>

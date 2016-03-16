@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul>
+<li class="select">一</li>
+<li class="abc a-b-c a_b_c">二</li>
+<li class="a b c ">三</li>
+<li class="select a b c ">一</li>
+<li>二</li>
+<li>三</li>
+<li class="a b c d select">一</li>
+<li class="a b c d">二</li>
+<li>三</li>
+<li class="select          a-b-c">一</li>
+<li class="a b select c d e">二</li>
+<li>三</li>
+<li class="select a b c d">一</li>
+<li>二</li>
+<li>三</li>
+<li class="select">一</li>
+<li  class="a b c d">二</li>
+<li>三</li>
+<li class="aselectb a-select-b">三</li>
+</ul>
+</body>
+</html>
+<script>
+//做为小测试题
+var eles=document.getElementsByTagName("*");
+function getElesByClass(str){
+	str=str.replace(/^ +| +$/g,"");
+	var aClassName=str.split(/ +/);
+	var eles=document.getElementsByTagName("*");
+	for(var i=0;i<aClassName.length;i++){
+		//eles=byClass(aClassName,eles);
+		var a=[];//准备放筛选结果的
+		var reg=new RegExp("(^| )"+aClassName[i]+"( |$)");
+		for(var j=0;j<eles.length;j++){
+			if(reg.test(eles[i].className)){
+				a.push(eles[i]);	
+			}
+				
+		}
+		eles=a;//相当于byClass方法中的return a这一步	
+	}
+	return eles;
+	
+}
+
+for(var i=0;i<eles.length;i++){
+	eles[i].style.backgroundColor="red";	
+}
+</script>

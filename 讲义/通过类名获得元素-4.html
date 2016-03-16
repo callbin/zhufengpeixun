@@ -51,15 +51,15 @@ for(var i=0;i<eles.length;i++){
 alert(a.length);
 
 //把上面总结的逻辑归纳成一个方法
-function byClass(className){
-	var reg=new RegExp("(?:^| )"+className+"(?: |$)");
+function byClass(className,eles){
+	var reg=new RegExp("(^| )"+className+"( |$)");
 	//reg=/(?:^| )className(?: |$)/;//这是错的
-	var eles=document.getElementsByTagName("*");
+	//var eles=document.getElementsByTagName("*");
 	var a=[];
 	for(var i=0;i<eles.length;i++){
 		var ele=eles[i];
 		if(reg.test(ele.className)){
-			a.push(ele);			
+			a.push(ele);	
 		}
 	}
 	return a;
@@ -67,11 +67,23 @@ function byClass(className){
 }
 
 //以下是测试代码
-var a=byClass("a");
-for(var i=0;i<a.length;i++){
-	a[i].style.backgroundColor="red";	
+var a=document.getElementsByTagName("*");
+
+var str="  a b   select   ";//指定的字符串
+//把str这个字符串分成三个字符串（三个类名）;
+var regTrim=/^ +| +$/g;//匹配首或尾包含一到多个空格的字符串
+//最常用的正则：非空验证和整理字符串中的空格
+str=str.replace(regTrim,"");
+
+var aClassName=str.split(/ +/);
+console.log(aClassName);
+
+var eles=document.getElementsByTagName("*");//筛选的总范围
+for(var i=0;i<aClassName.length;i++){
+	eles=byClass(aClassName[i],eles);
 }
 
-// 找出类名是a,b,select
-a
+for(var i=0;i<eles.length;i++){
+	eles[i].style.backgroundColor="red";	
+}
 </script>
