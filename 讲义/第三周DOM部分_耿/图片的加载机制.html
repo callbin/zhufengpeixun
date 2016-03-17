@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+</body>
+</html>
+<script>
+//alert(document.getElementsByTagName("img").item(0).offsetHeight);
+/*document.getElementsByTagName("img").item(0).onload=function(){
+	//如果图片资源已经成功加载了，则触发此方法
+	alert(this.offsetHeight);
+	
+}*/
+var oImg=document.createElement("img");
+var oImg=new Image;
+
+oImg.src="http://g.hiphotos.baidu.com/image/pic/item/0e2442a7d933c895d7ea4f72d31373f082020026.jpg";
+oImg.onload=function(){
+	
+}
+//欺骗图片的加载
+
+var oImg=document.createElement("img");
+var oImg=new Image;
+oImg.height="200";
+oImg.width=200;
+
+oImg.src="http://g.hiphotos.baidu.com/image/pic/item/0e2442a7d933c895d7ea4f72d31373f082020026.jpg?"+Math.random();
+document.body.appendChild(oImg);
+
+</script>

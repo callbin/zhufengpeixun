@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<div id="outer_outer" style="height:500px; position:relative; background:lightBlue; ">outer_outer<br>
+<br><br>
+
+    <div id="outer" style=" position:relative; background:pink; border:150px blue solid;">outer<br>
+<br><br>
+
+        <div id="div1" style="background:red;">div1<br><br><br><br>
+
+            <div id="inner" style="width:50px; height:50px; background:black; float:right;">inner</div>
+        </div>
+    
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+//以下说的浏览器不准确，应该叫网页（文档本身）
+
+inner.offsetTop;
+outer.offsetTop==inner.offsetParent.offsetTop;
+outer_outer.offsetTop==outer.offsetParent.offsetTop==inner.offsetParent.offsetParent.offsetTop;
+document.body.offsetTop;
+document.body.offsetParent;//是null
+
+var l=inner.offsetLeft;//l用来保存左偏移
+var t=inner.offsetTop;//t用来保存上偏移
+
+var p=inner.offsetParent;//p用来不断更新保存offsetParent
+while(p){
+	l+=p.offsetLeft+p.clientLeft;//p.clientLeft是左边框的宽，这是固定用法
+	t+=p.offsetTop+p.clientTop;//p.clientTop是上边框的宽度
+	p=p.offsetParent;
+	
+}
+//alert(l);alert(t);
+
+document.documentElement.clientHeight;//这是获得浏览器的高，是固定用法。
+
+//封装一个通用获得某元素距离文档左和上边的偏移量的方法
+
+function offset(ele){
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+	while(p){//判断ele是否有offsetParent(偏移参照物)
+		l+=p.offsetLeft+p.clientLeft;
+		t+=p.offsetTop+p.clientTop;
+		p=p.offsetParent;
+	}
+	
+	return {l:l,t:t};//最粗暴的写法，把变量l（后边的l是变量）赋给前边的对象的l这个属性
+	return {left:l,top:t};//稍温柔一点的写法
+	var obj={};//最温柔的写法
+	obj.left=l;obj.top=t;
+	return obj
+	
+}
+
+
+offset(inner).t;//inner距离上边的偏移
+
+
+
+</script>

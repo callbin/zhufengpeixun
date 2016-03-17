@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+img{ display:block; margin:10px; border:none; width:300px; height:300px;}
+</style>
+</head>
+
+<body>
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img realSrc="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif">
+<img realSrc="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif">
+<img realSrc="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif">
+<img realSrc="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+<img realSrc="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif">
+<img src="default.gif">
+</body>
+</html>
+
+<script>
+function offset(ele){
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+	while(p){//判断ele是否有offsetParent(偏移参照物)
+		l+=p.offsetLeft+p.clientLeft;
+		t+=p.offsetTop+p.clientTop;
+		p=p.offsetParent;
+	}
+	return {l:l,t:t};	
+}
+
+var oImgs=document.images;//DHTML 五百年前（老年间的）表达网页结构的属性（方式）
+var oImgs=document.getElementsByTagName("img");
+//document.all["content"]
+for(var i=0;i<oImgs.length;i++){
+	var oImg=oImgs[i];
+	oImg.t=offset(oImg).t;	
+}
+
+window.onscroll=function(){
+	var h=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);
+	if(h>oImgs[0].t+oImgs[0].offsetHeight){
+		//1、不直接让img标签加载真实图片,而是让其显示一张表示加载中的图片，以增强用户体验
+		oImgs[0].src="o_loading.gif";
+		
+		//2、然后创建一个图片对象，让其悄悄下载真实图片
+		var imgTemp=new Image;
+		//var imgTemp=document.createElement("img");
+		
+		
+		imgTemp.src=oImgs[0].getAttribute("realSrc")+"?"+Math.random();
+		//3、等远程服务器上的图片已经下载到本地缓存，则再把图片地址赋给img标签让其显示
+		console.log(imgTemp.src);//加调试用的代码
+		imgTemp.onload=function(){
+			oImgs[0].src=this.src;
+			console.log(this.src);//加调试用的代码
+			
+		}
+		imgTemp.onerror=function(){//看看是不是失败了
+			console.log("竟然失败了！！");	
+		}
+		
+		//oImgs[0].src=oImgs[0].getAttribute("realSrc")+"?"+Math.random();
+		//自定义在HTML的属性，用JS代码直接获取不到，必须用DOM的标准方法getAttribute。如果这个属性是W3C法定的属性，才可以直接打点的方式来操作，比如ele.id,ele.className,ele.tagName等
+		//如果是用JS定义的自定义属性，也可以直接打点的方式来操作，比如ele.realSrc="abc",alert(ele.realSrc);
+		
+	}
+	
+}
+</script>

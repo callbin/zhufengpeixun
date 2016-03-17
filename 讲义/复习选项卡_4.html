@@ -58,6 +58,8 @@ for(var i=0;i<oLis.length;i++){
 	oLis[i].onclick = changeTab;
 	
 }
+
+//方法耦合度的问题：写这样的一个changeTab方法，这个方法应该和外部的任何元素或变量不产生直接的联系，也就是说这方法应该是一个完全独立的功能模块
 function changeTab(){
 	this;
 	var n=getIndex(this,n);

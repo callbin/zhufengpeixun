@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:500px; height:150px; margin:35px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="outer">
+    <div id="div1">div1
+        <div id="inner" style="width:50px; height:50px; background:black; float:right;">inner</div>
+    </div>
+
+</div>
+<div id="div2" style="float:right; border:15px blue solid; margin-left:50px;">div2
+	<div id="div2_inner" style="float:right; background:pink; width:50px; height:60px; ">div2_inner</div>
+</div>
+
+
+<div id="div3" style="position:relative; clear:both;">div3
+	<div id="div3_inner" style="width:50px; height:50px; background:black; float:right; color:white;">div3_inner</div>
+</div>
+</body>
+</html>
+<script>
+//偏移量默认是距离浏览器左或上边的距离
+
+//偏移量的知识点要注意三个点：参照物，默认是相于浏览器产生的
+//偏移量和DOM层级关系没有必然联系
+//2、什么时候会改变参照物
+//3、什么情况下会产生偏移，标准流，浮动，设置了margin会有，定位也有，
+//偏移量是包括margin的，但不是包括border
+div1.offsetLeft;
+div2.offsetLeft;
+
+div1.offsetTop;
+div2.offsetTop;
+
+//表示偏移量参数物的属性：offsetParent(这个属性和parentNode没有必然关系)，标准流默认情况下，所有的元素的offsetParent都是body,body代指浏览器
+
+//什么情况下偏移参照物会变化:如果祖先元素设置了定位（relative,absolute,fixed）,
+//z-index,layout
+
+</script>

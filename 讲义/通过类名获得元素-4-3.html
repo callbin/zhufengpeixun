@@ -39,10 +39,16 @@ function getElesByClass(str){
 	for(var i=0;i<aClassName.length;i++){
 		//eles=byClass(aClassName,eles);
 		var a=[];//准备放筛选结果的
-		var reg=new RegExp("(^| )"+aClassName[i]+"( |$)");
+		var reg=new RegExp("(^| )"+aClassName[i]+"( |$)","g");//lastIndex的修改
+		
+		/(^| )b( |$)/g;//只要是加了g，就要考虑lastIndex的感受
+		li1 "b a c"
+		li2 "b c a"
+		
+		reg=/pattern/g
 		for(var j=0;j<eles.length;j++){
-			if(reg.test(eles[i].className)){
-				a.push(eles[i]);	
+			if(reg.test(eles[j].className)){
+				a.push(eles[j]);	
 			}
 				
 		}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//模式符g在正则方法里的怪异问题
+var reg=/(^| |)b( |$)/g;
+/*var str1="b a c";
+var str2="b c a";
+reg.test(str1);//true;
+
+reg.test(str2);//false
+reg.test(str2);//true;
+//以上为什么同一正则对同一个字符串做匹配会出现两种结果 
+
+//做捕获的时候，正则加g,exec方法不会自动的做全文查找
+
+var str3="b a b c b x b y b p";
+reg.lastIndex=0;//为什么要手动归零
+reg.exec(str3);//str3中会出现5个b，但exec每运行一次，只会捕获一个b
+var aResult=[];
+var result=null
+
+//exec的返回值就是数组，这个数组长度由这个正则的分组的个数决定
+while(result=reg.exec(str3)){//这里是一个等号
+	aResult.push(result);//result是数组
+	
+	//如果正则不加g，则这是个死循环。为什么呢？
+}
+alert(aResult)//这是最终的结果(少一个)；aResult是个二维数组
+console.log(aResult)
+
+//reg.lastIndex属性是可读写属性，不加g，永远为0。加了g则lastIndex的值会随匹配位置的变化而变化，并且可以手动修改
+
+//在用同一个正则匹配不同的字符串时，尽量不要加g，一定要注意lastIndex的变化
+
+
+
+//字符串方法中的match则会自动去捕获匹配到的项目
+str3.match(reg);//它返回的值是什么？
+//str3.match和reg.exec方法有什么区别？
+
+
+*/
+
+//原来removeClass方法里的正则有错误，以下这个比较严谨
+var reg=/(?:^| )(b(?: |$))\1*/g;
+//reg=/((^| )b)\1*( |$)/
+str5="b b  b b ab  b c b b";//结尾的b,53行正则去不掉
+alert(str5.replace(reg,""));
+
+
+var reg=/(^| )b( |$)/g;
+var str6="b b c";
+alert(str6.replace(reg,""));
+
+</script>

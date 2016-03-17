@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ height:300px; background:#3CF; font-size:36px; font-weight:bold; text-align:center; line-height:300px;}
+
+</style>
+</head>
+
+<body style="height:3000px;">
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div id="content">
+这是原来的文字
+
+
+</div>
+</body>
+</html>
+<script>
+//当滚动条变化的时候，计算content是否进入了浏览器的可视窗口
+window.onscroll;//这是浏览器的滚动条发生变化时的事件
+//如何判断content进入了浏览器可视窗口
+//文档向上翻出去的那一部分的高+浏览器本身的高>content的offsetTop(或者说：content距离文档顶部的绝对偏移量)
+
+//滚动条的位置（元素向上翻出去的距离）scrollTop
+document.documentElement.scrollTop||document.body.scrollTop;
+
+//浏览器高或宽的公式
+document.documentElement.clientHeight||document.body.clientHeight
+
+content.t=offset(content).t;//计算出content这个元素距离文档顶部的偏移量，并且把这个量保存在content的自定义属性t上
+window.onscroll=function(){
+	var w=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);
+	
+	//if(w>offset(content).t+content.offsetHeight){
+	if(w>content.t+content.offsetHeight){
+		//offset(content).t+content.offsetHeight是盒子底部的位置
+		//offsetHeight包括边框，clientHeight只包括padding和高，不包括边框
+		
+		content.innerHTML="变变变变……";	
+	}
+}
+
+function offset(ele){
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+	while(p){//判断ele是否有offsetParent(偏移参照物)
+		l+=p.offsetLeft+p.clientLeft;
+		t+=p.offsetTop+p.clientTop;
+		p=p.offsetParent;
+	}
+	return {l:l,t:t};	
+}
+
+</script>

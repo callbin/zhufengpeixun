@@ -27,8 +27,9 @@ function addClass(ele,str){//添加类名
 function removeClass(ele,str){//移除类名的方法
 	var reg=new RegExp("(^| )"+str+"( |$)","g");
 	
-	ele.className=ele.className.replace(reg,"");
+	ele.className=ele.className.replace(reg," ");
 	//以上写法会有bug，请测出此bug并修正
+	
 	
 }
 addClass(oDiv,"f");
