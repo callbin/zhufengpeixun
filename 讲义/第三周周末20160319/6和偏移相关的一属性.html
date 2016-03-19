@@ -10,13 +10,14 @@ div{ width:200px; height:100px; background:red; margin:50px; }
 </head>
 
 <body>
+<!--
 <div id="div1">div1</div>
 <div id="div2" style="float:right; margin-left:100px;">div2</div>
 <div id="div3" style="float:right; clear:both;">div3</div>
 <div id="div4" style="float:right; clear:both; border-left:50px green solid;">div3</div>
-
+-->
 <div id="div5" style="float:right; clear:both; border-left:50px green solid; width:250px; height:300px; position:relative; "> div5<br>
-	<div id="outer" style="position:relative; ">outer<br><br>
+	<div id="outer" style="position:relative; border:100px black solid;">outer<br><br>
 
     	<div id="middle" style="background:pink;">middle<br><br>
         	<div id="inner" style="background:#fff;" >inner<br> 
@@ -56,14 +57,32 @@ div{ width:200px; height:100px; background:red; margin:50px; }
 	var p=ele.offsetParent;
 	while(p){//判断一下当前计算的元素有没有offsetParent
 		//如果有，则继续向上找
-		t+=p.offsetTop;
-		l+=p.offsetLeft;
-		p=p.offsetParent;		
+		if(window.navigator.userAgent.indexOf("MSIE 8")==-1){
+			window.navigator.userAgent//这个叫用户代理字符串，保存了浏览器厂商，版本号，内核等信息
+			//像Trident（IE的内核），Gecko（chrome），还有一个，这些是浏览器的核心技术，需要了解--用途是面试的时候和面试呼悠 
+			
+			//这个代理字符串只在IE11以下有用。
+			//一定要掌握：移动端浏览器和高版本的IE浏览器如何判断
+			
+			//关于window.navigator.userAgent请参考高程三了解更多的细节
+			
+			
+			t+=p.offsetTop+p.clientTop;//JS里只有直接获得左边框和上边框宽度的属性，没有获得下边框和右边框宽度的属性
+			l+=p.offsetLeft+p.clientLeft;
+			
+		}else{
+			t+=p.offsetTop;
+			l+=p.offsetLeft;
+				
+		}
+		
+		//下面这句，一定要写的判断的外边
+		p=p.offsetParent;	
 	}
 	return {left:l,top:t}//把变量l的值赋给这个匿名对象的left属性……	 
  }
  
- 
+ alert(offset(inner).top);
  
  
 
