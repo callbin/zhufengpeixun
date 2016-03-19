@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+img{ display:block; width:200px; height:200px; margin:10px;}
+
+</style>
+</head>
+
+<body>
+<p>1p</p>
+
+<p>p</p><p>p</p><p>p</p><p>p</p><p>2p</p><p>p</p><p>p</p><p>3p</p><p>p</p><p>5p</p><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><p>6p</p><br><br><br><br><br><br><br><br><br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif">
+</body>
+</html>
+<script>
+//如果使用前端技术实现网站的性能优化：多用缓存，使图片的缓加载（懒加载，延迟加载）
+var oImgs=document.images;
+for(var i=0;i<oImgs.length;i++){
+	var oImg=oImgs[i];
+	oImg.b=offset(oImg).top+oImg.offsetHeight;
+
+}
+window.onscroll=function(){
+		var h=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);
+		
+		for(var i=0;i<oImgs.length;i++){
+			
+			var oImg=oImgs[i];
+			if(oImg.loaded)continue;
+			;(function(oImg){
+				//if(oImg.loaded)return;//如果52行写了，则这儿就不用写了，防止重复加载。oImg.loaded是在下边（66行）onload里自定义的属性
+				if(h>oImg.b){
+					
+					var realSrc=oImg.getAttribute("realImg")+"?"+Math.random();
+					oImg.src="o_loading.gif";
+					var tempImg=new Image;
+					tempImg.src=realSrc;
+					
+					//这样直接加循环不可以，问题都出在这儿！！
+					tempImg.onload=function(){
+							oImg.src=realSrc;
+							//以下加一个标识，用来标记加载工作已经完成。
+							oImg.loaded=true;
+					}	
+					
+				}
+			})(oImg);
+			
+		}
+	
+}
+function offset(ele){
+	var t=ele.offsetTop;
+	var l=ele.offsetLeft;
+	var p=ele.offsetParent;
+	while(p){//判断一下当前计算的元素有没有offsetParent
+		//如果有，则继续向上找
+		if(window.navigator.userAgent.indexOf("MSIE 8")==-1){
+			
+			t+=p.offsetTop+p.clientTop;
+			l+=p.offsetLeft+p.clientLeft;
+			
+		}else{
+			t+=p.offsetTop;
+			l+=p.offsetLeft;
+		}
+		p=p.offsetParent;
+	}
+	return {left:l,top:t}//把变量l的值赋给这个匿名对象的left属性……	 
+ }
+
+</script>

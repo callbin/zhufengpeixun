@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+img{ display:block; width:200px; height:200px; margin:10px;}
+
+</style>
+</head>
+
+<body>
+<p>1p</p>
+
+<p>p</p><p>p</p><p>p</p><p>p</p><p>2p</p><p>p</p><p>p</p><p>3p</p><p>p</p><p>5p</p><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><p>6p</p><br><br><br><br><br><br><br><br><br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif">
+</body>
+</html>
+<script>
+//如果使用前端技术实现网站的性能优化：多用缓存，使图片的缓加载（懒加载，延迟加载）
+var oImg=document.images.item(3);
+oImg.b=offset(oImg).top+oImg.offsetHeight;
+window.onscroll=function(){
+		var h=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);
+		if(h>oImg.b){
+			var realSrc=oImg.getAttribute("realImg");
+			//这儿不能用这种方式:realSrc=oImg.realImg;因为realImg是定义在HTML里的属性，这样的属性叫HTML的自定义扩展属性，这样属性只能getAttribute这个标准的DOM方法来操作。只有定义在JS中，或W3C规定好的属性才可以直接打点的方式来操作。当然，在JS定义的属性或W3C规定的属性，也可以用getAttribue来读。
+			//和getAttribute相对应的方法叫setAttribute
+			oImg.src=realSrc+"?"+Math.random();
+			//在一个网址中，写在问号后边的是查询字符，一般用来给后台服务器传值
+		}
+	
+}
+function offset(ele){
+	var t=ele.offsetTop;
+	var l=ele.offsetLeft;
+	var p=ele.offsetParent;
+	while(p){//判断一下当前计算的元素有没有offsetParent
+		//如果有，则继续向上找
+		if(window.navigator.userAgent.indexOf("MSIE 8")==-1){
+			
+			t+=p.offsetTop+p.clientTop;
+			l+=p.offsetLeft+p.clientLeft;
+			
+		}else{
+			t+=p.offsetTop;
+			l+=p.offsetLeft;
+		}
+		p=p.offsetParent;
+	}
+	return {left:l,top:t}//把变量l的值赋给这个匿名对象的left属性……	 
+ }
+
+</script>

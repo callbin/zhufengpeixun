@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+img{ display:block; width:200px; height:200px; margin:10px;}
+
+</style>
+</head>
+
+<body>
+<p>1p</p>
+
+<p>p</p><p>p</p><p>p</p><p>p</p><p>2p</p><p>p</p><p>p</p><p>3p</p><p>p</p><p>5p</p><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><p>6p</p><br><br><br><br><br><br><br><br><br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif">
+</body>
+</html>
+<script>
+//如果使用前端技术实现网站的性能优化：多用缓存，使图片的缓加载（懒加载，延迟加载）
+var oImg=document.images.item(0);
+oImg.b=offset(oImg).top+oImg.offsetHeight;
+window.onscroll=function(){
+		var h=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);
+		if(h>oImg.b){
+			var realSrc=oImg.getAttribute("realImg")+"?"+Math.random();
+			//oImg.src=realSrc+"?"+Math.random();//先不直接把图片地址赋值给img标签
+			oImg.src="o_loading.gif";//就是让真正的图片在下载完成之前，先用这张图片来提示用户真实的图片正在下载中
+			//创建一个临时的img标签对象，让这个对象去远程服务器上负责下载图片
+			
+			var tempImg=new Image;//tempImg=document.createElement("img");
+			tempImg.src=realSrc;//只要把真正的资源赋给这个图片的src地址，则它会自动的去下载图片到本地缓存。不需要把tempImg添加给body,它就可以自动完成下载图片，这是浏览器的机制
+			
+			//接下来就是等真实的图片下载完成，然后就可以让真实的图片显示在网页上了
+			//图片对象本身就有事件机制
+			tempImg.onload=function(){
+					oImg.src=realSrc;//一但图片已经下载成功，则让img标签显示真实的图片
+					//oImg.src=this.src;//这两句
+			}
+			
+	//img这个标签在DOM树中生成，和远程的图片下载下来并且成功在网页上显示，是两个过程
+			
+			
+			
+			
+		}
+	
+}
+function offset(ele){
+	var t=ele.offsetTop;
+	var l=ele.offsetLeft;
+	var p=ele.offsetParent;
+	while(p){//判断一下当前计算的元素有没有offsetParent
+		//如果有，则继续向上找
+		if(window.navigator.userAgent.indexOf("MSIE 8")==-1){
+			
+			t+=p.offsetTop+p.clientTop;
+			l+=p.offsetLeft+p.clientLeft;
+			
+		}else{
+			t+=p.offsetTop;
+			l+=p.offsetLeft;
+		}
+		p=p.offsetParent;
+	}
+	return {left:l,top:t}//把变量l的值赋给这个匿名对象的left属性……	 
+ }
+
+</script>
