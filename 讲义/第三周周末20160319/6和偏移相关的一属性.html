@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:200px; height:100px; background:red; margin:50px; }
+#div5 div{ width:auto; height:auto; margin:5px; background:#ccc;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+<div id="div2" style="float:right; margin-left:100px;">div2</div>
+<div id="div3" style="float:right; clear:both;">div3</div>
+<div id="div4" style="float:right; clear:both; border-left:50px green solid;">div3</div>
+
+<div id="div5" style="float:right; clear:both; border-left:50px green solid; width:250px; height:300px; position:relative; "> div5<br>
+	<div id="outer" style="position:relative; ">outer<br><br>
+
+    	<div id="middle" style="background:pink;">middle<br><br>
+        	<div id="inner" style="background:#fff;" >inner<br> 
+            
+            </div>
+        
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+//每一个盒子距离浏览器都会有偏移，这个偏移默认是从浏览器的左上角开始计算
+//offsetTop，offsetLeft，offsetParent（偏移量参照物，所有默认元素的偏移量参照物body）
+ 
+ //div2.offsetLeft和div3.offsetLeft是相同的，虽然div2设了margin-left，说明offsetLeft本身就本括了margin
+ 
+ //从div4的offsetLeft和div3.offsetLeft不同，可以知道，offsetLeft是从border外边开始计算的（已经把margin计算进去了）
+ 
+ //以上的盒子有一个共同的特点，就是它们的offsetParent是body,offsetParent和parentNode之间不存必然联系 
+ 
+ //什么时候offsetParent是变化呢？（不再是body）:只要元素的position属性设了relative,absolute,fixed中的一个，则这个元素会自动成为它后代元素的offsetParent，这和z-index起作用的原理一样的，主要是设置了定位会影响元素layout的变化
+ 
+ //接下来让你计算inner距离浏览器最顶端的偏移量（应该叫距离文档，或这个网页本身的偏移量）
+ var t=inner.offsetTop;//只是距离它上一级offsetParent的偏移量:outer
+ t+=outer.offsetTop;//t+=inner.offsetParent.offsetTop;//算到了div5
+ t+=div5.offsetTop;//t+=inner.offsetParent.offsetParent.offsetTop;//这样就算到了body
+ t+=document.body.offsetTop;//还可以加上一个0，但是无法再往下计算了
+ //div
+ 
+ //计算网页上任意元素到文档顶端偏移量（x轴和y轴的）
+ 
+ function offset(ele){
+	var t=ele.offsetTop;
+	var l=ele.offsetLeft;
+	var p=ele.offsetParent;
+	while(p){//判断一下当前计算的元素有没有offsetParent
+		//如果有，则继续向上找
+		t+=p.offsetTop;
+		l+=p.offsetLeft;
+		p=p.offsetParent;		
+	}
+	return {left:l,top:t}//把变量l的值赋给这个匿名对象的left属性……	 
+ }
+ 
+ 
+ 
+ 
+
+</script>
