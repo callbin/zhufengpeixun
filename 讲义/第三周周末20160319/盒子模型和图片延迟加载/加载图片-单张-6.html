@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+img{display:block;}
+</style>
+</head>
+
+<body>
+
+<h1>图片延迟加载的单张图加载</h1>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+</body>
+</html>
+<script>
+var a=["http://pic1.win4000.com/pic/9/8c/0a08466924.jpg",
+"http://pic1.win4000.com/pic/9/8c/0a08466925.jpg",
+"http://pic1.win4000.com/pic/9/8c/0a08466926.jpg","http://pic1.win4000.com/pic/9/8c/0a08466927.jpg","http://pic1.win4000.com/pic/9/8c/0a08466928.jpg"];
+function offset(ele){
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+	while(p){
+		if(window.navigator.userAgent.indexOf("MSIE 8")>-1){
+			l+=p.offsetLeft;
+			t+=p.offsetTop;
+		}else{
+			l+=p.offsetLeft+p.clientLeft;
+			t+=p.offsetTop+p.clientTop;
+		}
+		p=p.offsetParent;		
+	}
+	return {left:l,top:t};
+}
+var ele=document.getElementsByTagName("img").item(0);
+var h=offset(ele).top+ele.offsetHeight;
+window.onscroll=function(){
+	var winBottom=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);
+	if(!ele.loaded)
+	if(h<winBottom){
+		//ele.src=ele.realImg;
+		
+		var realImg=ele.getAttribute("realImg");
+		ele.src="o_loading.gif";
+		var tempImg=new Image;
+		//document.creteateElement("img")
+		
+		tempImg.src=realImg;
+		//浏览器所以的外链的资源都是缓存
+		tempImg.onload=function(){
+			ele.src=realImg;
+			ele.loaded=true;//标识（记号）属性，用来表示这张图片已经下载过了。
+		}
+		tempImg.onerror=function(){
+			console.log("图片下载出错！");	
+		}
+		
+		
+	}
+	
+}
+
+//JS异步特性
+//烧水--
+//打电话
+//网页生成和资源加载：异步的
+//网页结构的生成是同步的
+</script>

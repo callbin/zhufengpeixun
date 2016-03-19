@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+
+div{ width:150px; height:200px; background:#ccc; overflow:auto}
+</style>
+</head>
+
+<body>
+<div id="div1" style="overflow:hidden">
+忙于演唱会工作时，林忆莲男友恭硕良爱相随，两人不但是恋人更是工作伙伴，这段姊弟恋曾被林忆莲以“年龄不是最大问题”间接承认，恭硕良也隔空喊话“大家开心就好”，不料传出有第三者介入。据香港周刊指出，恭硕良曾与小模梁郁霖在夜店来电，但因恭硕良不愿放弃“林忆莲御用鼓手”的饭碗，两人转往地下情，将林忆莲蒙在鼓里。
+
+另外，林忆莲与恭硕良经常透过媒体传情，梁郁霖曾质问恭硕良，都被恭以工作关系带过。信以为真的梁郁霖乐得到处宣示主权，甚至被港媒发现她到寺庙为自己与恭点灯求姻缘。林忆莲得知有第三者后大受打击，一度疏远恭硕良。
+
+据林忆莲好友爆料因恭硕良不愿放弃“林忆莲御用鼓手”的饭碗，两人转往地下情，将林忆莲蒙在鼓里。
+
+</div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+console.log(ele.scrollTop);
+//ele.scrollTop的几个特点
+//1、内容向上翻出去的高度
+//2、可以读写
+//3、有上限和下限的
+
+
+
+ele.onscroll=function(){
+	//console.log(this.scrollTop);	
+	
+}
+
+;(function (){
+	//ele.scrollTop++;
+	
+/*	if(ele.scrollHeight-ele.clientHeight==ele.scrollTop){
+		//ele.scrollTop=0;	
+		ele.innerHTML+=ele.innerHTML;//不断让内容翻倍
+	}*/
+	
+	var t=ele.scrollTop;//这是累加前的
+	ele.scrollTop++//累加之后的
+	if(t==ele.scrollTop){//这一句深藏功与名：如果累加前的值和累加后的值相同，则表示scrollTop加不动了：到头了
+		ele.innerHTML+=ele.innerHTML;
+	}
+	
+	
+	//t==ele.scrollTop++
+	//if(t==++ele.scrollTop){//假定上限是718 ，累加先返回719然后再把719赋给ele.scrollTop(赋值不成功)，719和t比较为false， 719赋给ele.scrollTop -->718,结论是:永远这个条件不会为true,所以这个比较条件不正确
+	//if(t==(0,ele.scrollTop++)){//放在括号里也一样，先把累加后的结果返回了
+		//ele.innerHTML+=ele.innerHTML;
+	//}
+	window.setTimeout(arguments.callee,10);
+	//arguments.callee.caller
+	
+	})();
+
+function outer(){
+	
+	
+	inner();//inner被outer调用，invoke,
+}
+
+function inner(){
+	console.log(arguments.callee.caller);//输出outer	
+}
+/*
+	//自执行函数前加括号和加单目运算符是有区别的
+var a=(function(){
+	var i=9;
+	i++;
+	return i;
+		
+})()
+
+var a=!function(){
+	var i=9;
+	i++;
+	return i;
+		
+}()
+
+*/
+</script>

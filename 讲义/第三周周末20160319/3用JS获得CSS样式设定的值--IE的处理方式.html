@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body *{ margin:0; font-size:12px;}
+div{ height:100px; margin:100px; background:red; color:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+<p id="p1">我是段落</p>
+
+</body>
+</html>
+<script>
+//IE中获得样式集合的方式是通过一个叫currentStyle的属性
+div1.currentStyle.height//这样就得到了div1的样式中设定的高
+//em是参照当前容器的文字大小的单位，比如fontSize是12，则1.8em是12*1.8
+
+//currentStyle没法获得伪元素的样式
+
+function getCss(ele,attr){
+	
+	
+}
+
+
+
+</script>

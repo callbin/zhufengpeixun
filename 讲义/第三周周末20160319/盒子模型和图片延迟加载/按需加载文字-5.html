@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:200px; background:green; font-size:36px; font-weight:bold;}
+</style>
+</head>
+
+<body style="height:3500px;">
+<h1>图片延迟加载的最基本原理</h1>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div id="div1">
+	我是图片默认文字
+</div>
+</body>
+</html>
+<script>
+function offset(ele){
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+	while(p){
+		if(window.navigator.userAgent.indexOf("MSIE 8")>-1){
+			l+=p.offsetLeft;
+			t+=p.offsetTop;
+		}else{
+			l+=p.offsetLeft+p.clientLeft;
+			t+=p.offsetTop+p.clientTop;
+		}
+		p=p.offsetParent;		
+	}
+	return {left:l,top:t};
+}
+var ele=document.getElementById("div1");
+var h=offset(ele).top+ele.offsetHeight;//这是这个元素的底边距离文档顶部的绝对偏移量
+window.onscroll=function(){
+	var winBottom=(document.documentElement.scrollTop||document.body.scrollTop)	+(document.documentElement.clientHeight||document.body.clientHeight)
+	if(h<winBottom){
+		ele.innerHTML="我已经进入了浏览器的可视窗口！！";
+	}	
+}
+</script>
+
+
+
+
+
+

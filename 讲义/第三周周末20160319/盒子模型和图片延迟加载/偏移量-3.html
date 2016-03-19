@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+	#outer{ width:300px; margin:0 auto; background:#ccc; height:120px; border:100px solid red; display:block; }
+	#inner{ width:200px; margin:0 auto; background:purple; height:90px}
+	#p1{ width:150px; height:50px; background:black; margin:0 auto;  padding-top:30px;}
+	#a1{ float:right; background:green;color:white; font-weight:bold; z-index:999;
+	}
+</style>
+</head>
+
+<body id="body1">
+<div id="outer" style="position:relative;">
+	<div id="inner" >
+    	<p style="position:relative;" id="p1">
+        	<a id="a1" href="http://www.zhufengpeixun.com">珠峰培训</a>
+        </p>
+    </div>
+
+</div>
+<div id="div2">我是div2</div>
+</body>
+</html>
+<script>
+var outer=document.getElementById("outer");
+var inner=document.getElementById("inner");
+var p1=document.getElementById("p1");
+var a1=document.getElementById("a1");
+console.log(outer.offsetLeft);
+console.log(outer.offsetParent.id);
+console.log(inner.offsetLeft);
+console.log(inner.offsetParent.id);
+console.log(p1.offsetLeft);
+console.log(p1.offsetParent.id);
+console.log(a1.offsetLeft);
+console.log(a1.offsetParent.id);
+//在默认的情况下，所以有元素的偏移量是指相对文档产生的偏移
+//只要是能产生距离，就会产生偏移
+//console.log(div2.offsetTop);
+//一个元素产生偏移量的参照物默认是文档（网页）,body做为文档代理人，在JS里叫offsetParent;
+//console.log(div2.offsetParent);
+//offsetParent和parentNode不是一码事
+
+//什么情况，偏移量参照物会发生变化？先明确的一个概念：大家都在一个层级关系
+//z-index,形成新的层级关系的时候：写了相对或绝对定位的时候
+
+l=a1.offsetLeft;
+l+=p1.offsetLeft;
+//l+=a1.offsetParent.offsetLeft;
+l+=outer.offsetLeft;
+//l+=a1.offsetParent.offsetParent.offsetLeft;
+l+=document.body.offsetLeft;//0
+//null
+function offset(ele){//计算任意DOM元素距离文档的左或上的绝对偏移
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+	while(p){
+		if(window.navigator.userAgent.indexOf("MSIE 8")>-1){
+			l+=p.offsetLeft;//加上上一级的边框
+			t+=p.offsetTop;
+		}else{
+			
+			l+=p.offsetLeft+p.clientLeft;//加上上一级的边框
+			t+=p.offsetTop+p.clientTop;
+		}
+		
+		p=p.offsetParent;
+	}
+	/*
+	var obj={};
+	obj.left=l;
+	obj.top=t;
+	return obj;
+	*/
+	return {left:l,top:t}
+	
+}
+alert(offset(a1).left)
+//outer.style.display ="";
+
+</script>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+p::before{ content:"我在前边"; color:green; background:pink; clear:both; width:100px; height:100px; display:block;}
+p::after{ content:"我在后边"; color:pink; background:green;}
+
+</style>
+</head>
+
+<body>
+<zhufeng></zhufeng>
+<p>我是个段落p</p>
+</body>
+</html>
+<script>
+var ele=document.getElementsByTagName("p").item(0);
+window.getComputedStyle(ele).display;//可以只写一个参数，表示获得ele本身的样式集合
+
+window.getComputedStyle(ele,"before").display;//第二个参数是指定的伪元素
+
+</script>

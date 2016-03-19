@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ height:100px!important; margin:100px; background:red;}
+#div2,#div3{ padding:50px;}
+#div3{ border:50px blue solid;}
+
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+
+<div id="div2">div2</div>
+
+<div id="div3">div3</div>
+
+<div id="div4" style="width:150px;">div4据香港媒体报道，林忆莲与小11岁男友恭硕良被拍到在数码港公园遛狗。他们身穿运动装，十分休闲。49岁林忆莲绑着丸子头，看上去皮肤紧致，年轻依旧。
+
+林忆莲近年与音乐人恭硕良谱出恋曲，两人均未否认，更经常同台演出，这段相差11岁的姐弟恋看似谈得甜蜜，但媒体惊爆恭硕良搭上香港嫩模梁郁霖，林忆莲得知后不愿放手，欲发出攻势挽回恋情。
+
+忙于演唱会工作时，林忆莲男友恭硕良爱相随，两人不但是恋人更是工作伙伴，这段姊弟恋曾被林忆莲以“年龄不是最大问题”间接承认，恭硕良也隔空喊话“大家开心就好”，不料传出有第三者介入。据香港周刊指出，恭硕良曾与小模梁郁霖在夜店来电，但因恭硕良不愿放弃“林忆莲御用鼓手”的饭碗，两人转往地下情，将林忆莲蒙在鼓里。
+
+另外，林忆莲与恭硕良经常透过媒体传情，梁郁霖曾质问恭硕良，都被恭以工作关系带过。信以为真的梁郁霖乐得到处宣示主权，甚至被港媒发现她到寺庙为自己与恭点灯求姻缘。林忆莲得知有第三者后大受打击，一度疏远恭硕良。
+
+据林忆莲好友爆料，林忆莲对有音乐才华的男性特别倾心，明知恭硕良花名在外，仍死心塌地，还为了从小她18岁的小模梁郁霖手中夺回情郎，发动金钱利诱，让恭硕良担任她巡回个唱的专属鼓手。而恭硕良被问及这段三角恋时，四两拨千金的表示和梁是朋友，不愿得罪任何一方，三人行暧昧关系让人雾里看花。</div>
+</body>
+</html>
+<script>
+//clientWidth,clientHeight,offsetWidth,offsetHeight
+//clientWidth表示带左右padding的宽，同理可以clientHeight是带上下padding的高
+//offsetWidth是clientWidth+左右border的宽，同理offsetHeight它是clientHeight+上下的border的宽
+
+//以上两对属性和css的属性是否设置没有什么关系
+
+div1.clientWidth//实际的，在浏览器中占的位置，是以浏览器的显示结果为准 
+div1.offsetWidth
+
+//在JS中，没有直接获得元素内容宽或高的属性
+div2.height,div2.width
+
+//以上两组属性是只读，不可赋值
+div2.clientWidth=1000//不可赋值，不起作用
+
+div2.style.width="1000px";//只有这种方式才可改变元素的大小
+
+div2.style.padding="";
+
+//第四个div内容溢出了，如果想得到实际的内容的高，用scrollHeight,如果内容没有溢出，则scrollHeight和clientHeight相同
+
+//请计算文档的可见区域的高和实际的高
+document.documentElement.clientHeight;//标准浏览器没有问题
+document.documentElement.clientHeight||document.body.clientHeight;//如果不写文档声明，或在64位的IE中，则使用后者
+
+//JS原生代码里没有计算(内容)width+padding+border+margin的值
+$("#div4").width();//内容的宽
+$("#div4").innerWidth();//clientWidth
+$("#div4").outerWidth();//offsetWidth
+$("#div4").outerWidth(true);//offsetWidth+margin
+
+
+
+ 
+
+
+</script>

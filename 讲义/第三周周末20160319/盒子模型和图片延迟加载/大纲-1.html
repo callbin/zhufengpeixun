@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>珠峰培训-JS课程</title>
+<style type="text/css">
+ li{ font-size:24px;}
+ h1{ color:darkblue;}
+</style>
+</head>
+
+<body>
+<h1>JavaScript中和盒子模型相关的属性和方法</h1>
+<ol>
+	<li>盒子模型1：和高、宽相关的JS属性
+    	<ul>
+        	<li>没有现成的直接获得内容宽高的JS属性</li>
+        	<li>clientHeight,clientWidth：带padding的内容宽度</li>
+            <li>offsetHeight,offsetHeight:带边框的</li>
+            <li>scrollHeight,scrollWidth实际内容的，不带下padding</li>
+            
+        </ul>
+    </li>
+    <li>盒子模型2：用JS获得CSS属性，行内的和内嵌、外链样式
+    	<li>标准浏览器：window.getComputedStyle</li>
+        <li>IE6/7/8：ele.currentStyle</li>
+        <li>IE6/7/8里的诸多问题</li>
+    </li>
+    <li>元素的偏移和偏移参照物
+    	<ul>
+        	<li>offsetLeft和offsetTop</li>
+            <li>offsetLeft受到什么的影响：标准流自然产生，浮动产生，定位产生，margin产生</li>
+            <li>分清绝对定位的left是从那儿开始的，offsetLeft是从那儿开始的</li>
+            <li>难点：偏移量产生的参照物</li>
+            <li>所有网页元素默认的偏移参照物都是网页文档，body是它的代理人</li>
+            <li>当其祖先元素做了相对或绝对定位后，参照物会发生变化</li>
+            <li>如何获得网页中任意元素距离文档左上角的偏移量</li>
+        </ul>
+    </li>
+    <li>滚动条：scrollTop或scrollLeft</li>
+    <li>滚动条属性是可读写的属性</li>
+    <li>scrollTop或scrollLeft的值是有上限和下限的</li>
+    <li>文字无缝滚动实例</li>
+    <li>图片延迟加载实例
+    	<ul>
+        <li>按需加载</li>
+        <li>图片的异步</li>
+        <li>图片的缓存机制</li>
+        <li>按需加载图片</li>
+        <li>多张图片加载出现的问题和闭包解决方案</li>
+        <li>什么时候使用：异步与闭包</li>
+        </ul>
+    </li>
+</ol>
+clientHeight,clientwidth,clientLeft:左边框的宽,clientTop：上边框的宽<br>
+offsetHeight,offsetWidth,offsetLeft左偏移量，从border外边开始算,offsetTop：上偏移量，从上边框外边开始算<br>
+scrollTop,scrollLeft,scrollHeight：实际内容的高，包括溢出的内容,scrollWidth：实际内容的宽，包括溢出的内容
+</body>
+</html>
+<script>
+/*
+function fn(){};
+var fn=new Function();
+Function.prototype.call=function(){}
+fn.call();
+//第一点：call定义在原型上的方法（Function类上）
+
+typeof fn.call//它本身也是function类型的
+fn.call.call.call
+//call改变this指向
+fn.call(1)//让fn里的this指向1，
+//call里的this是谁：fn
+
+
+var a=[];
+a.sort();
+a.slice()
+
+function fn1(){alert(1)};function fn2(){alert(2);
+alert(this)};
+fn3=fn2.call;   
+fn2.call(fn1);//请问输出什么结果，为什么
+fn3.call(fn1);//请问输出什么结果，为什么:fn1.call();
+//fn3运行并且让它里的this指向fn1,
+//就是：那个实例调用了这个方法，则这个方法里的this就是当前这个实例
+//反之也是这样：这个方法里的this是谁，就相当于谁调用了这个方法
+fn3.call(fn1);
+//1、让fn3运行，Function.prototype.call
+//2、让fn3里的this指向fn1,就是Function.prototype.call里的this是fn1
+//3、相当于fn1.call();原则：这个方法里的this是谁，就相当于谁调用了这个方法
+*/
+</script>

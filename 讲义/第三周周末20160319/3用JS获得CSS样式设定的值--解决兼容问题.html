@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body *{ margin:0; font-size:12px;}
+div{ height:100px; margin:100px; background:red; color:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+<p id="p1">我是段落</p>
+
+</body>
+</html>
+<script>
+
+
+/*function getCss(ele,attr){//要得到ele这个元素的attr样式属性的值
+	
+	if(typeof getComputedStyle =="function"){
+		return getComputedStyle(ele)[attr]	
+	}else{
+		return ele.currentStyle[attr];//IE的方法
+	}
+}*/
+
+/*function getCss(ele,attr){
+	//if(getComputedStyle){//不加window点会报错。
+	if(window.getComputedStyle){
+	//为什么可以写window.getComputedStyle呢，写法document.getComputedStyle不行嘛？
+	//所有的全文方法或全局的内置对象，都可以看成是window的属性
+	Math
+	RegExp;
+	//以上两个是和window是平级的，和window一样，属于global下定义
+	//global，
+	
+	//nodeJS也是JS语言，这个JS里就没有window，process就相当前端JS里的window，（进程）
+	
+		return getComputedStyle(ele)[attr]	
+		
+	}else{
+		return ele.currentStyle[attr];
+	}
+		
+			
+}
+
+alert(getCss(div1,"height"));
+
+alert(abcd);//如果一个变量不存在，直接去的读操作，则会报错。
+alert(window.abcd);//如果一个变量，以属性的方式来做读操作，则没有问题，结果是undefined
+
+abcd2="";//一个变量不定义，可以直接写操作*/
+
+function getCss(ele,attr){
+	try{
+		return getComputedStyle(ele)[attr];	
+	}catch(e){
+		return ele.currentStyle[attr]
+	}
+	
+}
+
+
+
+</script>

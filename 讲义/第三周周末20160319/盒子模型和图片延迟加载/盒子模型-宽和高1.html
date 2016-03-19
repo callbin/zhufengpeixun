@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+ #div1{ height:200px; width:150px; background:blue;  padding:15px; border:15px solid red; }
+ body,div,p,li,ul,ol{font-size:12px; margin:0; padding:0; }
+</style>
+</head>
+
+<body>
+<div id="div1">
+
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！站在台风口上，猪都能飞起来！
+站在台风口上，猪都能飞起来！
+
+</div>
+</body>
+</html>
+<script>
+var ele=document.getElementById('div1');
+var w=ele.clientWidth;//内容+padding
+var h=ele.clientHeight;//内容的高+上下的padding;
+var offsetW=ele.offsetWidth;//在clientWidth的基础上+左右边框的宽度
+var offsetH=ele.offsetHeight;//在clentHeight的基础上+上下边框的宽度
+var contentH=ele.scrollHeight;//实际内容的高，包括溢出的，也是包括padding.如果没有溢出，此值和clientHeight相同，如果内容有溢出，则只包括上padding不包括下padding。
+//JS中没有现成这些属性：直接得到盒子的实际内容的宽高（widtth,height）
+//也没有直接得到margin值的属性
+/*
+var oStyle=window.getComputedStyle(ele,null);
+var attr="height";
+
+alert(oStyle[attr]);//字符串
+alert(parseInt(oStyle[attr]));
+
+var oStyle=ele.currentStyle;
+console.log(oStyle);
+*/
+function getCss(ele,attr){
+	/*
+	if(window.getComputedStyle){
+		return getComputedStyle(ele,null)[attr];
+	}else{
+		return ele.currentStyle[attr];
+	}
+	*/
+	/*
+	if(typeof getComputedStyle =="function"){
+		return getComputedStyle(ele,null)[attr];
+	}else{
+		return ele.currentStyle[attr];
+	}
+	*/
+	try{
+		return getComputedStyle(ele,null)[attr];
+	}catch(e){
+		return ele.currentStyle[attr];
+	}
+}
+alert(getCss(ele,"color"));
+//jQuery里关于盒子模型的方法
+$("#div1").height();//内容的高
+$("#div1").innerHeight();//相当于clientHeight;
+$("#div1").outerHeight();//相当于offsetHeight;
+$("#div1").outerHeight(true);//offsetHeight+margin(上下的)
+
+</script>

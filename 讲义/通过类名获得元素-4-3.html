@@ -41,9 +41,9 @@ function getElesByClass(str){
 		var a=[];//准备放筛选结果的
 		var reg=new RegExp("(^| )"+aClassName[i]+"( |$)","g");//lastIndex的修改
 		
-		/(^| )b( |$)/g;//只要是加了g，就要考虑lastIndex的感受
-		li1 "b a c"
-		li2 "b c a"
+		/(^| )b( |$)/g;//只要是加了g，就要考虑lastIndex的感受。
+		//li1 "b a c" lastIndex
+		//li2 "b c a"  
 		
 		reg=/pattern/g
 		for(var j=0;j<eles.length;j++){

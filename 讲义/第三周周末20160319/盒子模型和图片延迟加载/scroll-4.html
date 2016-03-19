@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:250px; height:200px; overflow:hidden; background:pink;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+学习咨询QQ:1144709265
+最新开班信息
+
+11月15、16号，22、23号和30、31号分别有免费课，欢迎报名。
+想参加培训的同学：请加入珠峰培训2014年学习管理群，群号：335471513，群共享里有系统学习视频、文字教材、上课大纲和考试大纲。
+一、课程设置：
+
+分为免费课，主体课两个阶段。第一阶段先上课，然后考试，考试合格后再交学费，就可以参加第二阶段的学习了。考试成绩优异的还可以奖励学费。第二阶段是专业的JS开发课程，是七到八周。后续还会有高端课程，包括node.js，移动端+HTML5开发，MVC富客端开发等内容，敬请期待！
+二、第一阶段课程内容：
+
+免费课包括：基本语句语法，变量类型、面向对象基础，DOM基本及应用，数组及应用，数学方法，算法（冒泡排序、快速排序、插入排序）等。
+三、免费课学习目标及要求：
+
+扎实并且牢固的基础知识，培养编程逻辑，认识并掌握基本的编程算法，具备基本的代码驾驭能力。并且具备努力学习、积极上进的学习状态！
+查看免费详细课程大纲
+四、考试奖励方案：
+
+在通过基本考试大纲要求的前提下（机试是必须完成选项卡面板和九九乘法表等基础内容），再能把冒泡排序写下来，奖励100元。 如果还能把快速排序和插入排序也写下来，再奖励100元。查看免费课考试大纲
+五、正式课重点内容：
+
+预解释、闭包、作用域、this关键字,函数在JS中的机制，DOM库，面向对象，模块化开发，jQuery源码级的tween动画库，事件、事件原理、观察者设计模式和自定义事件，ajax和ajax跨域，HTML5和移动端开发,CSS3应用查看全部珠峰培训JS课程大纲
+六、上课时间及课时：
+
+周末班：面授时间为每周六日的上午十点到下午五点半（中午从1点到2：30休息一个半小时）；周末班正式课是七到八周一轮课，学习效果不理想的，免费重听，一年内有效。讲课会录视频，供大家预习或复习。外地或出差的同时，还可以通过我们的在线平台实时听课。每周需完成作业，平时有老师专门在线负责督促和辅导作业！
+有时候晚上会在线补课，老师会在群里通知！
+七、学费：
+
+JavaScript前端开发课程学费6300元，HTML5+CSS3+移动端课程学费是2000元。查看珠峰培训JS正式课的课程表
+八、退班：
+
+友情提示：在您确定报名交学费之前，我希望您先看一下课程大纲，确认我们的教学内容就是您想学的，再试听一下我们的正式课（珠峰老师讲的），看看他的讲课风格是不是适合您，然后再上我们的免费基础课，看看
+</div>
+</body>
+</html>
+<script>
+var ele=document.getElementById('div1');
+/*
+ele.offsetLeft;
+ele.offsetWidth;
+ele.style.width=500+"px";
+*/
+ele.scrollTop
+
+/*
+var direction=1;
+-function(){
+	var val1=ele.scrollTop;
+	ele.scrollTop+=direction;
+	var val2=ele.scrollTop;
+	if(val1==val2){
+		//ele.scrollTop=0;
+		direction*=-1
+	}
+	window.setTimeout(arguments.callee,6);
+}();
+*/
+/*
+var innerHTML=ele.innerHTML;
+-function(){
+	var val1=ele.scrollTop;
+	ele.scrollTop++;
+	var val2=ele.scrollTop;
+	if(val1==val2){
+		ele.innerHTML+=innerHTML;	
+	}
+	window.setTimeout(arguments.callee,10);
+}();
+*/
+var scrollHeight=ele.scrollHeight;
+var innerHTML=ele.innerHTML;
+ele.innerHTML+=innerHTML;
+~function(){
+	//var val1=ele.scrollTop;
+	ele.scrollTop++;
+	/*
+	if(val1==ele.scrollTop){
+		
+	}
+	*/
+	if(ele.scrollTop==scrollHeight){
+		ele.scrollTop=0;	
+	}
+	
+	window.setTimeout(arguments.callee,10);
+}();
+</script>

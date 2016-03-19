@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ height:100px; margin:100px; background:red; color:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+
+</body>
+</html>
+<script>
+div1.style.height//只管行内样式，对其它样式无能为力
+//如果想算一个元素的任意样式，请用getComputedStyle,这个方法标准浏览器的方法，IE6/7/8不支持
+var oStyle=getComputedStyle(div1,null);
+//如果你对一个方法返回值了解的不透彻，请在控制台里输出，然后分析输出的结果
+
+oStyle.color=="red";//如果是颜色值的比较，请用rgb格式，不要直接和英文单词比较
+//div1.style.color="rgb(255,0,0)";//赋值没关系了
+
+var height=getComputedStyle(div1,null)["height"];//返回的结果不是一数字，是带单位字符串
+
+oStyle.width//是一个具体的带单位的结果，虽然我们没有在CSS里设置width的值
+
+//getComputedStyle的第二参数是指获得伪元素的样式
+
+</script>

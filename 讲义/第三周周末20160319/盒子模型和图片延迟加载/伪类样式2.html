@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#p1{ height:2em; line-height:2em;}
+#p1::before{
+	content:"我是用CSS添加在段落前边的";
+	color:red;
+	background:black;
+	clear:both;
+	}
+#p1::after{
+	content:"我出现在段落后边";
+	color:green;
+	background:red;
+	clear:both;
+	}
+</style>
+</head>
+
+<body>
+<p id="p1">
+站在台风口上，猪都能飞起来！
+</p>
+</body>
+</html>
+<script>
+var ele=document.getElementById('p1');
+var strColor=window.getComputedStyle(ele,"before").color;
+alert(strColor);
+</script>
