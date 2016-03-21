@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		ul li{
+			list-style: none;
+		}
+		.tabbedPannels{
+			width: 600px;
+			overflow: hidden;
+			margin:100px auto;
+		}
+		.tabbedPannels ul{
+			height: 36px;
+			overflow: hidden;
+		}
+		.tabbedPannels li{
+			float: left;
+			height: 36px;
+			line-height: 36px;
+			font-size: 16px;
+			text-align: center;
+			width: 90px;
+			margin-right: 10px;
+			background-color: pink;
+			cursor: pointer;
+		}
+		.tabbedPannels li.selectedTab{
+			background-color: green;
+			color: #fff;
+		}
+		.contentGroup{
+			width: 600px;
+			height: 400px;
+			overflow: hidden;
+		}
+		.contentGroup>div{
+			width: 580px;
+			height: 360px;
+			display: none;
+			padding: 10px;
+			color: #fff;
+			font-size: 16px;
+		}
+		.contentGroup>div.selectedContent{
+			display: block;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class="tabbedPannels">
+		<ul class="tabGroup">
+			<li class="tab ">选卡一</li>
+			<li class="tab">选卡二</li>
+			<li class="tab promoted">选卡三</li>
+			<li class="tab">选卡四</li>
+		</ul>
+		<div class="contentGroup">
+			<div class="content selectedContent">内容一</div>
+			<div class="content">内容二</div>
+			<div class="content">内容三</div>
+			<div class="content">内容四</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	var oLis=document.getElementsByClassName("tab");
+	var strEvent="onclick";
+	for(var i=0;i<oLis.length;i++){
+		/*oLis[i].i=i;
+		oLis[i].onclick=function(){
+			changeTab(this.i);
+		}
+
+		;(function(i){
+			oLis[i].onclick=function(){
+				changeTab(i);
+			}
+		})(i);*/
+		oLis[i][strEvent]=changeTab;
+	}
+	
+
+	function changeTab(){
+		var n=getIndex(this);
+		//alert(n);
+		this.className="tab selectedTab";
+		var sibling=siblings(this);
+		for(var i=0;i<sibling.length;i++){
+			sibling[i].className="tab";
+		}
+
+		var contents=document.getElementsByClassName("content");
+		for(var i= 0;i<contents.length;i++){
+			contents[i].className="content";
+		}
+		contents[n].className="content selectedContent";
+	}
+
+	//计算ele元素的索引号
+	function getIndex(ele){
+		var index=0;
+		var pre=ele.previousSibling;
+		while(pre){
+			if(pre.nodeType==1){//判断是否为元素节点
+				index++;
+			}
+			pre=pre.previousSibling;
+		}
+		return index;
+	}
+
+
+	/*function offset(ele){
+		var l=offsetLeft;
+		var t=offsetTop;
+		var p=offsetParent;
+		while(p){
+			if(window.navigator.userAgent.indexOf("MSIE 8")>=0){
+				l+=p.offsetLeft;
+				t+=p.offsetTop;
+			}else{
+				l+=p.offsetLeft+p.clientLeft;
+				t+=p.offsetTop+p.clientTop;
+			}
+			p=p.offsetParent;
+		}
+		return (left:l,top:t);
+	}*/
+
+
+	//获得所有元素兄弟节点
+	function siblings(ele){
+		/*var parent=ele.parentNode;
+		var children=parent.children;
+		var a=[];
+		for(var i=0; i<children.length;i++){
+			if(children[i].nodeType==1 && children[i]!=ele){
+				a.push(children[i]);
+			}
+		}
+		return a;*/
+
+		var a=[];
+		var pre=ele.previousSibling;
+		while(pre){
+			if(pre.nodeType==1){
+				a.push[pre];
+			}
+			pre=pre.previousSibling;
+		}
+		a.reverse();
+
+		var next=ele.nextSibling;
+		while(next){
+			if(next.nodeType==1){
+				a.push(next);
+			}
+			next=next.nextSibling
+		}
+
+		return a;
+	}
+
+
+	function next(ele){//获得弟弟元素节点，返回一个
+		if(typeof ele.nextElementSiblings=="object"){//判断是为了返回null
+			return ele.nextElementSiblings;
+		}
+		var next=ele.nextSibling;
+		while(next){
+			if(next.nodeType==1){
+				return next;
+			}
+			next=next.nextSibling;
+		}
+		return null;
+	}
+
+
+	function inserAfter(newEle,oldEle){
+		oldEle.parentNode.insertBefore(newEle,oldEle.nextSibling);
+	}
+
+
+	function prepend(parent,child){
+		parent.insertBefore(child,parent.firstChild);
+	}
+
+
+	function children(parent){//获得parent的所有元素子节点
+		var childNodes=parent.childNodes;
+		var a=[];
+		for(var i=0;i<childNodes.length;i++){
+			var child=childNodes[i];
+			if(child.nodeType==1){
+				a.push(child);
+			}
+		}
+		return a;
+	}
+</script>

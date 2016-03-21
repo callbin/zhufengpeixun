@@ -97,31 +97,22 @@
 </html>
 <script src="DOM.js"></script>
 <script>
-var oLis=document.getElementsByClassName("tab");//IE6/7/8不支持
+var oLis=DOM.getElesByClass("tab");//IE6/7/8不支持
 var strEvent="onclick";
 for(var i=0;i<oLis.length;i++){
 	oLis[i][strEvent]=changeTab;//changeTab是不带括号的，表示只是事件绑定，而不是把changeTab的运行结果返回给事件
 }
 
 function changeTab(){
-	/*//索引不用从外边由参数传进来，而是在这里自动计算出来
-	//this就等于当前触发事件的这个元素 
-	this;window;document;488
-	var index=0;
-	var previous=this.previousSibling;//上边的节点可能是元素，也可能是文本
-	while(previous){//判断previous是否存在
-		if(previous.nodeType===1){//判断previous是不是元素
-			index++
-		}
-		previous=previous.previousSibling;//继续往下找
-	}
-	alert(index)*/
+	
 	var n=DOM.getIndex(this);
-	//alert(n);
-	this.className="tab selectedTab";//当前选中的li加上选中的样式
+
+	//this.className="tab selectedTab";//当前选中的li加上选中的样式
+	DOM.addClass(this,"selectedTab");
 	var siblings=DOM.siblings(this);//再得到其它的li
 	for(var i=0;i<siblings.length;i++){
-		siblings[i].className="tab";//把其它的li的selectedTab去掉
+		//siblings[i].className="tab";//把其它的li的selectedTab去掉
+		DOM.removeClass(siblings[i],"selectedTab");
 	}
 	
 	
@@ -129,10 +120,12 @@ function changeTab(){
 	var contents=DOM.children(DOM.next(this.parentNode));
 	
 	for(var i=0;i<contents.length;i++){
-		contents[i].className="content";	
+		//contents[i].className="content";	
+		DOM.removeClass(contents[i],"selectedContent");
 	}
 	
-	contents[n].className="content selectedContent";
+	//contents[n].className="content selectedContent";
+	DOM.addClass(contents[n],"selectedContent");
 	
 }
 

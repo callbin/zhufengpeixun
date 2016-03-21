@@ -143,6 +143,83 @@ DOM.prepend=function (parent,child){//此方法和appendChild相对应，把chil
 	
 }
 
+DOM.children=function(parent,str){//获得parent的所有元素子节点
+								//还可以获得指定标签名的子元素
+	var a=[];
+	var childNodes=parent.childNodes;
+	
+	if(typeof str=="string"){//判断一下第二个参数传的是否正确
+		//标签名要和str指定的相同才行，还要是元素节点
+		str=str.toUpperCase();//把str无条件转为大写
+		for(var i=0;i<childNodes.length;i++){
+			child=childNodes[i];
+			if(child.tagName===str){//注意这个条件
+				a.push(child);
+			}
+		}
+	}else if(str===undefined){//没有指定标签名，则把所有的子元素都返回
+		for(var i=0;i<childNodes.length;i++){
+			var child=childNodes[i];
+			if(child.nodeType===1){
+				a.push(child);	
+			}
+		}
+	}else{
+		throw new Error("大哥，您第二个参数搞错了！！");	
+	}
+	return a;
+	
+}
+
+DOM.getElesByClass=function (str,context){//第二个参数是当次筛选的上下文（找查的范围）
+	context=context||document;//如果第二个参数content没有传，则以document为上下文
+	/*
+	if(document.getElementsByClassName){//如果浏览器支持此方法
+		return context.getElementsByClassName(str);
+	}
+	*/
+	var regTrim=/^ +| +$/g;
+	str=str.replace(regTrim,"");
+	var aClass=str.split(/ +/);
+	//var eles=document.getElementsByTagName("*");
+	
+	var eles=context.getElementsByTagName("*");
+	for(var i=0;i<aClass.length;i++){
+		//eles=byClass(aClass[i],eles);	
+		var reg=new RegExp("(^| )"+aClass[i]+"( |$)");
+		var a=[];
+		for(var j=0;j<eles.length;j++){
+			var ele=eles[j];
+			if(reg.test(ele.className)){
+				a.push(ele);
+			}
+		}
+		eles=a;//更新eles，以便下次筛选
+		
+	}
+	return eles;
+}
+
+DOM.addClass=function(ele,strClass){
+	//tab 
+	var reg=new RegExp("(^| )"+strClass+"( |$)");
+	if(!reg.test(ele.className))
+		ele.className+=" "+strClass;
+	
+}
+
+DOM.removeClass=function(ele,strClass){
+	var reg=new RegExp("(^| )"+strClass+"( |$)","g");
+	//ele.className="tab a a b c a";
+   // "(已经匹配过了，不再匹配)a b c a";//第二个连续出现的a匹配不到
+	//ele.className.replace(/ /g,"   ");//掺水（掺空格）
+	//ele.className="tab  a b c a";
+	
+	var tempStr=ele.className.replace(/ /g,"   ");//掺水（掺空格）
+	
+	ele.className=tempStr.replace(reg," ");
+}
+
 
 
 

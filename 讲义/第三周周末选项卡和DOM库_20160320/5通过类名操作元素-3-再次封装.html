@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab a b  selectedTab">选项一</li>
+        <li  class="a tab atabb b ">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class=" a b tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="a-tab-b">a-tab-b</li>
+    </ul>
+</body>
+</html>
+<script>
+function byClass(str,eles){//str是指定的类名,eles是筛选的范围
+	//var eles=document.getElementsByTagName("*");
+	var a=[];
+	//var reg=/(^| )str( |$)/;
+	var reg=new RegExp("(?:^| )"+str+"(?: |$)");//构造函数方式可以用变量来动态创建正则
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(reg.test(ele.className)){
+			a.push(ele);
+		}
+	}
+		return a;
+}
+
+var eles=document.getElementsByTagName("*");
+/*
+	第一步思路分解
+//不断筛选
+var a1=byClass("tab",eles);
+a2=byClass("a",a1);
+a3=byClass("b",a2);
+
+//把上边的思路可以整理成下边的写法，以便以后做循环筛选
+//如果获取类名是a,是b，还是tab的怎么办呢?
+eles=byClass("tab",eles);//先计算等号右侧的，把原来的eles集合传进去，计算之后得出来新的集合把等号左侧的eles更新
+eles=byClass("a",eles);
+eles=byClass("b",eles);
+*/
+
+/*
+	第二步思路分解
+var str="  a b   tab   ";
+var regTrim=/^ +| +$/g;
+str=str.replace(regTrim,"");//去掉首尾的空格
+var aClass=str.split(/ +/);//以一到多个空格为分隔符，将字符串分隔成若干段
+//var reg=new RegExp("");//这是一个空正则，和任意字符串去匹配都是true
+
+for(var i=0;i<aClass.length;i++){
+	eles=byClass(aClass[i],eles);	
+}
+
+*/
+
+
+function getElesByClass(str){
+	var regTrim=/^ +| +$/g;//去首尾空格
+	str=str.replace(regTrim,"");
+	var aClass=str.split(/ +/);//把多个类名分解到数组里
+	
+	var eles=document.getElementsByTagName("*");//这是筛选的最大范围
+	
+	for(var i=0;i<aClass.length;i++){//一层层的过滤筛选
+			eles=byClass(aClass[i],eles);
+	}
+	return eles;	
+}
+
+var str="  a b   tab   ";
+var eles=getElesByClass(str);
+for(var i=0;i<eles.length;i++){
+	eles[i].style.backgroundColor="red";	
+}
+
+
+
+
+
+</script>

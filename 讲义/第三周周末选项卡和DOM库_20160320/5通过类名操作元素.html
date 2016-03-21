@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab a b  selectedTab">选项一</li>
+        <li  class="a tab atabb b ">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class=" a b tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="a-tab-b">a-tab-b</li>
+    </ul>
+</body>
+</html>
+<script>
+//通过类名获得元素
+//把以上li的类名中包括a,b和tab的元素找出来（这是三个类名）
+
+document.getElementsByClassName("a b tab");
+//如果浏览器不支持getElementsByClassName方法，应该先把文档中所有的元素找到，然后再做三次过滤
+//第一次，先类名包含a的找到，
+//第二次，在第一次过滤的结果中，再把类名包含b的找出来
+//第三次，在第二次过滤的结果中，再把类名包含tab的找出来
+
+//减化，把以上li中，类名包含tab的找出来
+var eles=document.getElementsByTagName("*");//通过通配符*找到所有元素
+var reg=/(^| )tab( |$)/;
+var str="tab a b a-b-tab";
+//\b 边界只是逻辑位置,\w和\W字符之间的逻辑位置
+//\w是常用字符集，包括[A-Za-z0-9_] \W非\w的集合（反向集合）
+
+str="abc#dls^kdi*893!dk9-&^_abc"
+alert(str.split(/\b/));//为什么不能用\b
+
+/*
+reg.test(str);//true,RegExp
+reg.lastIndex;
+RegExp.$1;RegExp.$2;
+*/
+
+var a=[];
+for(var i=0;i<eles.length;i++){
+	var ele=eles[i];
+	
+	//判断ele.className这个字符串是否包括"tab"这个类名	
+	//if(ele.className.indexOf("tab")>-1){}
+	
+	"tab a b a-b-tab"
+	"a tab b";"a   tab b";"a b tab";
+	if(reg.test(ele.className)){
+		a.push(ele);
+	}
+
+}
+for(var i=0;i<a.length;i++){
+	a[i].style.backgroundColor="red";	
+}
+
+
+
+
+</script>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab a b  selectedTab">选项一</li>
+        <li  class="a tab atabb b ">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class=" a b tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="a-tab-b">a-tab-b</li>
+    </ul>
+</body>
+</html>
+<script>
+function byClass(str){//str是指定的类名
+	var eles=document.getElementsByTagName("*");
+	var a=[];
+	//var reg=/(^| )str( |$)/;
+	var reg=new RegExp("(?:^| )"+str+"(?: |$)");//构造函数方式可以用变量来动态创建正则
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(reg.test(ele.className)){
+			a.push(ele);
+		}
+	}
+		return a;
+}
+
+var a=byClass("tab");
+//如果获取类名是a,是b，还是tab的怎么办呢？
+for(var i=0;i<a.length;i++){
+	a[i].style.backgroundColor="red";	
+}
+
+
+
+
+</script>
