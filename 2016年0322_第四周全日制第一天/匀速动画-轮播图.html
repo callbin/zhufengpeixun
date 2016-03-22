@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #outer{
+            width: 300px;
+            height: 200px;
+            margin: 10px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        #inner{
+            width:1200px;
+            height: 200px;
+            position: absolute;
+            left:0;
+            top:0;
+        }
+        #inner li{
+            width: 300px;
+            height: 200px;
+            float: left;
+            font-size:45px;
+            color: #fff;
+        }
+        #btn{
+            text-align: center;
+
+        }
+        #btn span{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius:50%;
+            font-size:20px;
+            color: #fff;
+            margin: 10px;
+            background: orange;
+            text-align: center;
+            cursor: pointer;
+        }
+        #inner li:nth-child(1){
+            background: pink;
+        }
+        #inner li:nth-child(2){
+            background: orange;
+        }
+        #inner li:nth-child(3){
+            background: palegreen;
+        }
+        #inner li:nth-child(4){
+            background: paleturquoise;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <ul id="inner">
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+        <li>4444</li>
+    </ul>
+</div>
+<div id="btn">
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+</div>
+</body>
+</html>
+<script>
+    var oInner = document.getElementById("inner");
+    //方向的问题
+    //起始位置>终点位置  往左运动 oInner.offsetLeft-10
+    //起始位置<终点位置 往右运动  oInner.offsetLeft+10
+    function move(ele,target){
+        clearInterval(ele.timer);//清理上个move方法的定时器
+        function step(){
+            if(ele.offsetLeft>target){//往左运动
+                ele.style.left = ele.offsetLeft-17+"px";
+                if(ele.offsetLeft<=target){ //往左运动,超过终点位置时,停留在终点位置
+                    ele.style.left = target+"px";
+                    window.clearInterval(ele.timer);
+                }
+            }else if(ele.offsetLeft<target){//往右运动
+                ele.style.left = ele.offsetLeft+17+"px";
+                if(ele.offsetLeft>=target){//往右运动,超过终点位置时,停留在终点位置
+                    ele.style.left = target+"px";
+                    window.clearInterval(ele.timer);
+                }
+            }else{
+                window.clearInterval(ele.timer);
+            }
+        }
+        ele.timer = window.setInterval(step,15);
+    }
+    var btn = document.getElementById("btn");
+   var oSpans = btn.getElementsByTagName("span");
+    for(var i = 0;i<oSpans.length;i++){
+        oSpans[i].index = i;
+        oSpans[i].onclick = function(){
+            move(oInner,-300*this.index);
+        }
+    }
+    //1-->-300*0
+    //2-->-300*1
+    //3-->-300*2
+    //4 -->-300*3
+
+    //方向的问题
+    //动画积累的问题
+    //边界的问题
+
+
+</script>

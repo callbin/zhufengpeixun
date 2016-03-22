@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #div1{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left:100px;
+            top:100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>
+<script src="common.js"></script>
+<script>
+    //由当前的位置匀速的运动的窗口的右端
+    //js这边的动画都是拿定时器来模拟的
+    //当前的位置
+    //目标位置
+    //起始位置和目标位置都是距离参照物(body)的偏移量
+    var oDiv = document.getElementById("div1");
+    function move(){
+        var begin = oDiv.offsetLeft; /*起始位置*/
+        var target = c.win("clientWidth")-oDiv.offsetWidth;
+        //console.log(target);
+        if(oDiv.offsetLeft+10>=target){
+            oDiv.style.left = target+"px";
+            window.clearTimeout(timer);
+            return;
+        }
+        oDiv.style.left = begin+10+"px";
+    }
+    var timer = window.setInterval(move,15);
+
+
+
+</script>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #div1{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left:100px;
+            top:100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>
+<script>
+    //减速运动是模拟一种物理算法算出的一个值(nSpeed) (变化的值)
+    //nSpeed = (target-ele.offsetLeft)/10
+    //下一次的位置 = 当前的位置+nSpeed
+//    0---1000  100
+//    100--1000 90
+//    190 --1000 81
+//            ..... 0
+    var oDiv = document.getElementById("div1");
+    function buffer(ele,target){
+        window.clearTimeout(ele.timer);
+        function step(){
+            var nSpeed = (target-ele.offsetLeft)/10;
+           //在相加之前对nSpeed进行取整运算
+            nSpeed=nSpeed>0?Math.ceil(nSpeed):Math.floor(nSpeed);
+            console.log(nSpeed);
+           if(nSpeed == 0){
+               window.clearTimeout(ele.timer);
+               return;
+           }
+            ele.style.left = ele.offsetLeft+nSpeed+"px";
+            ele.timer =window.setTimeout(step,15);
+        }
+        step();
+    }
+    buffer(oDiv,600);
+    //offsetLeft/offsetLeft值如果是浮点数会自动进行四舍五入
+
+
+</script>
