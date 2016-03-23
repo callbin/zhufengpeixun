@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .stage{
+            width: 367px;
+            height: 297px;
+            background: url(images/bg-grid.jpg) no-repeat;
+            position:relative;
+
+        }
+        .stage img{
+            width: 142px;
+            height: 200px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin: -100px 0 0 -71px;
+        }
+        .stage img:nth-child(1){
+            opacity: 0.5;
+
+        }
+        .stage img:nth-child(2){
+            /*transform: rotate(-45deg);*/
+            /*-webkit-transform: rotate(-45deg); 谷歌*/
+            /*-ms-transform: rotate(-45deg); ie*/
+            /*-moz-transform: rotate(-45deg); 火狐*/
+            /*-o-transform: rotate(-45deg); 欧朋*/
+            /*transform: scale(0.5);*/
+             /*transform: skew(15deg,30deg);*//*第一个参数  正->左 负->右
+               第二个参数 正->下 负->上
+            */
+            transform: translate(-50px,-100px);/*left,top*/
+            transform-origin:right;
+        }
+/*transform变形 :rotate(45deg) skew(15deg) scale(2) translate(100px,200px)
+  transform-origin:center 变形的基准的默认的都是元素的中心点
+  rotate,skew,scale基准点是可以改变的,但是translate的基准点永远是中心点没法改变
+*/
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <img src="images/pic.jpg">
+        <img src="images/pic.jpg">
+    </div>
+</body>
+</html>

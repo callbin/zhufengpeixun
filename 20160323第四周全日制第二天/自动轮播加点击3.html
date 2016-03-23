@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #outer {
+            width: 300px;
+            height: 200px;
+            margin: 10px auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #inner {
+            width: 1200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #inner li {
+            width: 300px;
+            height: 200px;
+            float: left;
+            font-size: 45px;
+            color: #fff;
+        }
+
+        #btn {
+            text-align: center;
+
+        }
+
+        #btn span {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            font-size: 20px;
+            color: #fff;
+            margin: 10px;
+            background: orange;
+            text-align: center;
+            cursor: pointer;
+        }
+        #btn span.cur{
+            background: #000;
+        }
+
+        #inner li:nth-child(1) {
+            background: pink;
+        }
+
+        #inner li:nth-child(2) {
+            background: orange;
+        }
+
+        #inner li:nth-child(3) {
+            background: palegreen;
+        }
+
+        #inner li:nth-child(4) {
+            background: paleturquoise;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <ul id="inner">
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+        <li>4444</li>
+    </ul>
+</div>
+<div id="btn">
+    <span class="cur">1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+</div>
+<script src="DOM.js"></script>
+</body>
+</html>
+<script>
+    function buffer(ele, target) {
+        window.clearTimeout(ele.timer);
+        function step() {
+            var nSpeed = (target - ele.offsetLeft) / 10;
+            nSpeed = nSpeed > 0 ? Math.ceil(nSpeed) : Math.floor(nSpeed);
+            ele.style.left = ele.offsetLeft + nSpeed + "px";
+            if (nSpeed == 0) {
+                window.clearTimeout(ele.timer);
+                return;
+            }
+            ele.timer = window.setTimeout(step, 15);
+        }
+
+        step();
+    }
+    var oSpans = document.getElementById("btn").getElementsByTagName("span");
+    var oInner = document.getElementById("inner");
+    for(var i = 0;i<oSpans.length;i++){
+        oSpans[i].index = i;
+        oSpans[i].onclick = function(){
+            buffer(oInner,-300*this.index);
+            setCur(this);
+            window.clearInterval(oInner.autoTimer);
+            oInner.autoTimer = window.setInterval(autoLeft,2000);
+            n = this.index;
+        }
+    }
+
+    //给当前选中的目标元素设置样式
+    function setCur(ele){
+        //给当前点击的元素设置类名cur
+        DOM.addClass(ele,"cur");
+        //获取所有的兄弟元素,把类名cur都去掉
+        var siblings = DOM.siblings(ele);
+        for(var i = 0;i<siblings.length;i++){
+            DOM.removeClass(siblings[i],"cur");
+        }
+    }
+    //无缝滚动克隆第一张
+    var first = DOM.children(oInner,"li")[0];
+    first = first.cloneNode(true);
+    first.style.backgroundColor = "pink";
+    oInner.appendChild(first);
+    oInner.style.width = oInner.offsetWidth+first.offsetWidth+"px";
+
+
+
+
+    //自动往左滚动
+    var n = 0;//起始索引;
+    function autoLeft(){
+        n++;
+        if(n==5){
+            oInner.style.left = 0;
+            n = 1;
+        }
+        buffer(oInner,-300*n);
+        if(n==4){
+            setCur(oSpans[0]);
+        }else{
+            setCur(oSpans[n]);
+        }
+
+    }
+   oInner.autoTimer = window.setInterval(autoLeft,1000);
+
+</script>

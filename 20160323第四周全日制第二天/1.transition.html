@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #list li{
+            width: 100px;
+            height: 100px;
+            opacity: 1;
+            background: green;
+            /*transition:height 1s linear,width 1s linear; *//*执行两次,划过的时候执行一次,划出的时候执行一次*/
+            transition: all 1s linear;
+        }
+        #list li:nth-child(even){
+            background: yellow;
+        }
+        /*#list li:nth-child(1):hover{*/
+            /*height:400px;*/
+            /*width: 400px;*/
+            /*opacity:0.1;*/
+
+           /*/!*   transition-property :css属性*/
+                /*transition-duration :动画运行时间*/
+                /*transition-timing-function :动画类型(linear,ease-in,ease-out,ease-in-out)*/
+                /*transition-delay :延迟执行动画的时间*/
+
+
+           /**!/*/
+        /*}*/
+        /*#list li:nth-child(4):hover{*/
+
+        /*}*/
+        #list li.aa{
+            width: 200px;
+            height: 200px;
+            opacity: 0.5;
+        }
+        /*不管哪种方式触发了transition动画其本质是改变了css属性值
+        css属性值发生改变的时候transition动画才会起作用
+        */
+    </style>
+</head>
+<body>
+<ul id="list">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</body>
+</html>
+<!--
+transition过渡动画(只能设置起始状态和结束状态):在一定时间内,css属性值由一个值向另一个值过渡
+-->
+

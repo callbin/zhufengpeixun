@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .container{
+            width: 367px;
+            height: 297px;
+            background: url(images/bg-grid.jpg);
+            position: relative;
+        }
+        .slide{
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            background: palegreen;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin: -100px 0 0 -50px;
+            font-size: 30px;
+            color: #fff;
+            text-align: center;
+
+        }
+        .top{
+            transform: rotate(-45deg) skew(15deg,15deg);
+        }
+        .left{
+            transform:rotate(15deg) skew(15deg,15deg) translate(-50px,100px);
+        }
+        .right{
+            transform: rotate(-15deg) skew(-15deg,-15deg) translate(50px,100px);
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="slide top">1</div>
+    <div class="slide left">2</div>
+    <div class="slide right">3</div>
+</div>
+</body>
+</html>

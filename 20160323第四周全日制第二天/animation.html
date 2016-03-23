@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        div{
+            width: 400px;
+            height: 550px;
+            background: url(images/pic.jpg) no-repeat;
+            /*animation-name声明关键帧动画的名称*/
+            /*animation-duration 动画执行的时间*/
+            /*animation-timing-function 动画类型*/
+            /*animation-delay 动画延迟的时间*/
+            /*animation-interation-count 动画执行的次数(无限次:infinite)*/
+            /*animation-direction:reverse|alternate|alternate-reverse(动画运行的方向)*/
+            /*animation-play-state:running|paused 动画的状态(运行|停止)*/
+        /*animation-fill-mode:forwards(最后一帧)|backwards:(第一帧)|both(最后一帧)*/
+            animation:move 1s  ease-in  infinite;
+
+        }
+        @keyframes move {
+            0%,100%{
+                transform: rotate(45deg) scale(1);
+            }
+            50%{
+                transform: rotate(90deg) scale(0.5);
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+<div ></div>
+    <!--关键帧动画 :1.声明关键帧动画 2.通过animation调用关键帧动画-->
+
+
+</body>
+</html>

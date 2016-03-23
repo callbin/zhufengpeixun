@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .stage{
+            width: 367px;
+            height: 297px;
+            background: url(images/bg-grid.jpg) no-repeat;
+            position:relative;
+            transform-style:preserve-3d;/*在3D空间里展示*/
+            perspective: 800px;/*视距:离着多远看这个物体*/
+            /*x轴,y轴,Z轴*/
+
+        }
+        .stage img{
+            width: 142px;
+            height: 200px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin: -100px 0 0 -71px;
+        }
+        .stage img:nth-child(1){
+            opacity: 0.5;
+
+        }
+        .stage img:nth-child(2) {
+            /*transform: rotateX(45deg);*/ /*前后翻转*/
+            /*transform: rotateY(45deg);/!*左右翻转*!/*/
+            /*transform: translateZ(300px);*/
+        }
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <img src="images/pic.jpg">
+        <img src="images/pic.jpg">
+    </div>
+</body>
+</html>
