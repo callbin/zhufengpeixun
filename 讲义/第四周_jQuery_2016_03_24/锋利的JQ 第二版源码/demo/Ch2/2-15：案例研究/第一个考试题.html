@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+用代码描述一下原型链
+document.body.__proto__.__proto__.__proto__.
+Object.__proto__
+                   
+
+用代码单例模式和工厂模式
+animate={};
+animate.fadeIn=function(){}
+
+document.creatElement("div");
+
+jQuery入口方法可以看成是一个工厂模式
+
+function Factory(){
+	var obj={};
+    obj.attr1="";
+    obj.attr2="";
+    return obj;
+}
+
+总结浏览器兼容性问题
+
+数组的兼容性问题
+<!--
+字符串
+DOM方法
+-->
+<div>abcd</div>
+<!--
+document.querySelectorAll;//IE8先提出来的
+JSON
+-->
+
+-->
+
+
+
+
+</body>
+</html>
+<script>
+reg=/<\!--[\S\s]*?-->/g;
+/[(.?*+!)]]/;//在正则的[]中，单字符的元字符，都表示这个字符的本意，比较.就表示点本身
+/[.\n]/
+
+document.body.innerHTML=document.body.innerHTML.replace(reg,"");
+
+
+//常用字符
+/^[\w\u4e00-\u9fa5]{1,25}@\w{20}\.[a-z]{2,3}$/;
+/^[\w\u4e00-\u9fa5]{1,25}@\w{20}\.(cn|com|org|edu|cc)$/
+
+
+
+cc
+
+</script>
