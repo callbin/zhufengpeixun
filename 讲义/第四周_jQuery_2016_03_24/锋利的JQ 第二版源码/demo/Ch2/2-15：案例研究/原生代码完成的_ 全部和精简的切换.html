@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+ <link rel="stylesheet" type="text/css" href="css/default.css" /> 
+<!-- 引入jQuery -->
+<script src="../../../../../第三周周末选项卡和DOM库_20160320/DOM.js"></script>
+</script>
+
+</script>
+</head>
+<body>
+<div class="SubCategoryBox">
+<ul>
+<li><a href="#">佳能</a><i>(30440) </i></li>
+<li ><a href="#">索尼</a><i>(27220) </i></li>
+<li ><a href="#">三星</a><i>(20808) </i></li>
+<li ><a href="#">尼康</a><i>(17821) </i></li>
+<li ><a href="#">松下</a><i>(12289) </i></li>
+<li ><a href="#">卡西欧</a><i>(8242) </i></li>
+<li ><a href="#">富士</a><i>(14894) </i></li>
+<li ><a href="#">柯达</a><i>(9520) </i></li>
+<li ><a href="#">宾得</a><i>(2195) </i></li>
+<li ><a href="#">理光</a><i>(4114) </i></li>
+<li ><a href="#">奥林巴斯</a><i>(12205) </i></li>
+<li ><a href="#">明基</a><i>(1466) </i></li>
+<li ><a href="#">爱国者</a><i>(3091) </i></li>
+<li ><a href="#">其它品牌相机</a><i>(7275) </i></li>
+</ul>
+<div class="showmore">
+<a href="more.html"><span>显示全部品牌</span></a>
+</div>
+</div>
+</body>
+</html>
+<script>
+var oLis=document.getElementsByTagName("li");
+//更精确的方法用这个：
+var oLis=DOM.getElesByClass("SubCategoryBox")[0].getElementsByTagName("li");
+//把索引从6开始，但不包含最后一个的li保存下来
+
+var ctrlLis=[].slice.call(oLis,6,oLis.length-1);//有兼容问题
+var ctrlLis=DOM.listToArray(oLis).slice(6,oLis.length-1);//没兼容问题
+for(var i=0;i<ctrlLis.length;i++){
+	ctrlLis[i].style.display="none";//默认这一部分是隐藏的	
+}
+
+//把需要高亮的品牌元素先获取到，以备后用
+var promotedLis=[];
+var reg=/佳能|柯达|爱国者/;
+for(var i=0;i<oLis.length;i++){
+	if(reg.test(oLis[i].innerHTML))
+		promotedLis.push(oLis[i]);	
+}
+
+var oA=DOM.children(DOM.getElesByClass("showmore")[0],"a")[0];
+oA.onclick=function(){
+	var oSpan=DOM.children(this)[0];
+	//如果第一个是隐藏的，则把所有的ctrlLis设为显示
+	if(ctrlLis[0].style.display=="none"){//因为是批量设置这些被控制元素是隐藏还是显示的，那我们以第一个元素做为判断依据即可
+		for(var i=0;i<ctrlLis.length;i++){
+			ctrlLis[i].style.display="block";	
+		}
+		oSpan.innerHTML="显示精减品牌";
+		oSpan.style.backgroundImage="url(img/up.gif)";
+		
+		//给那些需要高亮的品牌加上promoted类样式
+		/*for(var i=0;i<promotedLis.length;i++){
+			DOM.addClass(promotedLis[i],"promoted");
+		}*/
+		//用forEach代替for循环，IE6/7/8不支持
+		promotedLis.forEach(function(ele){
+			DOM.addClass(ele,"promoted");
+		});
+	}else{
+		for(var i=0;i<ctrlLis.length;i++){
+			ctrlLis[i].style.display="none";	
+		}
+		oSpan.innerHTML="显示全部品牌";
+		oSpan.style.backgroundImage="url(img/down.gif)";
+		
+		//给那些高亮的品牌去掉promoted类样式
+		for(var i=0;i<promotedLis.length;i++){
+			DOM.removeClass(promotedLis[i],"promoted");
+		}
+		
+		///用forEach代替for循环,IE6/7/8不支持
+		promotedLis.forEach(function(ele){
+			DOM.removeClass(ele,"promoted");
+		});
+	}
+	return false;
+}
+</script>

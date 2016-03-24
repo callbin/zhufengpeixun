@@ -52,7 +52,20 @@
 <script>
 $("li.level1>a").click(function(){
 	
-	$(this).next().show(700).parent().siblings().children("ul").hide(700);
+	//$(this).next().show(700).parent().siblings().children("ul").hide(700);
+	//var ele=$(this);//把原生的DOM转成jQuery对象，不转不能用jQuery的方法
+	
+	//var next=ele.next();//找到a的弟弟ul，
+	var next =$("ul",this.parentNode);//两个参数,第二个参数是第一个参数的上下文：当次的查找以this.parentNode为范围
+	next.show(700);//让a下边的ul显示
+	var oLi=next.parent();
+	//var oLi=next.parent();//父节点
+	//var oLi=ele.parents();//它的祖先们
+			//ele.parentsUntil("body");//截止到某一个祖先节点
+	var otherLi=oLi.siblings();//找li兄弟节点
+	var oUls=otherLi.children("ul");//
+	oUls.hide(700);//oUls是几个
+	
 	
 	
 	return false;//阻止事件的默认行为	

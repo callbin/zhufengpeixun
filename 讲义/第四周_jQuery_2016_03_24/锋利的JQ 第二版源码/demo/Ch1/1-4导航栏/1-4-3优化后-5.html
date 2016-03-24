@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="css/default.css" type="text/css" />
 
 <!-- 引入 jQuery -->
-<script src="../../scripts/jquery.js" type="text/javascript"></script>
+
 <style type="text/css">
 #menu{ width:150px; height:300px; background:#ccc; position:absolute; }
 </style>
@@ -49,23 +49,22 @@
 
 </body>
 </html>
+<script src="../../../../../第三周周末选项卡和DOM库_20160320/DOM.js"></script>
 <script>
-$("li.level1>a").click(function(){
+/*
+	第一步：找到level1下边的子元素a，然后绑定事件
+		通过DOM.getElesByClass方法找到所有的level1元素，然后再把各个level1元素下的子元素a找出来，然后再绑定事件
 	
-	$(this).next().show(700).parent().siblings().children("ul").hide(700);
+	第二步：找到this下的ul，让其显示
+		就是this的弟弟，这个相对简单
+	
+	第三步：找到this的父节点的兄弟节点中的ul子元素，让其隐藏
+		找到this的父节点，然后再找到父节点的兄弟节点，然后再把每一个兄弟节点中的ul子节点找出来（循环），然后再把这些ul子节点设为display:none
 	
 	
-	return false;//阻止事件的默认行为	
-})
+*/
 
-document.oncontextmenu=function(e){
-	//e是事件对象，天生就有，IE低版本不支持
-	var ele=document.createElement("div");
-	ele.id="menu";
-	ele.style.left=e.pageX+"px";//鼠标在文档中的x轴坐标
-	ele.style.top=e.pageY+"px";
-	document.body.appendChild(ele);
-	ele.innerHTML="你想谁呢？";
-	return false;//阻止事件的默认行为	
-}
+
+
+
 </script>

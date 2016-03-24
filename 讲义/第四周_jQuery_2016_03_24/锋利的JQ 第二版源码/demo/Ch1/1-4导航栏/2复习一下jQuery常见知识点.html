@@ -6,14 +6,24 @@
 <link rel="stylesheet" href="css/default.css" type="text/css" />
 
 <!-- 引入 jQuery -->
-<script src="../../scripts/jquery.js" type="text/javascript"></script>
+
 <style type="text/css">
 #menu{ width:150px; height:300px; background:#ccc; position:absolute; }
 </style>
-
+<script src="../../scripts/jquery.js" type="text/javascript"></script>
 </head>
 <body>
-<p>第三步：优化后：</p>
+1、jQuery的首要功能是查找DOM元素，它的入口方法是jQuery，简写为$
+2、$的参数类型
+$("选择器格式的字符串");
+$("HTML格式的字符串");
+$(DOM对象);//把DOM原生对象转化为jQuery对象，
+$("选择器格式的字符串",context);
+
+$("div",ele);
+$("div","#div1");
+
+//如何把jQuery对象转化为JS原生对象呢？
 
 <div class="box">
 	<ul class="menu">
@@ -47,25 +57,20 @@
 	</ul>
 </div>
 
+
 </body>
 </html>
 <script>
-$("li.level1>a").click(function(){
-	
-	$(this).next().show(700).parent().siblings().children("ul").hide(700);
-	
-	
-	return false;//阻止事件的默认行为	
-})
+//一定要认识jQuery对象是什么？基于面向对象的一个实例，是一个类数组
+var $lis=$("li")
+var oLis=[].slice.call($lis,0);//把jQuery对象中的DOM元素转存到原生JS的数组中
+$lis[8]//把存在jQuery对象中第8个索引位置的元素取到
 
-document.oncontextmenu=function(e){
-	//e是事件对象，天生就有，IE低版本不支持
-	var ele=document.createElement("div");
-	ele.id="menu";
-	ele.style.left=e.pageX+"px";//鼠标在文档中的x轴坐标
-	ele.style.top=e.pageY+"px";
-	document.body.appendChild(ele);
-	ele.innerHTML="你想谁呢？";
-	return false;//阻止事件的默认行为	
-}
+$lis.get(8);//和上边一样的功能
+//但是，要分清$lis.eq(8)和$lis.get(8)的区别
+$lis.eq(8);//得到的是jQuery对象，可以用jQuery方法
+$lis.eq(8).animate({height:500},800);
+$lis.get(8).style.display="block";;
+$lis.eq(8).style.display="block";;
+
 </script>

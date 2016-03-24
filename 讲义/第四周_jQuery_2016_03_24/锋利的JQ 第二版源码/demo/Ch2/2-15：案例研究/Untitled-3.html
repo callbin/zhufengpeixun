@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var a=[3,9,8,2,10,7,6,4,1];
+a.forEach(function(val,index,ary){
+	//当遍历此数组的时候，会自动的执行这个回调方法：给回调方法传三个参数
+	//三个参数第一个是当次遍历到的数组项（值），第一次是3，第二次是9,……
+	//第二个参数是当前遍历到的数组项在原数组中的索引位置
+	//第三个参数是原数组本身
+	console.log(val,index,ary);
+	this.innerHTML+="值是:"+val+",索引位置是"+index+"<br>";
+},div1);
+
+//forEach还可以有第二个参数（可选），第二个参数是第一个参数的上下文（也就是第一个参数函数执行的时候的this关键字）
+
+</script>

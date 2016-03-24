@@ -19,8 +19,9 @@
 <div class="tabbedPannels" >
 	<ul class="tabGroup">
     	<li class="tab selectedTab">选项一</li>
-        <li  class="tab">选项二</li>
+        <li id="li2"  class="tab">选项二</li>
         <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
         <li  class="tab">选项四</li>
     </ul>
     <div class="contentGroup">
@@ -38,28 +39,6 @@
 </html>
 <script src="jquery-1.9.1.js"></script>
 <script>
-//第一步：JavaScript Query，首先就是查找DOM元素，和document.querySelectorAll的风格一样，也就是说是CSS选择器的风格
-$(".tab").click(function(){//把click方法里的匿名方法，绑定给所有的类名叫tab的元素。这里面会对应一个隐式循环（jQuery里隐式循环用非常）
-	
-	$(this).addClass("selectedTab").siblings().removeClass("selectedTab");
-	//jQuery的链式写法：因为每个方法都会返回下一次执行的方法的上下文（这个上下文 都是jQuery的实例）
-	
-/*	this.className="tab selectedTab";
-	for(var i=0;i<silbings.length;i++){
-		siblings[i].className="tab";	
-	}*/
-	
-	var index=$(this).index();//相当于我们DOM库里的index方法
-	this.parentNode.nextElementSibling.chilren[index];
-	var $content=$(this).parent().next().children().eq(index)
-	$content.addClass("selectedContent").siblings().removeClass("selectedContent");
-	//以上是分解成了两行代码，以下是用一行代码来表示，效果一样
-	$(this).parent().next().children().eq(index).addClass("selectedContent").siblings().removeClass("selectedContent");
-	
-	
-	
-});
-
 //以下三行代码一个作用，都是在文档中把类是既是tab，又是content的元素找出来
 alert($(".tab.content").length);
 document.getElementsByClassName("tab content");
@@ -71,4 +50,17 @@ alert($(".tab .content").length);//查找.tab下的后代元素中类名叫conte
 alert($(".tab>.content").length);////查找.tab下的子元素中类名叫content的元素
 
 $("*")//和document.getElementsByTagName("*")相同
+$("#li2+li").css("font-size","36px").css({background:"red",border:"10px blue solid"}).next().hide(5000,function(){//回调方法
+	$(this).show(5000);
+	
+	}).end().fadeOut(5000);//前边的css方法是设置一个CSS属性的值，后边是批量设置CSS属性的值
+	//hide隐藏，show显示，这两个方法的参数如果有数字，则这两个方法变成了动画，参数是动画执行的时间（单位是毫秒）
+	//end是指把被操作元素的往上回找一级
+	
+	
+	//以下是过滤选择器
+	$("li:first");//获得所有li中唯一的第一个li
+	$("li:even").css("background","orange");//获得li中索引为偶数的元素，从0开始的
+	$("li:not(#li2)").css("font-size","24px");//把所有的li中，id是li2的元素排除掉
+	$("li:eq(2)").css("color","green");//找所有的li中的索引为2的元素
 </script>

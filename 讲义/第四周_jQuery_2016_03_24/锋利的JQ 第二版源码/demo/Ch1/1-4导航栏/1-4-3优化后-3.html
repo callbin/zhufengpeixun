@@ -51,21 +51,18 @@
 </html>
 <script>
 $("li.level1>a").click(function(){
-	
-	$(this).next().show(700).parent().siblings().children("ul").hide(700);
-	
-	
+	var $ul=$(this).next();
+	/*$ul.is("#abcd");
+	$ul.is("ul");
+	$ul.is(".class1");
+	$ul.is("[class*=level2]");*/
+	if($ul.is(":visible")){//is是判断状态的方法，
+		$ul.hide(700);
+	}else{
+		$ul.show(700).parent().siblings().children("ul").hide(700);
+	}
+
 	return false;//阻止事件的默认行为	
 })
 
-document.oncontextmenu=function(e){
-	//e是事件对象，天生就有，IE低版本不支持
-	var ele=document.createElement("div");
-	ele.id="menu";
-	ele.style.left=e.pageX+"px";//鼠标在文档中的x轴坐标
-	ele.style.top=e.pageY+"px";
-	document.body.appendChild(ele);
-	ele.innerHTML="你想谁呢？";
-	return false;//阻止事件的默认行为	
-}
 </script>

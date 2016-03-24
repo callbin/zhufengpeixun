@@ -6,35 +6,13 @@
  <link rel="stylesheet" type="text/css" href="css/default.css" /> 
 <!-- 引入jQuery -->
 <script src="../../scripts/jquery.js" type="text/javascript"></script>
-<script type="text/javascript">
-$(function(){ 								    //  等待DOM加载完毕.
-	var $category = $('ul li:gt(5):not(:last)');     	    //  获得索引值大于5的品牌集合对象(除最后一条)	
-	$category.hide();							    //  隐藏上面获取到的jQuery对象。
-	var $toggleBtn = $('div.showmore > a');             //  获取“显示全部品牌”按钮
-	$toggleBtn.click(function(){
-		  if($category.is(":visible")){
-				$category.hide();                   		 //  隐藏$category
-				$(this).find('span')
-					.css("background","url(img/down.gif) no-repeat 0 0")      
-					.text("显示全部品牌");                  //改变背景图片和文本
-				$('ul li').removeClass("promoted");			// 去掉高亮样式
-		  }else{
-				$category.show();                   		 //  显示$category
-				$(this).find('span')
-					.css("background","url(img/up.gif) no-repeat 0 0")      
-					.text("精简显示品牌");                  //改变背景图片和文本
-				$('ul li').filter(":contains('佳能'),:contains('尼康'),:contains('奥林巴斯')")
-					.addClass("promoted");				//添加高亮样式
-		  }
-		return false;					      	//超链接不跳转
-	})
-})
+
 </script>
 </head>
 <body>
 <div class="SubCategoryBox">
 <ul>
-<li ><a href="#">佳能</a><i>(30440) </i></li>
+<li><a href="#">佳能</a><i>(30440) </i></li>
 <li ><a href="#">索尼</a><i>(27220) </i></li>
 <li ><a href="#">三星</a><i>(20808) </i></li>
 <li ><a href="#">尼康</a><i>(17821) </i></li>
@@ -55,3 +33,30 @@ $(function(){ 								    //  等待DOM加载完毕.
 </div>
 </body>
 </html>
+<script>
+var $lis=$(".SubCategoryBox>ul>li");
+var $ctrlLis=$lis.filter("li:gt(5):not(:last)");
+var $promotedLis=$lis.filter(":contains(佳能),:contains(柯达),:contains(爱国者)");
+$ctrlLis=$(".SubCategoryBox>ul>li:gt(5):not(:last)");
+//jQuery中有三个筛选方法：filter同级筛选，children子元素筛选，find是从后代元素中筛选
+$lis.children("li");//在$lis中找子元素是Li的，相当于$("li>li");
+$lis.find("li");//找所有的后代元素li,相当于$("li li");
+$ctrlLis.hide();
+//$(".showmore>a>span").click(function(){})
+$(".showmore>a").click(function(){
+	if($ctrlLis.is(":visible")){
+		$ctrlLis.hide();
+		$("span",this).text("显示全部品牌").css("background-image","url(img/down.gif)");
+		//写在JS里的路径是相对于这个HTML页面的，无论JS内嵌在HTML页中还是从外部引用
+		$promotedLis.removeClass("promoted");
+	}else{
+		$ctrlLis.show();
+		$("span",this).text("显示精减品牌").css("background-image","url(img/up.gif)");
+		$promotedLis.addClass("promoted");
+		
+	}
+	
+	return false;
+})
+
+</script>
