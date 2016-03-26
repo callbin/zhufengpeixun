@@ -35,7 +35,7 @@ function getCss(ele,attr){//专门为aniamte用的方法
 	
 }
 var timer=0;
-function animate(ele,attr,target,duration,callback){
+function animate(ele,attr,target,duration,callback,val1,val2,va3){
 	var times=0;
 	var interval=15;
 	
@@ -52,7 +52,7 @@ function animate(ele,attr,target,duration,callback){
 			ele.timer=null;
 			//标识着动画已经结束
 			if(typeof callback == "function"){
-				callback.call(ele);
+				callback.call(ele,val1,val2,val3);
 				//callback();	
 			}
 		}

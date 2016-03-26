@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px;-opacity:0.5; -filter:alpha(opacity=50)}
+#left,#right{ width:50px; height:50px; background:green; position:absolute; top:220px; left:150px; margin:10px; cursor:pointer;}
+#right{ left:220px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="left">左</div>
+<div id="right">右</div>
+</body>
+</html>
+<script>
+
+function getCss(ele,attr){//专门为aniamte用的方法
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele)[attr])
+	}else{
+		//专门为IE处理opacity写的代码
+		if(attr=="opacity"){
+			var value=ele.currentStyle.filter;//取得IE中滤镜样式的值
+			//alpha(opacity = 50);
+			var reg=/alpha\(opacity *= *(\d+(?:\.\d+)?)\)/;
+			if(reg.test(value)){
+				//return parseFloat(RegExp.$1);
+				return RegExp.$1/100
+				//reg.$1;	//不是实例上的$1属性
+			}else{
+				return 1;//如果没有写opacity，则把默认值返回	
+			}
+		}
+		return parseFloat(ele.currentStyle[attr]);
+	}
+	
+}	
+
+//淡入淡出效果
+//
+function fadeInOut(ele,target,duration,callback){
+	var times=0;
+	var interval=15;
+	
+	var begin=getCss(ele,"opacity");
+	var change=target-begin;
+	
+	clearTimeout(ele.timer);
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			var val=times/duration*change+begin
+			ele.style.opacity=val;//不带单位
+			ele.style.filter="alpha(opacity="+val*100+")";//IE专用
+		}else{
+			ele.style.opacity=target;
+			ele.style.filter="alpha(opacity="+target*100+")";
+			clearInterval(ele.timer);
+			ele.timer=null;
+			if(typeof callback == "function"){
+				callback.call(ele);	
+			}
+		}
+	}
+	
+	ele.timer=window.setInterval(step,interval);
+	
+}
+left.onclick=function(){
+	fadeInOut(div1,0,1000);
+	//alert(getCss(div1,"opacity"));
+}
+
+right.onclick=function(){
+	fadeInOut(div1,1,1000);
+}
+</script>

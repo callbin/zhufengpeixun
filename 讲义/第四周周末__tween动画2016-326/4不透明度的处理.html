@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px;}
+#left,#right{ width:50px; height:50px; background:green; position:absolute; top:220px; left:150px; margin:10px; cursor:pointer;}
+#right{ left:220px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="left">左</div>
+<div id="right">右</div>
+</body>
+</html>
+<script>
+
+function getCss(ele,attr){//专门为aniamte用的方法
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele)[attr])
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+	
+}	
+
+//淡入淡出效果
+//
+function fadeInOut(ele,target,duration,callback){
+	var times=0;
+	var interval=15;
+	
+	var begin=getCss(ele,"opacity");
+	var change=target-begin;
+	
+	clearTimeout(ele.timer);
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			ele.style.opacity=times/duration*change+begin;//不带单	
+		}else{
+			ele.style.opacity=target;
+			clearInterval(ele.timer);
+			ele.timer=null;
+			if(typeof callback == "function"){
+				callback.call(ele);	
+			}
+		}
+	}
+	
+	ele.timer=window.setInterval(step,interval);
+	
+}
+left.onclick=function(){
+	fadeInOut(div1,0,1000);
+}
+
+right.onclick=function(){
+	fadeInOut(div1,1,1000);
+}
+</script>
