@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px;-opacity:0.5; -filter:alpha(opacity=50)}
+#left,#right{ width:50px; height:50px; background:green; position:absolute; top:220px; left:150px; margin:10px; cursor:pointer;}
+#right{ left:220px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="left">左</div>
+<div id="right">右</div>
+</body>
+</html>
+<script src="animate.js"></script>
+<script>
+
+left.onclick=function(){
+	
+	var obj={width:500}
+	animate(div1,obj,1000,function(){this.style.backgroundColor="green";});//div1是运动的元素，obj运动的维度的集合，1000是规定的时间
+}
+
+right.onclick=function(){
+	animate(div1,"opacity",1,1000);
+	//fadeInOut(div1,1,1000);
+}
+</script>
