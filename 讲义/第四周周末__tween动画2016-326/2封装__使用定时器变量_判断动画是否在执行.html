@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px;}
+#left,#right{ width:50px; height:50px; background:green; position:absolute; top:220px; left:150px; margin:10px; cursor:pointer;}
+#right{ left:220px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="left">左</div>
+<div id="right">右</div>
+</body>
+</html>
+<script>
+//把按时间比例的动画封装成一个完整的方法
+/*
+	animate是方法名
+	ele是运动的元素
+	attr是运动的方向，是个CSS属性
+	target是运动的终点
+	duration是完成此动画规定的总时间
+	
+*/
+function getCss(ele,attr){//专门为aniamte用的方法
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele)[attr])
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+	
+}
+var timer=0;
+function animate(ele,attr,target,duration){
+	var times=0;
+	var interval=15;
+	
+	var begin=getCss(ele,attr);
+	var change=target-begin;
+	clearInterval(ele.timer);//这样写无效，因为这样只能访问当次animate运行的时候定义的timer变量，无法访问上一次运行animate方法里定义的变量
+	
+	//我们需要一个跨作用域都可以访问操作的变量
+	//下一步用全局变量
+	function step(){
+		times+=interval;
+		if(times<duration){
+			ele.style[attr]=times/duration*change+begin+"px";
+		}else{
+			ele.style[attr]=target+"px";
+			window.clearInterval(ele.timer);
+			ele.timer=null;//这是关键：上一句代码不是已经把ele.timer给清掉了吗？为什么这儿还要主动赋null值呢？
+			//ele.timer上会保存一个数字，但是否有这个数字和这个数字表示的定时器队列是否有效是是两码事。
+			//但是ele.timer是我们判断定时器队列是否正在执行（即动画是否正在执行的依据）的一个依据，所以，当动画停止的时候，需要把ele.timer手动赋值为null
+			
+		}
+		
+	}
+	ele.timer=window.setInterval(step,interval);
+}
+var ele=document.getElementById("div1");
+
+//通过判断ele.timer可以知道ele是否动画中，如果正在执行动画，则ele.timer>=1，则为true。如果ele没有做动画，则ele.timer是undefined或null
+ele.onclick=function(){
+	if(!this.timer)//如果定时器上正常值，则不执行一下句
+		animate(ele,"left",1000,2000);	//如果动画没有执行，则启动
+	else{
+		clearInterval(this.timer);	//如果动画执行了，则停止
+		this.timer=null;
+		//通过这个小示例，充分理解定时器的返回值
+	}
+}
+right.onclick=function (){
+	animate(ele,"width",1000,2000);	
+}
+				
+</script>
