@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px;}
+</style>
+</head>
+
+<body>
+当前的起点：100px
+让此元素在1000ms的时间内，到达900px的位置
+100ms-->90px
+
+当前消耗的时间/规定的总时间=当前走过的路程/总路程
+十分之一  （900-100）/10
+走过的路程和当前的位置，不是一回事
+当前的位置=（900-100）/10+100（起点）
+
+假设每隔10ms定时器驱动一步动画(10ms走一步)
+var times=0;
+
+times+=1;//当前消耗的时间
+
+知道的量：
+	当前消耗的时间（不断累加变化的值）
+	规定的总时间
+    
+    起点和终点，分别是起点和终点，通过这两个值，可以计算需要运动的总的路程（总距离）
+    不断的求：当前的位置=运动的距离+起点
+    			运动的距离怎么计算=当前消耗的时间/总时间*总距离
+                
+				当前的位置=当前消耗的时间/总时间*总距离 + 起点
+                
+                var times=0;
+                var duration=1000;
+                var interval=10;//每走一步的间隔时间
+                
+                var begin=100;
+                var target=900;
+                var change=target-begin;
+                
+
+<div id="div1"></div>
+</body>
+</html>
+<script>
+				var times=0;
+                var duration=1000;
+                var interval=15;//每走一步的间隔时间
+                
+                var begin=100;
+                var target=900;
+                var change=target-begin; 
+				
+				
+				var ele=document.getElementById("div1");
+				function step(){
+					times+=interval;
+					//加一个停止的条件
+					if(times<duration){
+						ele.style.left=times/duration*change+begin+"px";
+					}else{
+						//times大于或等于duration则强止让它停在终点，并且停止运动
+						ele.style.left=target+"px";
+						clearInterval(timer);	
+					}
+					//window.setTimeout(step,interval);
+					//window.setInterval(step,interval);
+				}
+				
+				var timer=window.setInterval(step,interval);
+
+</script>

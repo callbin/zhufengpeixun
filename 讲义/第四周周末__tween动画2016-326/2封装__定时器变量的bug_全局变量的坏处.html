@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px;}
+#left,#right{ width:50px; height:50px; background:green; position:absolute; top:220px; left:150px; margin:10px; cursor:pointer;}
+#right{ left:220px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="left">左</div>
+<div id="right">右</div>
+</body>
+</html>
+<script>
+//把按时间比例的动画封装成一个完整的方法
+/*
+	animate是方法名
+	ele是运动的元素
+	attr是运动的方向，是个CSS属性
+	target是运动的终点
+	duration是完成此动画规定的总时间
+	
+*/
+function getCss(ele,attr){//专门为aniamte用的方法
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele)[attr])
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+	
+}
+var timer=0;
+function animate(ele,attr,target,duration){
+	var times=0;
+	var interval=15;
+	
+	var begin=getCss(ele,attr);
+	var change=target-begin;
+	clearInterval(timer);//这样写无效，因为这样只能访问当次animate运行的时候定义的timer变量，无法访问上一次运行animate方法里定义的变量
+	
+	//我们需要一个跨作用域都可以访问操作的变量
+	//下一步用全局变量
+	function step(){
+		times+=interval;
+		if(times<duration){
+			ele.style[attr]=times/duration*change+begin+"px";
+		}else{
+			ele.style[attr]=target+"px";
+			window.clearInterval(timer);
+		}
+		
+	}
+	timer=window.setInterval(step,interval);
+}
+var ele=document.getElementById("div1");
+
+//下面的测试会使动画出现积累，解决这个问题的方案是：在执行新的动画之前，先把原来的动画清除掉
+ele.onclick=function(){
+	animate(ele,"left",1000,2000);	
+}
+right.onclick=function (){
+	animate(this,"left",1000,2000);	
+}
+				
+</script>

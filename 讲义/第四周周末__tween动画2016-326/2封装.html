@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+//把按时间比例的动画封装成一个完整的方法
+/*
+	animate是方法名
+	ele是运动的元素
+	attr是运动的方向，是个CSS属性
+	target是运动的终点
+	duration是完成此动画规定的总时间
+	
+*/
+function getCss(ele,attr){//专门为aniamte用的方法
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele)[attr])
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+	
+}
+function animate(ele,attr,target,duration){
+	var times=0;
+	var interval=15;
+	
+	var begin=getCss(ele,attr);
+	var change=target-begin;
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			ele.style[attr]=times/duration*change+begin+"px";
+		}else{
+			ele.style[attr]=target+"px";
+			window.clearInterval(timer);
+		}
+		
+	}
+	var timer=window.setInterval(step,interval);
+}
+var ele=document.getElementById("div1");
+ele.onclick=function(){
+	animate(this,"width",567,1000);	
+}
+				
+</script>
