@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+body{ background:#ccc;}
+img{ margin:100px auto; position:relative; top:-400px;}
+#parent{ position:relative; overflow:hidden; top:-400px;}
+#parent div{ position:absolute;}
+
+</style>
+</head>
+
+<body>
+<img src="img/slider1.jpg" width="980" height="318" />
+</body>
+</html>
+<script src="tween.js"></script>
+<script>
+//三行，10列
+
+window.onload=function(){
+	var a=[];
+	var j=0;
+	document.onclick=function(){
+		
+		var i=0;
+	var oImg=document.getElementsByTagName("img").item(0);
+	
+	 
+	var parentDiv=document.createElement('div');
+	parentDiv.style.height=oImg.height+"px";
+	parentDiv.style.width=oImg.width+"px";
+	parentDiv.id="parent";
+	document.body.appendChild(parentDiv);
+	
+	var w=oImg.width/10;
+	var h=oImg.height/3;
+	for(var i =0;i<30;i++){
+		var oDiv=document.createElement('div');
+		oDiv.style.height=h+"px";
+		oDiv.style.width=w+"px";
+		oDiv.style.backgroundImage="url(img/slider1.jpg)";
+		oDiv.style.backgroundPosition=i%10*-w+"px "+parseInt(i/10)*-h+"px";
+		oDiv.t=parseInt(i/10)*h;
+		oDiv.l=parseInt(i%10*w);
+		//oDiv.style.top=(oDiv.t=parseInt(i/10)*h)+"px";		
+		//oDiv.style.left=(oDiv.l=i%10*w)+"px";	
+		if(Math.floor(i/10)==0){
+			oDiv.style.top=-318-209+'px';
+			oDiv.style.left=-98+'px';
+		}else if(Math.floor(i/10)==1){
+			oDiv.style.top=oDiv.t+'px';
+			oDiv.style.left=980+98+'px';
+			
+		}else if(Math.floor(i/10)==2){
+			oDiv.style.top=318+209+'px';
+			oDiv.style.left=-98+'px';
+			
+		}
+		parentDiv.appendChild(oDiv);
+		oDiv.w=oDiv.offsetWidth;
+		oDiv.h=oDiv.offsetHeight;
+		oDiv.style.width=0;
+		oDiv.style.height=0;
+		oDiv.style.opacity=0;
+	a.push(oDiv);
+		
+	}
+	
+	
+	
+	for(var i=0;i<a.length;i++){
+		var ele=a[i];		
+		(function(ele,i){
+		window.setTimeout(function(){move(ele,{opacity:1,width:ele.w,height:ele.h,top:ele.t,left:ele.l},1000,3);},i%10*100);
+		})(ele,i);
+
+	}//end for;
+
+	}//end document.onclick
+	
+}
+
+
+</script>

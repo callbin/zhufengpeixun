@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:0px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script type="text/ecmascript" src="tween.js"></script>
+<script type="text/ecmascript">
+document.getElementById('div1').onclick=function(){
+	move(this,{left:500},1000,4);
+	
+	}
+
+</script>

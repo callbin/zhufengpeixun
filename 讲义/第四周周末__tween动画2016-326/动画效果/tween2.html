@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ width:256px; height:256px; position:relative; margin:150px auto; background:#ccc;}
+#content div{ height:256px; width:128px; position:absolute; top:0; left:0; background:url(img/2.png);}
+
+</style>
+</head>
+
+<body>
+<div id="content">
+</div>
+</body>
+</html>
+<script type="text/ecmascript" src="tween.js"></script>
+<script>
+
+var content=document.getElementById('content');
+var a=[];
+for(var i=0;i<8;i++){
+	var oDiv=document.createElement('div');
+	oDiv.style.width=0+'px';
+	oDiv.style.height="0px";
+	oDiv.style.left=32*i+"px";
+	oDiv.style.top=0;
+	oDiv.style.backgroundPosition=-32*i+"px 0";
+	oDiv.style.opacity=0;
+	content.appendChild(oDiv);
+	
+	a.push(oDiv);
+	
+}
+
+
+document.onclick=function(){
+	
+	
+	for(var i=0;i<a.length;i++){
+		var ele=a[i];
+		(function(ele,i){
+		
+		window.setTimeout(function(){move(ele,{width:32,opacity:1,height:256},1600,3);},50*i);
+		})(ele,i)
+	}
+	
+	
+	}
+
+</script>

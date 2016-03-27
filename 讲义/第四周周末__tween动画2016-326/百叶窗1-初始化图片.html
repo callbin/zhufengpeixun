@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ width:1000px; height:300px;  position:relative; margin:10px auto; background:#FCC;}
+#content div{ width:100px; height:100px; position:absolute; background:black; background-image:url(banner1.jpg);}
+</style>
+</head>
+
+<body>
+<img src="banner1.jpg" width="1000" height="300">
+<div id="content">
+
+</div>
+</body>
+</html>
+<script>
+var content=document.getElementById("content");
+var rows=3;
+var cols=10;
+var a=[];
+for(var i=0;i<rows*cols;i++){
+	var ele=document.createElement("div");
+	content.appendChild(ele);
+	ele.style.left=i%cols*100+"px";;//用列号*width则是当前的left坐标
+	ele.style.top=Math.floor(i/cols)*100+"px";;//用行号*height则是当前的top坐标
+	ele.style.backgroundPosition="-"+i%cols*100+"px -"+Math.floor(i/cols)*100+"px";
+	/*
+	
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9 （0到9）/10，然后向下取整 则是行号
+	10,11,12,13,14,15,16,17,18,19  当前的索引%cols，则是列号
+	20,21,22,23,24,25,26,27,28,29  
+	
+	*/
+	a.push(ele);
+	
+}
+
+</script>

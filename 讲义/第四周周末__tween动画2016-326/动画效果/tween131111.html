@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ background:#ccc; width:980px; height:318px; overflow:hidden; margin:50px auto; position:relative;}
+#content img{ border:none; position:absolute; top:0; left:0; }
+#content div{ position:absolute; }
+
+</style>
+</head>
+
+<body>
+<div id="content">
+	<img src="img/slider1.jpg" width="980" height="318" />
+    <img src="img/slider2.jpg" />
+    <img src="img/slider3.jpg" />
+
+</div>
+
+</body>
+</html>
+<script src="tween.js"></script>
+<script>
+window.onload=function(){
+	var content=document.getElementById('content');
+	 
+	var a=[];
+	var oImgs=content.getElementsByTagName('img')//.item(i).src;
+	var j=0;//从倒数第二张开始
+	oImgs.item(2).style.zIndex++;//默认最后一张在最上边
+	var oImg=oImgs.item(j);
+	
+	
+	for(var i=0;i<30;i++){
+		
+		var oDiv=document.createElement('div');
+		oDiv.style.width=0+"px";
+		oDiv.style.height=0+"px";			
+		var l=98*(i%10);
+		var t=Math.floor(i/10)*106;
+		oDiv.style.left=l+"px";
+		oDiv.style.top=t+"px";
+		oDiv.style.opacity=0;
+		oDiv.style.backgroundImage="url("+oImg.src+")";
+		oDiv.style.backgroundPosition=-l+"px -"+t+"px";
+		oDiv.style.zIndex=9;
+		oDiv.l=l;
+		oDiv.t=t;
+		content.appendChild(oDiv);
+		a.push(oDiv);
+	}	
+	
+var effectType=5;
+var pre=null
+content.onclick=function(){
+	console.log(pre);
+	var oImg=oImgs.item(j);
+	if(typeof pre=="number") oImgs.item(pre).style.zIndex+=4;
+	pre=j;
+	if(j==1){
+		effectType=3;
+		for(var k=0;k<a.length;k++){
+			a[k].style.backgroundImage="url(img/slider"+(j+1)+".jpg)";
+			with(a[k].style){
+				left="1090px";
+				top="418px";
+				width=0;
+				height=0;
+				opacity=0;				
+			}			
+		}		
+	}else if(j==2){
+		for(var k=0;k<a.length;k++){
+			a[k].style.backgroundImage="url(img/slider"+(j+1)+".jpg)";
+			if(Math.floor(k/10)==0){
+			a[k].style.top=-318-209+'px';
+			a[k].style.left=980+98+'px';
+		}else if(Math.floor(k/10)==1){
+			a[k].style.top=a[k].t+'px';
+			a[k].style.left=980+98+'px';			
+		}else if(Math.floor(k/10)==2){
+			a[k].style.top=318+209+'px';
+			a[k].style.left=980+98+'px';			
+		}	
+		}
+	}else if(j==0){
+		effectType=5;
+		for(var k=0;k<a.length;k++){
+			a[k].style.backgroundImage="url(img/slider"+(j+1)+".jpg)";
+			with(a[k].style){
+				width=0;
+				height=0;
+				opacity=0;				
+			}			
+		}		
+	}
+	j++;
+	if(j>=oImgs.length)	j=0;		
+		for(var i=0;i<a.length;i++){					
+			;(function(ele){
+				//console.log(oDiv.style.backgroundImage);
+				ele.style.zIndex+=9;				
+				window.setTimeout(function(){
+					move(ele,{left:ele.l,top:ele.t,opacity:1,width:98,height:106},600,effectType);
+					},i%10*100+100)
+			})(a[i]);			
+		}		
+	}	
+}
+
+</script>

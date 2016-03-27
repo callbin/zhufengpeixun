@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ background:#ccc; width:980px; height:318px; overflow:hidden; margin:50px auto; position:relative;}
+#content img{ border:none; }
+#content div{ position:absolute; }
+
+</style>
+</head>
+
+<body>
+<div id="content">
+	<img src="img/slider1.jpg" width="980" height="318" />
+    <img src="img/slider2.jpg" />
+    <img src="img/slider3.jpg" />
+
+</div>
+
+</body>
+</html>
+<script src="tween.js"></script>
+<script>
+window.onload=function(){
+	var content=document.getElementById('content');
+	var j=0;
+	var a=[];
+	var oImgs=content.getElementsByTagName('img')//.item(i).src;
+	var oImg=oImgs.item(j);
+	var mask=document.createElement('div');
+	mask.style.width=980+'px';
+	mask.style.height=318+'px';
+	with(mask.style){
+		position="absolute";
+		top=0;
+		left=0;
+		background="black";
+		
+	}
+	content.appendChild(mask);
+	
+	for(var i=0;i<30;i++){
+		
+		var oDiv=document.createElement('div');
+		oDiv.style.width=0+"px";
+		oDiv.style.height=0+"px";	
+		
+		
+		var l=98*(i%10);
+		var t=Math.floor(i/10)*106;
+		oDiv.style.left=l+"px";
+		oDiv.style.top=t+"px";
+		oDiv.style.opacity=0;
+		oDiv.style.backgroundImage="url("+oImg.src+")";
+		oDiv.style.backgroundPosition=-l+"px -"+t+"px";
+		oDiv.l=l;
+		oDiv.t=t;
+		
+		//Math.floor(i/10);1/10 ;Math.ceil(1.1);
+		//parseInt(i/10);
+		//0,1,2,3,4,5,6,7,8,9
+		//i%10
+		//10,11,12,
+		//20,21,22,23
+		
+		content.appendChild(oDiv);
+		a.push(oDiv);
+	}
+	
+	
+	
+	//10列3行
+
+
+
+
+//var j=0;
+var effectType=5;
+content.onclick=function(){
+	var oImg=oImgs.item(j);
+	oDiv.style.backgroundImage="url("+oImg.src+")";
+	
+	if(j==1){
+		effectType=3;
+		for(var k=0;k<a.length;k++){
+			with(a[k].style){
+				left="1090px";
+				top="418px";
+				width=0;
+				height=0;
+				opacity=0;
+				
+			}
+			
+		}
+		
+	}else if(j==2){
+		console.log(j);
+		for(var k=0;k<a.length;k++)
+			if(Math.floor(k/10)==0){
+			a[k].style.top=-318-209+'px';
+			a[k].style.left=980+98+'px';
+		}else if(Math.floor(k/10)==1){
+			a[k].style.top=a[k].t+'px';
+			a[k].style.left=980+98+'px';
+			
+		}else if(Math.floor(k/10)==2){
+			a[k].style.top=318+209+'px';
+			a[k].style.left=980+98+'px';
+			
+		}
+		
+		
+		
+		
+	}
+	
+	j++;
+	if(j>=oImgs.length)
+		j=0;
+	
+		
+		for(var i=0;i<a.length;i++){
+					
+			;(function(ele){
+				
+				window.setTimeout(function(){
+					move(ele,{left:ele.l,top:ele.t,opacity:1,width:98,height:106},600,effectType);
+					},i%10*100+100)
+			})(a[i]);
+			
+		}
+		
+	}
+	
+	
+	
+}
+
+</script>

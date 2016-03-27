@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+body{ margin:0;}
+#content div{ width:180px; height:180px; background:url(image.jpg); float:left; transition-duration:400ms;}
+#content .inner1{ background-position:0 0; transition-duration:400ms;}
+#content .inner2{ background-position:-180px 0;}
+#content .inner3{ background-position:-360px 0;}
+#content .inner4{ background-position:0 -180px;}
+#content .inner5{ background-position:-180px -180px;}
+#content .inner6{ background-position:-360px -180px;}
+#content .inner7{ background-position:0 -360px;}
+#content .inner8{ background-position:-180px -360px;}
+#content .inner9{ background-position:-360px -360px;}
+
+
+
+
+#content .inner11{ background-position:0 0; transition-duration:400ms; transform:translate(-200px,-200px) rotate(1080deg); opacity:0;}
+#content .inner21{ background-position:-180px 0; transform:translate(00px,-200px) rotate(1080deg); opacity:0;}
+#content .inner31{ background-position:-360px 0; transform:translate(200px,-200px) rotate(1080deg); opacity:0;}
+#content .inner41{ background-position:0 -180px;transform:translate(-200px,00px) rotate(1080deg); opacity:0;}
+#content .inner51{ background-position:-180px -180px; transform:translate(0px,00px) rotate(1080deg); opacity:0;}
+#content .inner61{ background-position:-360px -180px;transform:translate(200px,00px) rotate(1080deg); opacity:0;}
+#content .inner71{ background-position:0 -360px;
+transform:translate(-200px,200px) rotate(1080deg); opacity:0;}
+#content .inner81{ background-position:-180px -360px;
+transform:translate(0px,200px) rotate(1080deg); opacity:0; }
+#content .inner91{ background-position:-360px -360px;
+transform:translate(200px,200px) rotate(1080deg); opacity:0;}
+
+</style>
+<title>无标题文档</title>
+</head>
+
+<body>
+<div id="content" style="_background:url(image.jpg); height:540px; width:540px; margin:100px auto">
+
+<div class="inner1 inner11" ></div>
+<div class="inner2"></div>
+<div  class="inner3"></div>
+<div class="inner4"></div>
+<div class="inner5"></div>
+<div class="inner6"></div>
+<div class="inner7"></div>
+<div class="inner8"></div>
+<div class="inner9"></div>
+
+
+</div>
+</body>
+</html>
+<script>
+var eles=document.getElementById('content').getElementsByTagName("div");
+document.getElementById('content').onclick=function(){
+	
+	for(var i=0;i<eles.length;i++){
+		eles.item(i).className="  inner"+(i+1)+1;
+		
+	}
+}
+
+</script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+#outer{  -webkit-transition-duration:1s;}
+#outer:hover{  opacity:0;}
+#div2{  margin:200px auto}
+#div2 div{background:url(logo.png); width:90px; height:80px; float:left;}
+
+#div2 div{ transition-duration:0.5s;   }
+#div2:hover div.l1{-webkit-transform:translate(-280px,-280px) rotate(1080deg) scale(0.01,0.01);  }
+#div2:hover div.l2{-webkit-transform:translate(-280px,280px) rotate(1080deg) scale(0.01,0.01);   -ms-transform:translate(-280px,280px) rotate(1080deg) scale(0.01,0.01); }
+#div2:hover div.l3{-webkit-transform: rotate(720deg) scale(5,1); ; }
+#div2:hover div.l4{-webkit-transform:translate(280px,-280px) rotate(1080deg) scale(0.01,0.01); opacity:0; }
+#div2:hover div.l5{-webkit-transform:translate(280px,280px) rotate(1080deg) scale(0.01,0.01); opacity:0; }
+
+
+</style>
+</head>
+
+<body>
+<div id="outer" style="background:url(logo.png); height:80px; width:450px; "></div>
+<div id="div2" style=" height:80px; width:450px; ">
+    <div  class="l1"></div>
+    <div class="l2" style="background-position:-90px 0"></div>
+    <div class="l3" style="background-position:-180px 0"></div>
+    <div class="l4" style="background-position:-270px 0"></div>
+    <div class="l5" style="background-position:-360px 0"></div>
+</div>
+</body>
+</html>

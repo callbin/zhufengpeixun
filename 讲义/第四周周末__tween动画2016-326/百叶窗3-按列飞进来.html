@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ width:1000px; height:300px;  position:relative; margin:10px auto; background:#FCC;}
+#content div{ width:100px; height:100px; position:absolute; background:black; background-image:url(banner1.jpg);}
+</style>
+</head>
+
+<body>
+<img src="banner1.jpg" width="1000" height="300">
+<div id="content">
+
+</div>
+</body>
+</html>
+<script src="animate.js"></script>
+<script>
+var content=document.getElementById("content");
+var rows=3;
+var cols=10;
+var a=[];
+for(var i=0;i<rows*cols;i++){
+	var ele=document.createElement("div");
+	content.appendChild(ele);
+	ele.l=i%cols*100;//把每个小div的真正坐标保存到自定义属性l和t上
+	ele.t=Math.floor(i/cols)*100;
+	if(Math.floor(i/cols)==0){//把第一个隐藏在左上角
+		ele.style.left=-200+"px";//用列号*width则是当前的left坐标
+		ele.style.top=-100+"px";//用行号*height则是当前的top坐标
+	}else if(Math.floor(i/cols)==1){
+		ele.style.left=-200+"px";//用列号*width则是当前的left坐标
+		ele.style.top=ele.t+"px";//用行号*height则是当前的top坐标
+	}else{
+		ele.style.left=-200+"px";//用列号*width则是当前的left坐标
+		ele.style.top=300+"px";//用行号*height则是当前的top坐标
+	}
+	ele.style.opacity=1;
+	ele.style.backgroundPosition="-"+i%cols*100+"px -"+Math.floor(i/cols)*100+"px";
+	a.push(ele);
+	
+}
+content.onclick=function(){
+	for(var i=0;i<a.length;i++){
+		;(function(i){
+			window.setTimeout(function(){
+				animate(a[i],{left:a[i].l,top:a[i].t,opacity:1},600,2);	
+			},i%cols*200)//
+		})(i);
+	}
+}
+</script>

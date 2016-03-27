@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ width:256px; height:256px; position:relative; margin:150px auto; background:#ccc;}
+#content div{ height:256px; width:128px; position:absolute; top:0; left:0; background:url(img/2.png);}
+
+</style>
+</head>
+
+<body>
+<div id="content">
+<div id="left"></div>
+<div id="right" style=" left:128px; background-position:-128px;"></div>
+
+</div>
+</body>
+</html>
+<script type="text/ecmascript" src="tween.js"></script>
+<script>
+var right=document.getElementById('right');
+var left=document.getElementById('left');
+left.style.left="-280px";
+left.style.opacity=0;
+right.style.left="408px"
+right.style.opacity=0;
+
+document.onclick=function(){
+	
+	move(left,{left:0,opacity:1},1600,4);
+	move(right,{left:128,opacity:1},1600,4);
+	
+	}
+
+
+
+</script>
