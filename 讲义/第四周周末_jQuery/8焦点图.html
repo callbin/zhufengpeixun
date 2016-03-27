@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:500px; height:270px; margin:50px auto; position:relative; overflow:hidden; }
+#inner{ width:2500px; height:270px; position:absolute; top:0; left:-500px; }
+#inner div{ width:500px; height:270px; float:left; text-align:center; line-height:270px; font-size:100px; color:white; background:
+black;}
+#btn{ list-style:none; padding:0; margin:0; width:300px; position:absolute; right:30px; bottom:30px; height:50px; }
+#btn li{ padding:0; margin:10px; width:30px; height:30px; border-radius:15px; background:orange; color:#606; font-size:18px; font-weight:bold; float:left; line-height:30px; text-align:center; cursor:pointer; }
+#btn li.promoted{ background:#fff;}
+</style>
+
+</head>
+
+<body>
+<div id="outer"><!-- 表演的大舞台 -->
+	<div id="inner"> <!-- 表演的小组 这个小组里有若干个小伙伴 -->
+    	<div >一</div>
+        <div style="background:red;">二</div>
+        <div style="background:green;">三</div>
+        <div style="background:blue;">四</div>
+        <div style="background:pink;">五</div>
+    </div>
+    <ul id="btn"> <!-- 按钮 -->
+    	<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li>
+    </ul>
+
+</div>
+</body>
+</html>
+<script src="jquery-1.9.1.js"></script>
+<script>
+$("#btn>li").click(function(){
+	var _this=this;
+	$("#inner").animate({left:$(this).index()*-500},function(){
+		$(_this).addClass("promoted").siblings().removeClass("promoted");
+	});	
+	//$(_this).addClass("promoted").siblings().removeClass("promoted");
+})
+//方法重载：一个方法名，有不同的参数个数或参数类型。JS中没有方法重载的概念，是通过判断方法参数的个数或类型来模拟实现方法重载的
+//方法重写：子类上的方法覆盖了父类上的方法
+</script>

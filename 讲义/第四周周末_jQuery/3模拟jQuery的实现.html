@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ margin:10px;}
+</style>
+</head>
+
+<body>
+<div>1</div>
+<div>2</div>
+<div>3</div>
+<div>4</div>
+<div>5</div>
+<div>6</div>
+<div>7</div>
+<div>8</div>
+</body>
+</html>
+<script>
+function Query(selector){//selector是一个CSS选择器格式的字符串
+	//构造函数负责通过指定的selector查找并保存元素
+	//.class1,#div1,div
+	var regId=/^#([a-z]\w*)$/i;
+	var regClass=/^\.([a-z][\w-]*)$/i
+	//reg=/[-abc123]/
+	var regTagName=/^[a-z]\w*$/i;
+	
+	if(regId.test(selector)){
+		var ele=document.getElementById(RegExp.$1);	
+		this[0]=ele;//this是当前类的实例
+		this.length=1;
+	}else if(regClass.test(selector)){
+		var eles=document.getElementsByClassName(RegExp.$1);
+		for(var i=0;i<eles.length;i++){
+			this[i]=eles[i];
+			//this=eles//一定要理解这样是错误的，this不能被人为修改	
+		}
+		this.length=eles.length;
+	}else if(regTagName.test(selector)){
+		var eles=document.getElementsByTagName(selector);
+		for(var i=0;i<eles.length;i++){
+			this[i]=eles[i];	
+		}
+		this.length=eles.length;
+	}
+}
+
+//当你new一个构造函数时，会发生那些事？
+
+Query.prototype.width=function(value){//设置宽度
+	this;
+	for(var i=0;i<this.length;i++){
+		this[i].style.width=value+"px";	
+	}
+	return this;//这是链式写法的关键
+	//this.width
+}
+
+Query.prototype.height=function(value){
+	for(var i=0;i<this.length;i++){
+		this[i].style.height=value+"px";	
+	}
+	return this;
+}
+
+Query.prototype.bgColor=function(value){
+	for(var i=0;i<this.length;i++){
+		this[i].style.backgroundColor=value;	
+	}
+	
+	return this;
+}
+
+Query.prototype.eq=function(n){//获得指定索引的元素，返回的是Query对象
+	var obj=new Query;//返回一个没有保存任何元素“空对象”
+	obj[0]=this[n];//把原来的第n项转存到新对象上
+	obj.length=1;//新对象上只保存了一项n，所以length是1
+	return obj;//返回的是Query类的对象，以便继续使用链式写法
+}
+Query.prototype.get=function(n){//获得指定索引的元素，返回的DOM原生对象
+	//return this[n];//这样写导致人品变差，因为在规定有返回值的方法里，如果计算不到返回值，则返回null。但this[n]可能是undefined
+	if(this[n]){
+		return this[n]	
+	}else{
+		return null;
+	}
+}
+function $(selector){
+	return new Query(selector);	
+}
+//
+
+/*var obj=new Query("div");
+
+new Query("div").width(100).height(100).bgColor("green");*/
+$("div").width(100).height(100).bgColor("green").eq(3).width(200).bgColor("red").get(0).style.height="200px";
+/*$("div").width();//参数可选，这里没有参数，表示读出div内容的宽
+$("div").innerWidth();//不能有参数，相当于clientWidth
+$("div").outerWidth();//不能有参数，相当于offsetWidth;
+$("div").outerWidth(true);//表示offsetWidth+左右的margin;*/
+</script>

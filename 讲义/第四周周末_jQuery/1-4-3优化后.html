@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>导航栏</title>
+<link rel="stylesheet" href="css/default.css" type="text/css" />
+
+<!-- 引入 jQuery -->
+<script src="jquery-1.9.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*//等待dom元素加载完毕.
+$(document).ready(function(){
+	$(".level1 > a").click(function(){
+		$(this).addClass("current")   //给当前元素添加"current"样式
+		.next().show()                //下一个元素显示
+		.parent().siblings().children("a").removeClass("current")        //父元素的兄弟元素的子元素<a>移除"current"样式
+		.next().hide();                //它们的下一个元素隐藏
+		return false;
+	});
+});*/
+</script>
+
+</head>
+<body>
+<p>第三步：优化后：</p>
+
+<div class="box">
+	<ul class="menu">
+		<li class="level1">
+			<a href="#none">衬衫</a>
+			<ul class="level2">
+				<li><a href="#none">短袖衬衫</a></li>
+				<li><a href="#none">长袖衬衫</a></li>
+				<li><a href="#none">短袖T恤</a></li>
+				<li><a href="#none">长袖T恤</a></li>
+			</ul>
+		</li>
+		<li class="level1">
+			<a href="#none">卫衣</a>
+			<ul class="level2">
+				<li><a href="#none">开襟卫衣</a></li>
+				<li><a href="#none">套头卫衣</a></li>
+				<li><a href="#none">运动卫衣</a></li>
+				<li><a href="#none">童装卫衣</a></li>
+			</ul>
+		</li>
+		<li class="level1">
+			<a href="#none">裤子</a>
+			<ul class="level2">
+				<li><a href="#none">短裤</a></li>
+				<li><a href="#none">休闲裤</a></li>
+				<li><a href="#none">牛仔裤</a></li>
+				<li><a href="#none">免烫卡其裤</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+</body>
+</html>
+<script>
+$("li.level1>a").click(function(){
+	//要实现JS的效果，就不能让a标签跳转，则需要阻止事件的默认行为
+	//return false;//只要在由事件驱动的方法里返回一个false，则表示取消此事件的默认行为的意思，这是第一种方式
+	
+	//由事件直接驱动的方法，无法人为的传实参。但是浏览器会自动给它传一个实参：事件对象
+	//fn();这里像这样被直接调用的方法，浏览器不会给它自动的传实参进来
+	arguments[0].preventDefault();//标准浏览器阻止事件默认行为的方法
+	});
+$("li.level1").click(function(){
+	var $ul=$(this).children("ul");
+	if($ul.is(":visible")){
+		$ul.hide(600);
+	}else{
+		$ul.show(800).end().siblings().children("ul").hide(800);
+	}
+	//end方法是把操作的元素向上返回一级，把操作的元素由ul返回到li
+	//$(this).children("a").next().end().end();
+	
+});
+
+
+document.oncontextmenu=function(){
+	return false;	
+}
+</script>
