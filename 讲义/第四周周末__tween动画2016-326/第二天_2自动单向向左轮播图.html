@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:500px; height:270px; margin:50px auto; position:relative; overflow:hidden; }
+#inner{ width:2500px; height:270px; position:absolute; top:0; left:0px; }
+#inner div{ width:500px; height:270px; float:left; text-align:center; line-height:270px; font-size:100px; color:white; background:
+black;}
+#btn{ list-style:none; padding:0; margin:0; width:300px; position:absolute; right:30px; bottom:30px; height:50px; }
+#btn li{ padding:0; margin:10px; width:30px; height:30px; border-radius:15px; background:orange; color:#606; font-size:18px; font-weight:bold; float:left; line-height:30px; text-align:center; cursor:pointer; }
+#btn li.promoted{ background:#039; color:red; font-weight:bold;}
+
+</style>
+
+</head>
+
+<body>
+<div id="outer"><!-- 表演的大舞台 -->
+	<div id="inner"> <!-- 表演的小组 这个小组里有若干个小伙伴 -->
+    	<div >一</div>
+        <div style="background:red;">二</div>
+        <div style="background:green;">三</div>
+        <div style="background:blue;">四</div>
+        <div style="background:pink;">五</div>
+    </div>
+    <ul id="btn"> <!-- 按钮 -->
+    	<li class="promoted">1</li><li>2</li><li>3</li><li>4</li><li>5</li>
+    </ul>
+
+</div>
+</body>
+</html>
+<script src="animate.js"></script>
+<script>
+var oLis=document.getElementById("btn").getElementsByTagName("li");
+
+//以下是用JS代码把图片由五张扩展到六张，首尾相同
+var oDiv=document.getElementById("inner").getElementsByTagName("div").item(0);
+inner.appendChild(oDiv.cloneNode(true));
+inner.style.width=inner.offsetWidth+oDiv.offsetWidth+"px";
+
+for(var i=0;i<oLis.length;i++){
+	oLis.item(i).n=i;
+	oLis.item(i).onclick=function(){
+		animate(inner,{left:this.n*-500},800);
+		//clearInterval();
+		step=this.n;
+		current(step);
+		clearTimeout(autoTimer);//和clearInterval通用
+		//当点击事件触发后五秒钟再启动这个自动的播放，自动播放还是每隔两秒一次
+		autoTimer=window.setTimeout(function(){
+			autoTimer=window.setInterval(autoMove,2000);
+		},3000);
+		//3000,3+2 >3 <5;10 autoMove,执行了两次
+		
+		
+	}
+}
+
+
+var step=0;
+function autoMove(){
+	step++;
+	if(step>=6){//索引5是第六张，从索引4走到索引5，就是从第五张走到第六张，而第六张是第一张的复本，在视觉上就相当于从第五张走到了第一张
+		//一但走到第六张，则切换到第一张，然后从第一张往第二张上走
+		inner.style.left=0;//把图片的坐标切到第0张上，由于切换的速度太快，视觉上不会有什么感受
+		step=1;//表示从索引0走到索引1上
+	}
+	if(step==5){//防止lis集合越界
+		current(0)	
+	}else{
+		current(step);
+	}
+	animate(inner,{left:step*-500},600);
+}
+var autoTimer=window.setInterval(autoMove,2000);
+
+function current(n){
+		for(var i=0;i<oLis.length;i++){
+			oLis[i].className="";
+			}
+			oLis[n].className="promoted";
+}
+</script>

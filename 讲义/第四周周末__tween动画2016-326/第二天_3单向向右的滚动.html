@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:500px; height:270px; margin:50px auto; position:relative; overflow:hidden; }
+#inner{ width:3000px; height:270px; position:absolute; top:0; left:0px; }
+#inner div{ width:500px; height:270px; float:left; text-align:center; line-height:270px; font-size:100px; color:white; background:
+black;}
+#btn{ list-style:none; padding:0; margin:0; width:300px; position:absolute; right:30px; bottom:30px; height:50px; }
+#btn li{ padding:0; margin:10px; width:30px; height:30px; border-radius:15px; background:orange; color:#606; font-size:18px; font-weight:bold; float:left; line-height:30px; text-align:center; cursor:pointer; }
+#btn li.promoted{ background:#039; color:red; font-weight:bold;}
+
+</style>
+
+</head>
+
+<body>
+<div id="outer"><!-- 表演的大舞台 -->
+	<div id="inner"> <!-- 表演的小组 这个小组里有若干个小伙伴 -->
+    	<div >一</div>
+        <div style="background:red;">二</div>
+        <div style="background:green;">三</div>
+        <div style="background:blue;">四</div>
+        <div style="background:pink;">五</div>
+        <div>六（假冒的第一张）</div>
+    </div>
+    <ul id="btn"> <!-- 按钮 -->
+    	<li class="promoted">1</li><li>2</li><li>3</li><li>4</li><li>5</li>
+    </ul>
+
+</div>
+</body>
+</html>
+<script src="animate.js"></script>
+<script>
+var oLis=document.getElementById("btn").getElementsByTagName("li");
+
+//以下是用JS代码把图片由五张扩展到六张，首尾相同
+var oDiv=document.getElementById("inner").getElementsByTagName("div").item(0);
+//inner.appendChild(oDiv.cloneNode(true));
+inner.style.width=inner.offsetWidth+oDiv.offsetWidth+"px";
+
+var step=0;
+
+function autoRight(){
+	step--;
+	if(step<0){
+		//alert("到了最左边了，没法走了");
+		inner.style.left="-2500px";
+		step=4;//从索引5走到索引4
+		//alert("现在已经切换过来了")	
+	}
+	animate(inner,{left:step*-500},600);
+	
+}
+
+
+window.setInterval(autoRight,2000);
+
+
+</script>
