@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+var a=[3,9,7,5,4,2,1];
+function fn(item,index,ary){
+	//JS里，有没有形参意义不大
+	alert(item);
+}
+//forEach有两个参数，第一个是回调方法：当forEach执行的时候开始遍历数组，每遍历到一个数组项则执行一次这个回调方法，并且在执行这个回调方法的时候，主动传三个参数给回调方法：第一个参数是当前遍历到的数组项，第二项是当前数组项在这个数组里的索引，第三项被遍历的数组本身。
+//第二个参数是可选的，是当第一个参数执行的时候指定的上下文
+
+a.forEach(fn,context);
+Array.prototype.myForEach=function(callback,context){
+	for(var i=0;i<this.length;i++){
+		callback.call(context,this[i],i,this);
+	}
+}
+
+
+//有多少方法是以function做为参数：sort，replace
+var str="8368493";
+str.replace(/\d/g,function(){
+	
+})
+
+
+</script>
