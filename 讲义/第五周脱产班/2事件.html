@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:300px; background:#ccc; margin:100px auto; position:relative;}
+#inner{ width:60px; height:60px; background:red; position:absolute; }
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+function fn1(){
+	
+	}
+ele.onmouseover=function(e){
+	e.type//事件类型，在这个方法里面只能是mouseover
+	
+
+	var inner=document.createElement("div");
+	inner.id="inner";
+	this.appendChild(inner);
+	e.pageX;//鼠标相对于整个文档的坐标
+	e.pageY;
+}
+
+ele.onclick=fn1;
+
+document.documentElement.onmousemove=function(e){
+	e=e||window.event;//IE的事件对象是全局的window.event	
+	console.log(e.clientX,e.clientY);//相对的浏览器的坐标
+}
+
+
+document.onkeydown=function(event){
+	var e=event||window.event;
+	console.log("事件类型"+e.type+",按下的鼠标的编码："+e.keyCode,e.ctrlKey)
+	
+}
+
+</script>

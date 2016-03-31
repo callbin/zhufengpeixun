@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul class="tabGroup" id="ul1">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab a b  selectedTab">选项一</li>
+        <li  class="a tab atabb b ">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class=" a b tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="a-tab-b">a-tab-b</li>
+    </ul>
+    
+    <ul class="tabGroup" id="ul2">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="tab a b  selectedTab">选项一</li>
+        <li  class="a tab atabb b ">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class=" a b tab">选项四</li>
+        <li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class=" promoted">选项三</li>
+        <li  class="tab">选项四</li>
+        <li class="a-tab-b">a-tab-b</li>
+    </ul>
+</body>
+</html>
+<script>
+
+function getElesByClass(str,context){//第二个参数是当次筛选的上下文（找查的范围）
+	context=context||document;//如果第二个参数content没有传，则以document为上下文
+	/*
+	if(document.getElementsByClassName){//如果浏览器支持此方法
+		return context.getElementsByClassName(str);
+	}
+	*/
+	var regTrim=/^ +| +$/g;
+	str=str.replace(regTrim,"");
+	var aClass=str.split(/ +/);
+	//var eles=document.getElementsByTagName("*");
+	
+	var eles=context.getElementsByTagName("*");
+	for(var i=0;i<aClass.length;i++){
+		//eles=byClass(aClass[i],eles);	
+		var reg=new RegExp("(^| )"+aClass[i]+"( |$)");
+		var a=[];
+		for(var j=0;j<eles.length;j++){
+			var ele=eles[j];
+			if(reg.test(ele.className)){
+				a.push(ele);
+			}
+		}
+		eles=a;//更新eles，以便下次筛选
+		
+	}
+	return eles;
+}
+
+var str="  a b   tab   ";
+var eles=getElesByClass(str,ul1);
+for(var i=0;i<eles.length;i++){
+	eles[i].style.backgroundColor="red";	
+}
+
+
+
+
+
+</script>

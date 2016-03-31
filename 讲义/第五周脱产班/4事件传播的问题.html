@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:800px; height:500px; background:#63C}
+#middle{ padding:30px; height:400px; width:600px; background:#FF6}
+#inner{ width:300px; height:300px; padding:30px; background:#96C;}
+#p1{ background:#6F6; padding:30px; margin:10px;}
+#span1{ display:block; height:100px; width:100px; background:#C9C;}
+</style>
+</head>
+
+<body>
+<div id="outer">outer<br>
+	<div id="middle">middle<br>
+    	<div id="inner">inner<br>
+        	<p id="p1">pppppp<br>
+            	<span id="span1">span<br><br></span>
+            </p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+function fn(e){
+	alert(this.innerHTML);	
+}
+var eles=document.getElementsByTagName("*");
+for(var i=0;i<eles.length;i++){
+	//eles.item(i).onclick=fn;
+	
+	//这表示冒泡获阶段（从里往外）处理事件上绑定的方法
+	eles.item(i).addEventListener("click",fn,false);
+	
+	//这表示在捕获阶段（从外往里）处理事件上绑定的方法
+	eles.item(i).addEventListener("click",fn,true);
+	
+}
+
+//事件和事件上绑定的处理方法是两回事
+
+//其实我们不必纠结事件处理方法绑定给那个阶段，重要的是理解事件传播的意义（就是它有什么用）
+
+
+</script>
+
+

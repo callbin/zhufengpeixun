@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+.tabbedPannels{ width:550px; overflow:hidden; margin:10px auto;}
+.tabbedPannels ul.tabGroup{ list-style:none; margin:0; padding:0;}
+.tabbedPannels li.tab{ width:80px; height:2em; font-size:16px; margin-left:10px; float:left; background:#0FF;text-align:center; line-height:2em; cursor:pointer; }
+.tabbedPannels div.contentGroup{}
+.tabbedPannels div.content{ height:400px; background:#ccc; clear:both; display:none; padding:10px; }
+.tabbedPannels li.tab.selectedTab{ background:#ccc; font-weight:bold;}
+.tabbedPannels div.content.selectedContent{ display:block;}
+.promoted{ color:red;}
+</style>
+</head>
+
+<body>
+<div class="tabbedPannels" >
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+    </ul>
+    <div class="contentGroup">
+    <div class="content selectedContent">内容一</div>
+    
+     <div class="content">内容二
+     	<ul><li>JS</li><li>node</li><li>HTML5</li><li>CSS3</li></ul>
+     
+     </div>
+      <div class="content">内容三</div>
+      <div class="content">内容四</div>
+    </div>
+</div>
+
+
+<div class="tabbedPannels" >
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+    </ul>
+    <div class="contentGroup">
+    <div class="content selectedContent">内容一</div>
+    
+     <div class="content">内容二
+     	<ul><li>JS</li><li>node</li><li>HTML5</li><li>CSS3</li></ul>
+     
+     </div>
+      <div class="content">内容三</div>
+      <div class="content">内容四</div>
+    </div>
+</div>
+
+
+<div class="tabbedPannels" >
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+    </ul>
+    <div class="contentGroup">
+    <div class="content selectedContent">内容一</div>
+    
+     <div class="content">内容二
+     	<ul><li>JS</li><li>node</li><li>HTML5</li><li>CSS3</li></ul>
+     
+     </div>
+      <div class="content">内容三</div>
+      <div class="content">内容四</div>
+    </div>
+</div>
+
+<div class="tabbedPannels" >
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一</div>
+        
+         <div class="content">内容二
+            <ul><li>JS</li><li>node</li><li>HTML5</li><li>CSS3</li></ul>
+         
+         </div>
+          <div class="content">内容三</div>
+          <div class="content">内容四</div>
+    </div>
+</div>
+</body>
+</html>
+<script src="DOM.js"></script>
+<script>
+var oLis=document.getElementsByClassName("tab");//IE6/7/8不支持
+var strEvent="onclick";
+for(var i=0;i<oLis.length;i++){
+	oLis[i][strEvent]=changeTab;//changeTab是不带括号的，表示只是事件绑定，而不是把changeTab的运行结果返回给事件
+}
+
+function changeTab(){
+	/*//索引不用从外边由参数传进来，而是在这里自动计算出来
+	//this就等于当前触发事件的这个元素 
+	this;window;document;488
+	var index=0;
+	var previous=this.previousSibling;//上边的节点可能是元素，也可能是文本
+	while(previous){//判断previous是否存在
+		if(previous.nodeType===1){//判断previous是不是元素
+			index++
+		}
+		previous=previous.previousSibling;//继续往下找
+	}
+	alert(index)*/
+	var n=DOM.getIndex(this);
+	//alert(n);
+	this.className="tab selectedTab";//当前选中的li加上选中的样式
+	var siblings=DOM.siblings(this);//再得到其它的li
+	for(var i=0;i<siblings.length;i++){
+		siblings[i].className="tab";//把其它的li的selectedTab去掉
+	}
+	
+	
+	//var contents=this.parentNode.nextElementSibling.children;
+	var contents=DOM.children(DOM.next(this.parentNode));
+	
+	for(var i=0;i<contents.length;i++){
+		contents[i].className="content";	
+	}
+	
+	contents[n].className="content selectedContent";
+	
+}
+
+</script>

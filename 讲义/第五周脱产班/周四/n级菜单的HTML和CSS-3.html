@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#menu,#menu li{ padding:0; margin:0; list-style:none;}
+#menu li{ width:130px; margin:10px; }
+#menu span{ display:block; width:180px; overflow:hidden;background:green; -webkit-user-select:none;}
+
+/* 区分是否是终极菜单 */
+
+#menu span.open,#menu span.closed{ background:lightBlue; font-weight:bold; cursor:pointer;}
+#menu span.open::before{color:red; content:"-"; font-size:24px;}
+#menu span.open+ul{ display:block;}
+#menu span.closed+ul{ display:none;}
+
+#menu span.closed::before{color:red; content:"+"; font-size:24px;}
+
+</style>
+</head>
+
+<body>
+<ul id="menu">
+	<li>
+    	<span>第一级第一个菜单</span>
+        <ul>
+        	<li><span>1第二级第一个菜单</span></li>
+            <li><span>1第二级第二个菜单</span>
+            	<ul>
+        	<li><span>1-2第三级第一个菜单</span></li>
+            <li><span>1-2第三级第二个菜单</span></li>
+            <li><span>1-2第三级第三个菜单</span></li>
+            <li><span>1-2第三级第四个菜单</span>
+            	<ul>
+        	<li><span>1-2-4第二级第一个菜单</span></li>
+            <li><span>1-2-4第二级第二个菜单</span></li>
+            <li><span>1-2-4第二级第三个菜单</span>
+            	<ul>
+        	<li><span>3第二级第一个菜单</span></li>
+            <li><span>3第二级第二个菜单</span></li>
+            <li><span>3第二级第三个菜单</span></li>
+            <li><span>3第二级第四个菜单</span></li>
+        </ul>
+            
+            </li>
+            <li><span>1-2-4第二级第四个菜单</span></li>
+        </ul>
+            
+            
+            
+            </li>
+        </ul>
+            </li>
+            <li><span>1第二级第三个菜单</span></li>
+            <li><span>1第二级第四个菜单</span></li>
+        </ul>
+        
+        </li>
+    <li><span>第一级第二个菜单</span>
+    	<ul>
+        	<li><span>2第二级第一个菜单</span></li>
+            <li><span>2第二级第二个菜单</span></li>
+            <li><span>2第二级第三个菜单</span></li>
+            <li><span>2第二级第四个菜单</span></li>
+        </ul>
+    </li>
+    <li><span>第一级第三个菜单</span>
+    	<ul>
+        	<li><span>3第二级第一个菜单</span></li>
+            <li><span>3第二级第二个菜单</span></li>
+            <li><span>3第二级第三个菜单</span></li>
+            <li><span>3第二级第四个菜单</span></li>
+        </ul>
+    
+    </li>
+    <li><span>第一级第四个菜单</span></li>
+
+</ul>
+</body>
+</html>
+<script>
+var oLis=document.getElementById("menu").getElementsByTagName("li");
+
+//取到所有的li，然后去判断它是否是终极菜单
+
+for(var i=0;i<oLis.length;i++){
+	var oLi=oLis.item(i);
+		//如果当前的菜单项下面还有ul，说明此项还有下一级菜单
+		if(oLi.getElementsByTagName("ul").length){
+			//则让下一级菜单关闭
+			//oLi.children[1].style.display="none";
+			//关闭之后让它的样式为closed
+			oLi.children[0].className="closed";
+		}
+}
+
+document.getElementById("menu").onclick=function(e){
+	e=e||window.event;
+	var target=e.target||e.srcElement;
+	if(target.tagName=="SPAN"){
+		if(target.className=="open"){
+			target.className="closed";
+		}else{
+			target.className="open";
+		}
+	}
+}
+
+
+
+
+
+</script>

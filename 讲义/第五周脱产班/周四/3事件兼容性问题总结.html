@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+1、事件对象不一样：IE是全局的window.event;标准浏览器是当事件触发时自动传给绑定在此事件上的方法中的arguments[0]
+2、pageX，pageY这两个属性IE不支持
+	pageX和e.clientX差一个docuemnt.documentElement.scrollLeft||document.body.scrollLeft;
+    
+3、事件源属性不一样：e.target||e.srcElment;
+
+4、取消事件传播的方法不同：e.stopPropagation(),IE用e.cancelBubble=true;
+5、阻止事件默认行为的方法不同：e.preventDefault();IE用e.returnValue=false;
+
+6、最大的兼容问题出现DOM2级事件中
+	6.1绑定事件的方法不一样
+    6.2在IE中被绑定方法执行时的this指向不一样
+    6.3在IE中被绑定方法执行的顺序不一样
+    6.4IE中一个方法可以被重复绑定
+
+
+
+</body>
+</html>
+<script>
+
+</script>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+.tabbedPannels{ width:550px; overflow:hidden;}
+.tabbedPannels ul.tabGroup{ list-style:none; margin:0; padding:0;}
+.tabbedPannels li.tab{ width:80px; height:2em; font-size:16px; margin-left:10px; float:left; background:#0FF;text-align:center; line-height:2em; cursor:pointer; }
+.tabbedPannels div.contentGroup{}
+.tabbedPannels div.content{ height:400px; background:#ccc; clear:both; display:none; padding:10px; }
+.tabbedPannels li.tab.selectedTab{ background:#ccc; font-weight:bold;}
+.tabbedPannels div.content.selectedContent{ display:block;}
+.promoted{ color:red;}
+</style>
+</head>
+
+<body>
+<div class="tabbedPannels" >
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li  class="tab">选项二</li>
+        <li  class="tab promoted">选项三</li>
+        <li  class="tab">选项四</li>
+    </ul>
+    <div class="contentGroup">
+    <div class="content selectedContent">内容一</div>
+    
+     <div class="content">内容二
+     	<ul><li>JS</li><li>node</li><li>HTML5</li><li>CSS3</li></ul>
+     
+     </div>
+      <div class="content">内容三</div>
+      <div class="content">内容四</div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+var oLis=document.getElementsByTagName("li");
+
+</script>

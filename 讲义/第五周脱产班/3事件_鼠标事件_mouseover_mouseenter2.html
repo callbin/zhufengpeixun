@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:300px; background:#ccc; margin:100px auto; position:relative; cursor:pointer;}
+#inner{ width:60px; height:60px; background:red; position:absolute; }
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+
+ele.onmouseenter=function(e){
+	
+	var inner=document.createElement("div");
+	inner.id="inner";
+	
+	this.appendChild(inner);
+	inner.style.left=e.pageX-this.offsetLeft+"px";
+	inner.style.top=e.pageY-this.offsetTop+"px";
+	//事件传播，事件流
+	
+	/*
+	mouseenter事件和mouseover事件的区别：
+		1、解决了当鼠标从子元素（或后代元素）离开再到父元素的时候还会触发父元素的mouseover事件这一问题。
+		也就是说：如果鼠标从子元素进入到了父元素，则不会触发父元素的mouseenter事件
+		2、如果鼠标是从父元素中进入到了子元素里，也不会触发父元素的mouseenter事件
+	*/
+	
+}
+
+ele.onmousemove=function(e){
+	var inner=document.getElementById("inner");
+	if(inner){
+		inner.style.left=e.pageX-this.offsetLeft+"px";
+		inner.style.top=e.pageY-this.offsetTop+"px";	
+	}
+}
+
+ele.onmouseleave=function(){
+	var inner=document.getElementById("inner");
+	if(inner){
+		this.removeChild(inner);	
+	}
+}
+
+
+//mouseover-->mouseout;mouseenter-->mouseleave
+
+
+
+
+
+</script>

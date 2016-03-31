@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<a href="http://www.zhufengpeixun.cn">珠峰培训</a>
+</body>
+</html>
+<script>
+function bind(ele,type,fn){
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);	
+	}else if(ele.attachEvent){
+		ele.attachEvent("on"+type,fn);
+	}
+}
+
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+	}else if(ele.detachEvent){
+		ele.detachEvent("on"+type,fn);
+	}
+	
+}
+
+var ele=document.getElementsByTagName("a").item(0);
+
+bind(ele,"click",function(){return false});
+//如果在DOM2级事件里，return false是不能阻止事件的默认行为的（IE6/7/8除外），只能用e.preventDefault()
+bind(ele,"click",function(e){
+	e=e||window.event;
+	if(e.preventDefault){
+		e.preventDefault();//此方法IE6/7/8不支持
+		e.stopPropagation();//标准浏览器中取消事件传播的方式
+	}else{
+		e.returnValue=false;//IE专用的阻止事件默认行为的属性
+		e.cancelBubble=true;//这是IE专用的取消冒泡的方式
+		//return false //IE也支持用这种方式来阻止事件的默认行为
+	}
+	});
+
+
+
+
+
+</script>

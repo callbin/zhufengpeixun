@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul>
+<li>1</li><li>2</li>字
+<li>3</li></ul>
+</body>
+</html>
+<script>
+var oLis=document.getElementsByTagName("li");
+var newLi=document.createElement("li");
+newLi.innerHTML="new";
+//讨论：如果insertBefore的第二个参数是null，它和appendChild方法一样
+var li1=oLis.item(0);
+alert(li1.previousSibling.tagName);//tagName只是元素的属性
+alert(li1.previousSibling.nodeName);//所有的节点都会有这个属性，如果是非元素节点，它将输出 :#节点类型
+</script>

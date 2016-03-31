@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+
+function fn1(){
+	alert(this.innerHTML);
+	}
+function fn2(){
+	alert(2);
+	}	
+var counter=0
+function fn3(){
+	//实现当div1被点三次，则把fn1,fn2这两个方法从click事件上移除
+	counter++;
+	if(counter==3){
+		unbind(ele,"click",fn1);
+		unbind(ele,"click",fn2);
+	}
+}
+var globalFn=null;
+function bind(ele,type,fn){
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);	
+	}else if(ele.attachEvent){
+		//如果fn是fn1，但新生成的匿名方法不是fn1
+		//想个办法：在这个bind作用域内定义的这个方法，能在unbind作用域里识别出来
+		var globalFn=function(){fn.call(ele)}
+		ele.attachEvent("on"+type,globalFn);
+	}
+	
+	fn1;
+	function fn2(){fn1()}
+}
+
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+	}else if(ele.detachEvent){
+		ele.detachEvent("on"+type,globalFn);
+	}
+	
+}
+
+var innerHTML="window"
+bind(ele,"click",fn1);//如果在IE中，fn1的this是window
+bind(ele,"click",fn2);
+unbind(ele,"click",fn1);
+//this
+//顺序
+
+
+
+
+
+
+</script>

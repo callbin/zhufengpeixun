@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:300px; background:#ccc; margin:100px auto; position:relative;}
+#inner{ width:60px; height:60px; background:red; position:absolute; }
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+function fn1(){
+	
+	}
+ele.onmouseover=function(e){
+	e.type//事件类型，在这个方法里面只能是mouseover
+	
+	//event事件对象
+	var inner=document.createElement("div");
+	inner.id="inner";
+	this.appendChild(inner);
+	arguments[0]//事件对象，只有直接把一个方法赋值给事件属性，当事件触发的时候，浏览器才会把事件对象自动的传给这个方法
+	fn1();//这样fn1在这个方法里被调用，浏览器不会传事件对象给这个方法
+	//凡是直接由事件驱动的方法，浏览器才会传一个事件对象给这个方法
+}
+
+ele.onclick=fn1;
+
+</script>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:300px; background:#ccc; margin:100px auto; position:relative; cursor:pointer;}
+#inner{ width:60px; height:60px; background:red; position:absolute; }
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+
+ele.onmouseover=function(e){
+	
+	var inner=document.createElement("div");
+	inner.id="inner";
+	
+	this.appendChild(inner);
+	inner.style.left=e.pageX-this.offsetLeft+10+"px";
+	inner.style.top=e.pageY-this.offsetTop+20+"px";
+	//事件传播，事件流
+	
+	inner.onmouseover=function(e){
+		e.stopPropagation();//停止事件传播
+		//e.preventDefault();//阻止事件的默认行为
+		
+		//现在使用停止事件传播解决了当子元素触发mouseover事件时，会引用父元素的mouseover事件这一问题。但是解决不了当鼠标从子元素离开再到父元素的时候还会触发父元素的mouseover事件这一问题
+	}
+	
+}
+
+ele.onmousemove=function(e){
+	var inner=document.getElementById("inner");
+	if(inner){
+		inner.style.left=e.pageX-this.offsetLeft+10+"px";
+		inner.style.top=e.pageY-this.offsetTop+20+"px";	
+	}
+}
+
+ele.onmouseout=function(){
+	var inner=document.getElementById("inner");
+	if(inner){
+		this.removeChild(inner);	
+	}
+}
+
+
+
+
+
+
+
+
+</script>
