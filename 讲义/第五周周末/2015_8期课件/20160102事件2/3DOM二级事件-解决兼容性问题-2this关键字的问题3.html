@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+var innerHTML="window";
+var ele=document.getElementById("div1");
+function fn1(){alert(this.innerHTML);
+	counter++;
+	if(counter==2){
+		unbind(ele,"click",fn1);
+		unbind(ele,"click",fn2);//在移除fn2的时候，fn2还没有执行呢。来看：当事件触发的同时，能不能移除绑定在事件上的方法
+		//出现了各种浏览器不同结果(chrome的45版会有严重的bug)
+	}
+}
+function fn2(){alert(2)}
+function fn3(){alert(3)}
+var counter=0;
+function fn4(){alert(4)}
+function fn5(){alert(5);}
+var fnTemp=null;
+function bind(ele,type,fn){//把fn方法绑定给ele的type这个事件
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);	
+	}else{
+		if(!ele["aEvent"+type]){//提前准备一下数组，用来放真正被绑定到事件上的方法
+			ele["aEvent"+type]=[];//以aEvent为属性命名的前缀，以事件类型为区分符
+		}
+		var a=ele["aEvent"+type];//
+		/*ele.click=[];
+		ele.mouseenter*/
+		//fn1,fn2,fn3,fn4,fn5,fn5
+		for(var i=0;i<a.length;i++){
+			if(a[i].photo==fn)return;//避免数组里有重复的方法,一但有重复的方法则退出
+		}
+		var fnTemp=function (){fn.call(ele)}//这样做就可以使fn在执行的时候，让fn的this指向ele
+		fnTemp.photo=fn;//加的这个photo属性，只是让fnTemp和fn有关联
+
+		a.push(fnTemp);//仅仅是保存
+		ele.attachEvent("on"+type,fnTemp);
+	}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+	}else{
+		//现在要以fn为查找判断的依据，把在bind里绑定的那个fnTemp找出来并且移除（是在事件上去掉）
+		//第一步要把fnTemp保存下来，第二步再通过合适技巧找到它
+		var a=ele["aEvent"+type];
+		if(a){
+			for(var i=0;i<a.length;i++){
+				if(a[i].photo==fn){
+					ele.detachEvent("on"+type,a[i]);
+				}
+			}
+		}
+		
+	}
+}
+
+bind(ele,"click",fn1);
+
+bind(ele,"mouseenter",fn1);
+//现在出现了在不同的事件上，也不同绑定相同的方法了
+
+
+</script>

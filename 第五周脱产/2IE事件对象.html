@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:400px; height:400px; background:lightBlue; margin:50px auto; position:relative;}
+#inner{ position:absolute; width:80px; height:80px; background:red; }
+</style>
+</head>
+
+<body  style="
+height:5000px;">
+第一个事件:mouseover 创建一张大图-->在鼠标的位置
+
+第二个事件：mousemove 这张大图随鼠标移动而移动
+
+第三个事件：mouseout 大图消失（或隐藏或删除）
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+</body>
+</html>
+<script>
+/*
+	先讲标准浏览器的事件对象
+*/
+
+var ele=document.getElementById("div1");
+ele.onmouseover=function(event){
+	//IE浏览器是当事件触发的时候，会把事件对象赋给window.event全局变量，也就是说window.event是来接收当时的事件对象
+	event=event||window.event;//处理了标准浏览器和IE浏览器的事件兼容问题了
+	
+	//if(!event.pageX){//不严谨
+	if(typeof event.pageX == "undefined"){
+		event.pageX=(document.documentElement.scrollLeft||document.body.scrollLeft)+event.clientX;
+		
+		event.pageY=(document.documentElement.scrollTop||document.body.scrollTop)+event.clientY;
+	}
+	
+	
+	
+}
+</script>

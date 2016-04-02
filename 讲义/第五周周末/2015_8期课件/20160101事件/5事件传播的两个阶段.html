@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body *{ padding:50px; border:30px white solid; display:block; background:blue;}
+</style>
+<script>var abcd</script>
+</head>
+
+<body>
+<div id="outer">outer
+	<div id="middle">
+    middle
+    <div id="inner" style="background:red;">
+    	inner
+        <p id="p1" style="background:orange">p
+        	<span>span</span>
+        </p>
+    </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+function fn(e){
+	alert(this.id||this.tagName);
+	//e.stopPropagation();
+}
+var eles=document.getElementsByTagName("*");
+for(var i=0;i<eles.length;i++){
+	eles.item(i).addEventListener("click",fn,false);
+	eles.item(i).addEventListener("click",fn,true);
+	//这个试验告诉我们：先捕获阶段，再冒泡阶段
+}
+
+</script>

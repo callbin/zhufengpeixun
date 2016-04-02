@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var obj = {};
+    //    function fn() {
+    //        console.log(this);
+    //    }
+    //    window.setTimeout(fn.bind(obj), 1000);
+
+    function bind(context, callback) {
+        var outerArg = Array.prototype.slice.call(arguments, 2);
+        return function () {
+            var innerArg = Array.prototype.slice.call(arguments, 0);
+            var arg = innerArg.concat(outerArg);
+            typeof callback === "function" ? callback.apply(context, arg) : null;
+        }
+    }
+</script>
+</body>
+</html>

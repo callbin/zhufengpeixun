@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:400px; height:400px; background:lightBlue; margin:50px auto; position:relative;}
+#inner{ position:absolute; width:80px; height:80px; background:red; }
+</style>
+</head>
+
+<body  style="
+height:5000px;">
+第一个事件:mouseover 创建一张小图-->在鼠标的位置
+
+第二个事件：mousemove 这张小图随鼠标移动而移动
+
+第三个事件：mouseout 小图消失（或隐藏或删除）
+<div id="div1"></div>
+
+</body>
+</html>
+<script>
+/*
+	先讲标准浏览器的事件对象
+*/
+
+var ele=document.getElementById("div1");
+ele.onmouseover=function(event){//这个函数是被事件触发的：则浏览会自动的把“事件”对象传给这个函数。要强调的是：这个方法必须是由事件驱动的才会传事件对象
+	//既然“事件”是对象，它应该承载很多的信息：
+	event.clientX;//鼠标相对于浏览器的坐标
+	event.clientY;
+	event.pageX;//IE不支持，鼠标相对于文档的坐标
+	event.pageY;//IE不支持
+	e.target||e.srcElement;
+	e.keyCode;//当事件是由键盘触发的时候，这是每个键的ASCII码
+	
+	e.stopPropagation();//停止事件传播
+	e.cancelBubble=true;//IE专用的取消事件冒泡（和上边是一样的功能）
+	
+	e.preventDefault();//标准浏览器的DOM2级事件中的取消事件的默认行为
+	e.returnValue=false;//IE的DOM2级事件中的取消事件的默认行为
+	
+	//事件和事件处理方法（给事件上绑定的方法）是两码事
+	
+	var oInner=document.createElement("div");
+	this.appendChild(oInner);
+	oInner.id="inner";
+	//oInner应该在鼠标的位置
+	//事件
+	oInner.style.left=arguments[0].clientX+"px";
+	oInner.style.top=arguments[0].clientY+"px";
+}
+
+function fn1(){
+	alert(arguments[0].clientX);
+}
+
+function fn2(){
+	alert(arguments[0].clientX);
+}
+ele.onclick=fn1;//事件会直接触发fn1,弹出鼠标的x轴坐标
+ele.onclick=function(){
+	fn2();	//报错:事件不是直接触发的fn2，而是先触发匿名方法，再由匿名方法调用这这个fn2，这样事件对象则不会传给fn2，则arguments[0]是undefined，undefined上没有任何属性，则报错
+	//fn2(arguments[0]);//这样就没有问题，是因为匿名方法会收到事件对象放在arguments[0]，然后再传给fn2
+}
+</script>

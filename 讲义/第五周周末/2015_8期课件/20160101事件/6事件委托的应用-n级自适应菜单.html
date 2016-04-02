@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#menu{ width:270px; margin:10px auto; background:#9C9;}
+#menu ul,#menu li{ padding:0; margin:10px; list-style:none;}
+#menu span{ display:block;}
+
+span.open:before{ content:"-"; font-size:24px; color:red; font-weight:bold;}
+span.close:before{ content:"+"; font-size:24px; color:red; font-weight:bold;}
+</style>
+</head>
+
+<body>
+<div id="menu">
+	<ul>
+    	<li>
+        	<span>第一级菜单 </span>
+            <ul>
+            	<li><span>1第二 级菜单 </span></li>
+                <li><span>1第二 级菜单 </span></li>
+                <li>
+                	<span>1第二 级菜单 </span>
+                	<ul>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+            </ul>
+                </li>
+                <li><span>1第二 级菜单 </span></li>
+                <li><span>1第二 级菜单 </span></li>
+            </ul>
+        </li>
+        
+        <li>
+        	<span>第一级菜单 </span>
+            <ul>
+            	<li><span>1第二 级菜单 </span></li>
+                <li><span>1第二 级菜单 </span></li>
+                <li>
+                	<span>1第二 级菜单 </span>
+                	<ul>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+            </ul>
+                </li>
+                <li><span>1第二 级菜单 </span></li>
+                <li><span>1第二 级菜单 </span></li>
+            </ul>
+        </li>
+        <li><span>第一级菜单</span></li>
+        
+        <li>
+        	<span>第一级菜单 </span>
+            <ul>
+            	<li><span>1第二 级菜单 </span></li>
+                <li><span>1第二 级菜单 </span></li>
+                <li>
+                	<span>1第二 级菜单 </span>
+                	<ul>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span>
+                    	<ul>
+                        <li><span>1-1第三 级菜单 </span></li>
+                    	<li><span>1-1第三 级菜单 </span></li>
+                    	<li><span>1-1第三 级菜单 </span></li>
+                        <li><span>1-1第三 级菜单 </span></li>
+                    	<li><span>1-1第三 级菜单 </span></li>
+                    	<li><span>1-1第三 级菜单 </span></li>
+                        </ul>
+                    
+                    </li>
+                    <li><span>1-1第三 级菜单 </span></li>
+                    <li><span>1-1第三 级菜单 </span></li>
+            </ul>
+                </li>
+                <li><span>1第二 级菜单 </span></li>
+                <li><span>1第二 级菜单 </span></li>
+            </ul>
+        </li>
+    
+    </ul>
+
+</div>
+</body>
+</html>
+<script>
+//第一步：初始化菜单
+	//让第一级菜单显示，
+	//把终极菜单设为绿背景，把非终极菜单设为蓝背景
+	//把关闭的菜单前边加一个+表示当前是闭合状态，把展开的菜单前边设一个-表示是打开的状态
+var lis=document.getElementById("menu").getElementsByTagName("li");
+for(var i=0;i<lis.length;i++){
+	var oLi=lis.item(i);
+	if(oLi.getElementsByTagName("ul").length){//有下一级菜单
+		oLi.children[0].style.backgroundColor="lightBlue";
+		oLi.children[0].className="close";
+		oLi.children[1].style.display="none";
+		
+		
+	}else{//终极菜单
+		oLi.children[0].style.backgroundColor="green";
+	}
+	
+}
+
+document.getElementById("menu").onclick=function(e){
+	e=e||window.event;
+	var target=e.target||e.srcElement;
+	if(target.tagName=="SPAN"){
+		if(target.className=="open"){
+			target.nextElementSibling.style.display="none";
+			target.className="close";
+			
+			//以下是把所有的后代菜单也都关掉
+			var oUls=target.nextElementSibling.getElementsByTagName("ul");
+			for(var i=0;i<oUls.length;i++){
+				oUls[i].previousElementSibling.className="close";
+				oUls[i].style.display="none";	
+			}
+		}else if(target.className=="close"){
+			target.nextElementSibling.style.display="block";
+			target.className="open";
+		}
+	}
+}
+</script>

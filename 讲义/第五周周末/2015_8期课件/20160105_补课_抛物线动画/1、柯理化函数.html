@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+<!--
+[JS高阶编程技巧]
+惰性函数：http://www.zhufengpeixun.com/viewer.do?courseId=976740#currentPlaying=1764844
+柯理化函数：http://www.zhufengpeixun.com/viewer.do?courseId=976741#currentPlaying=1764845
+
+在第七周周末班上课前一定要把这两个视频反复的多看几遍直到明白为止
+-->
+<script type="text/javascript">
+    //bind ->浏览器定义在Function.prototype上的一个公有的方法,主要是为了实现在方法绑定的时候改变里面的this指向的问题
+
+    var obj = {name: "珠峰培训"};
+    function fn() {
+        console.log(this);
+    }
+
+    //document.body.addEventListener("click", fn, false);
+    //->当我点击的时候我想让fn中的this不是body而是obj?
+
+    //document.body.addEventListener("click", fn.call(obj), false);//->在绑定的时候就把fn执行了,里面的this虽然也变为了obj,但是我们这样的话是把fn执行的返回结果undefined绑定给了我们body的点击行为
+    //    document.body.addEventListener("click", function () {
+    //        fn.call(obj);
+    //    }, false);
+
+    //document.body.addEventListener("click", fn.bind(obj), false);//->预处理机制：在绑定的时候我们先不执行fn,只是把fn中的this预处理为obj,当body的点击行为触发的时候在执行fn,并且里面的this已经变为了obj了
+    //->bind虽然好用但是不兼容,我们就可以采用柯理化函数的思想(预处理机制)来实现我们的bind了
+
+    function processThis(context, callback) {
+        return function () {
+            callback.call(context);
+        }
+    }
+    document.body.addEventListener("click", processThis(obj, fn), false);
+
+    //jQuery中的事件:
+    //常用的快捷事件绑定:click、mouseover...
+    //on、off
+    //bind、unbind、trigger
+    //delegate
+    //不管是哪一个都是采用DOM2级事件模型完成的；而且除了delegate以外，其余的所有的事件都是基于on完成的;delegate是采用事件委托来实现事件绑定的;
+
+    //    $("#div1").bind("click",function(){});
+    //    $("#div1").trigger("click");
+</script>
+</body>
+</html>

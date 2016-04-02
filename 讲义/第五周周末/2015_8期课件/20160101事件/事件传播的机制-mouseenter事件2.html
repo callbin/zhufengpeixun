@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:200px; height:200px; background:red; position:relative; margin:100px auto}
+#child{ height:50px; width:50px; position:absolute; background:black;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+ele.onmouseenter=function(e){
+	var child=document.createElement("div");
+	child.id="child";
+	with(child.style){
+			left=e.pageX-this.offsetLeft+"px";
+			top=e.pageY-this.offsetTop+"px";
+			//为什么要减去offsetLeft和offsetTop
+	}
+	this.appendChild(child);
+	
+	//事件传播产生的
+}
+
+//黑盒子是以红盒子为定位依据的
+//鼠标是以浏览器定位依据
+//鼠标在红盒子的最右边的时候，pageX=208
+//鼠标距离红盒子的最左边是 200，黑盒子定位要以这个200为依据
+//这个200如何得到的：pageX-红盒子距离浏览器的左偏移 pageX-offsetLeft
+
+//关于mouseover的一些问题
+//子元素的事件会传播给父元素
+//当鼠标从子元素离开，到了父元素里边的时候，也会触发父元素的mouseover事件
+</script>

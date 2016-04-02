@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+ul,li{ margin:0; padding:0; list-style:none; }
+ul{ margin:150px auto; width:480px; height:640px; background:#9CF; position:relative;}
+li{ width:150px; height:150px; margin:5px; float:left; overflow:hidden; background:#66C; cursor:move; -webkit-user-select:none; }
+img{ width:150px; height:150px;}
+</style>
+</head>
+
+<body>
+<ul>
+	<li><img src="img/1.png"></li>
+    <li><img src="img/2.png"></li>
+    <li><img src="img/3.png"></li>
+    <li><img src="img/4.png"></li>
+    <li><img src="img/5.png"></li>
+    <li><img src="img/6.png"></li>
+    <li><img src="img/7.png"></li>
+    <li><img src="img/8.png"></li>
+    <li><img src="img/9.png"></li>
+    <li><img src="img/10.png"></li>
+    <li><img src="img/11.png"></li>
+    <li><img src="img/12.png"></li>
+ 
+</ul>
+</body>
+</html>
+<script>
+var oLis=document.getElementsByTagName("li");
+for(var i=0;i<oLis.length;i++){
+	var oLi=oLis.item(i);
+	//oLi.style.position="absolute";
+	oLi.style.top=oLi.offsetTop+"px";
+	oLi.style.left=oLi.offsetLeft+"px";
+}
+
+for(var i=0;i<oLis.length;i++){
+	var oLi=oLis.item(i);
+	oLi.style.position="absolute";
+	
+}
+
+for(var i=0;i<oLis.length;i++){
+	var oLi=oLis.item(i);
+	oLi.style.margin=0;//定位是在margin外边开始的，但是offset是从margin里面开始计算的。margin就会被重复计算
+	
+}
+
+</script>

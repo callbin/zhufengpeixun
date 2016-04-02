@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:200px; height:200px; background:red; position:relative; margin:100px auto}
+#child{ height:50px; width:50px; position:absolute; background:black; opacity:0.5;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+ele.onmouseenter=function(e){
+	var child=document.createElement("div");
+	with(child.style){
+		top=e.pageY-this.offsetTop+"px";
+		left=e.pageX-this.offsetLeft+"px";
+	}
+	child.id="child";
+	this.appendChild(child);
+	
+}
+
+ele.onmousemove=function(e){
+	var child=document.getElementById("child")
+	with(child.style){
+		var valY=e.pageY-this.offsetTop-child.offsetHeight/2;
+		var valX=e.pageX-this.offsetLeft-child.offsetWidth/2;
+		if(valY<=0){
+			top=0;	
+		}else if(valY>=this.offsetHeight-child.offsetHeight){
+			top=this.offsetHeight-child.offsetHeight+"px";
+		}else{
+			top=valY+"px";	
+		}
+		if(valX<=0){
+			left=0;	
+		}else if(valX>=this.offsetWidth-child.offsetWidth){
+			left=this.offsetWidth-child.offsetWidth+"px";
+		}else{
+			left=valX+"px";
+		}
+		//top=e.pageY-this.offsetTop-child.offsetHeight/2+"px";
+		//left=e.pageX-this.offsetLeft-child.offsetWidth/2+"px";
+	}
+}
+
+ele.onmouseleave=function(e){
+	var child=document.getElementById("child");
+	if(child){
+		this.removeChild(child);	
+		
+	}
+	
+}
+
+var obj={width:100,height:400,age:20,name:"tom"}
+
+with(obj){
+	width=130;
+	abcd=400;
+	
+}
+
+
+</script>

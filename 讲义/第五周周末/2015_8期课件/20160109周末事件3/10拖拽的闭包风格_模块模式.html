@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:100px; height:100px; background:red; position:absolute; top:0; left:0; cursor:move; -webkit-user-select:none;}
+</style>
+</head>
+
+<body>
+<div id="div1" style="z-index:100;">1</div>
+<div id="div2">2</div>
+<div id="div3">3</div>
+<div id="div4">4</div>
+</body>
+</html>
+<script src="event.js"></script>
+
+<script>
+//面向过程风格的拖拽，面向对象的拖拽
+//ele.x,y,mx,my;this.x,this.y
+var myInit=(function(){
+	//var ele=document.getElementById("div1");
+	//on(ele,"mousedown",down);
+	var x=null,y=null,mx=null,my=null;
+	//var MOVE=null;
+	//var UP=null;
+	//var MOVE=move.bind(ele);
+	//var UP=up.bind(ele);
+	function down(e){
+		x=this.offsetLeft;
+		y=this.offsetTop;
+		mx=e.pageX;
+		my=e.pageY;
+		if(this.setCapture){
+			this.setCapture();
+			on(ele,"mousemove",move);
+			on(ele,"mouseup",up);	
+		}else{
+			this.MOVE=move.bind(this);
+			this.UP=up.bind(this);
+			on(document,"mousemove",this.MOVE);
+			on(document,"mouseup",this.UP);
+		}
+		e.preventDefault();
+	}
+	function move(e){
+		this.style.left=x+(e.pageX-mx)+"px";
+		this.style.top=y+(e.pageY-my)+"px";
+		
+	}
+	
+	function up(e){
+		if(this.releaseCapture){
+			this.releaseCapture();
+			off(this,"mousemove",move);
+			off(this,"mouseup",up);	
+		}else{
+			off(document,"mousemove",this.MOVE);
+			off(document,"mouseup",this.UP);	
+		}
+		
+	}
+	
+	function init(ele){//这是个入口方法，负责使拖拽可以起作用。
+		on(ele,"mousedown",down);
+		
+	}
+	//init(div1);
+	//init(div2);
+	return {init:init,down:down};
+	
+})();
+ 
+myInit.init(div1);
+myInit.init(div2);
+myInit.init(div3);
+myInit.init(div4);
+
+//模块模式的适用场景
+
+
+</script>
+<script src="drag.js"></script>
+var drag=require("drag.js");//requireJS
+;(function(){
+	var x,y,mx,my,l,t
+    
+    module.exports.down=down;
+    return module.exports;
+
+})()

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+var innerHTML="window";
+var ele=document.getElementById("div1");
+function fn1(){alert(this.innerHTML);
+	counter++;
+	if(counter==2){
+		unbind(ele,"click",fn1);
+		unbind(ele,"click",fn2);
+	}
+}
+function fn2(){alert(2)}
+function fn3(){alert(3)}
+var counter=0;
+function fn4(){alert(4)}
+function fn5(){alert(5);}
+var fnTemp=null;
+function bind(ele,type,fn){//把fn方法绑定给ele的type这个事件
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);	
+	}else{
+		if(!ele["aEvent"+type]){
+			ele["aEvent"+type]=[];
+		}
+		var a=ele["aEvent"+type];
+		for(var i=0;i<a.length;i++){
+			if(a[i].photo==fn)return;
+		}
+		var fnTemp=function (){fn.call(ele)}//这样做就可以使fn在执行的时候，让fn的this指向ele
+		fnTemp.photo=fn;//加的这个photo属性，只是让fnTemp和fn有关联
+
+		a.push(fnTemp);//仅仅是保存
+		ele.attachEvent("on"+type,fnTemp);
+	}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+	}else{
+		//现在要以fn为查找判断的依据，把在bind里绑定的那个fnTemp找出来并且移除（是在事件上去掉）
+		//第一步要把fnTemp保存下来，第二步再通过合适技巧找到它
+		var a=ele["aEvent"+type];
+		if(a){
+			for(var i=0;i<a.length;i++){
+				if(a[i].photo==fn){
+					ele.detachEvent("on"+type,a[i]);
+				}
+			}
+		}
+		
+	}
+}
+
+/*bind(ele,"click",fn1);
+bind(ele,"click",fn2);
+bind(ele,"click",fn3);
+bind(ele,"click",fn4);
+bind(ele,"click",fn5);*/
+var a=[];
+a.push(fn1);
+a.push(fn2);
+a.push(fn3);
+a.push(fn4);
+a.push(fn5);
+bind(ele,"click",run);//实现的间接绑定fn1-fn5这五个方法:实现了当click事件触发的时候，执行fn1-fn5
+
+function run(){//中间环节，用来联系事件和被驱动的方法
+	for(var i=0;i<a.length;i++){
+		//a[i]();
+		//a[i]();//数组里的每个方法中，也会有this
+		a[i].call(this);
+		
+	}
+}
+</script>

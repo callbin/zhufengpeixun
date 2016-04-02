@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<a id="a1" href="http://www.zhufengpeixun.cn">珠峰培训</a>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+function fn1(e){//在这个方法，不解决任何的事件兼容性问题
+/*	e=e||window.event;
+	if(e.preventDefault){
+		e.preventDefault();
+	}else{
+		e.returnValue=false;	
+	}
+	*/
+	arguments[0].preventDefault();
+	alert(this.innerHTML);
+	
+	
+}
+var ele=document.getElementById("a1");
+on(ele,"click",fn1);
+//fn1是被run执行，要由run给它一个事件对象，在run里面，就应该把这些事件的兼容问题都解决了
+
+//由bind绑定的方法，则由unbind来移除
+//由on绑定的方法，则由off来移除
+//现在的on方法里，已经不用bind了
+//
+
+</script>
+
+

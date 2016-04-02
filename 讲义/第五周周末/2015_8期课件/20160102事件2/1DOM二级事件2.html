@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2)}
+function fn3(){alert(3)}
+function fn4(){alert(4)}
+ele.addEventListener;
+ele.removeEventListener;
+//标准浏览器的方法
+ele.addEventListener("click",fn1,false);
+ele.addEventListener("click",fn2,false);
+ele.addEventListener("click",fn3,false);
+ele.addEventListener("click",fn4,false);
+//可以在同一事件上绑定多个方法，这些绑定的方法是先绑定先执行，绑定在事件上的方法里的this是当前的元素
+
+
+
+
+</script>

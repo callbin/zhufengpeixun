@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//bind是解决IE中this关键字指向window的问题，
+//this问题，顺序问题，不能重复绑定的问题
+function bind(ele,type,fn){
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);
+	}else{
+		if(!ele["aEvent"+type]){
+			ele["aEvent"+type]=[];	
+		}
+		var a=ele["aEvent"+type];
+		for(var i=0;i<a.length;i++){
+			if(a[i].photo==fn)return;
+		}
+		var fnTemp=function(){fn.call(ele)};
+		
+		ele.attachEvent("on"+type,fnTemp);
+		
+		a.push(fnTemp);fnTemp.photo=fn;
+	}
+	
+}
+function unbind(){
+	
+}
+
+
+var a=[];
+a.push(fn1);
+a.push(fn2);
+a.push(fn3);
+a.push(fn4);
+a.push(fn5);
+bind(ele,"click",run);
+
+function on(ele,type,fn){
+	if(!ele["onEvent"+type])
+		ele["onEvent"+type]=[];
+	var a=ele["onEvent"+type];
+	a.push(fn);
+	
+	bind(ele,type,run);//这个代码可能会被执行多次，但只有第一次有效
+}
+on(div1,"click",fn1);
+on(div1,"click",fn2);
+
+function run(e){//通知
+	e=e||event;
+	var type=e.type;
+	var a=this["onEvent"+type];
+	var a=ele["onEvent"+type];
+	for(var i=0;i<a.length;i++){
+		a[i].call(this,e);
+		fn1.call(this);	
+	}
+}
+
+
+
+</script>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:0; cursor:move; -webkit-user-select:none;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+//在面向对象的编程里，类上的方法里的this关键字：指向当前实例。这有可能会和事件里的this关键字冲突，如果有冲突，则强制改变this，使其指向实例
+function fn(){}
+var obj={attr:133,fn:fn}
+function Drag(ele/*,ar1,ar2,ar3*/){//类最其码是管理一系列的行为.构造函数还要起初始化作用
+	//this已经不是被拖拽的元素了，现在需要把被拖拽的元素保存在this上
+	//this其实是一个承载体，它承载着和拖拽相关的所有的行为或属性
+	this.ele=ele;//把要拖拽的DOM对象保存到当前实例上
+	this.x=null;
+	this.y=null;
+	this.mx=null;
+	this.my=null;
+/*	this.obj1=ar1;
+	this.obj2=ar2;
+	this.obj3=ar3;*/
+	
+/*	var fn=this.down;
+	on(this.ele,"mousedown",fn);//0f000111aaa
+	this.down;
+	this.down();*/
+	this.DOWN=processThis(this,this.down);
+	
+	var _this=this;
+	this.DOWN=function(e){_this.down.call(_this,e);this;}
+	this.MOVE=processThis(this,this.move);
+	this.UP=processThis(this,this.up);
+	on(this.ele,"mousedown",this.DOWN);//当事件触发的时候，DOWN的this和this.down里的this分别是谁呢？
+	on(this.ele,"mousedown",this.down);//
+	
+	
+}
+Drag.prototype.down=function(e){
+	this.x=this.ele.offsetLeft;
+	this.y=this.ele.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	if(this.ele.setCapture){
+		this.ele.setCapture();
+		on(this.ele,"mousemove",this.MOVE);
+		on(this.ele,"mouseup",this.UP);
+	}else{
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+	}
+	e.preventDefault();
+}
+Drag.prototype.move=function(e){
+	this.ele.style.left=this.x+e.pageX-this.mx+"px";
+	this.ele.style.top=this.y+e.pageY-this.my+"px";
+}
+Drag.prototype.up=function(e){
+	if(this.ele.releaseCapture){
+		this.ele.releaseCapture();
+		off(this.ele,"mousemove",this.MOVE);
+		off(this.ele,"mouseup",this.UP);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+}
+Drag.prototype.limited=function(obj){
+	
+}
+ 
+new Drag(div1);
+
+
+</script>

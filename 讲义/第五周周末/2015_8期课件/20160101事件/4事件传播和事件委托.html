@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body *{ padding:50px; border:30px white solid; display:block; background:blue;}
+</style>
+<script>var abcd</script>
+</head>
+
+<body>
+<div id="outer">outer
+	<div id="middle">
+    middle
+    <div id="inner" style="background:red;">
+    	inner
+        <p id="p1" style="background:orange">p
+        	<span>span</span>
+        </p>
+    </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+//网页中有n个元素，实现无论点到谁，都弹出这个被点中元素的id名或标签名.事件不能给其它元素造成连锁反应
+
+/*var eles=document.getElementsByTagName("*");
+for(var i=0;i<eles.length;i++){
+	eles.item(i).onclick=function(e){
+		alert(this.id||this.tagName);
+		e=e||window.event;
+		if(e.stopPropagation){
+			e.stopPropagation();
+		}else{
+			e.cancelBubble=true;//IE的阻止事件传播的方式	
+		}
+	}
+}*/
+
+//事件委托：不再一一处理事件，而是把事件交给某一个上级元素（或某一个顶级元素）来处理（就是委托给某一个上级元素去统一处理）
+//事件委托正是利用的事件传播的机制
+document.documentElement//事件触发本身和事件处理二者的关系
+document.body.onclick=function(e){
+	var e=e||window.event;
+	var target=e.target||e.srcElement;//得到事件源，事件源就是事件开始的地方
+	alert(target.id||target.tagName);
+	
+}
+</script>

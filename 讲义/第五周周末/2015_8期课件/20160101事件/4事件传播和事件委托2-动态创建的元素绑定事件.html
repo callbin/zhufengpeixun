@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+</body>
+</html>
+<script>
+//要给所有的以后创建的div的click事件增加处理方法，（这些div是#div1子元素）
+//这些div现在没有，什么时候有不知道
+document.documentElement.onclick=function(e){
+	if(e.target.parentNode.id=="div1"&&e.target.tagName=="DIV"){
+		//做相应处理就好	
+	}
+}
+
+
+</script>

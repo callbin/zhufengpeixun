@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+</body>
+</html>
+<script>
+//bind,unbind,on,run,off
+//on解决顺序问题
+//on创建了一个数组，把要绑定的方法，按顺序保存到数组里，
+//当事件触发的时候，运行run，由run去遍历保存到数组里的方法
+//事件上真正绑定是run方法，on方法是“假”绑定
+//run是在on执行的绑定的，并且不考虑run的移除
+/*
+		on和run方法执行的过程 
+	on(ele,"click",fn1);//先创建ele.aEventclick,然后把fn1保存进去
+	on(ele,"click",fn2);//直接把fn2保存到ele.aEventclick数组里
+	on(ele,"click",fn3);//直接把fn2保存到ele.aEventclick数组里
+	on(ele,"mouseover",fn1);//这是不同的事件类型，还要再创建ele.aEventmouseover的数组，然后把fn1再放到数组里。
+	//当click事件触发了，不是直接执行的fn1,fn2,fn3,而是执行的是run，run方法再去遍历执行ele.aEventclick数组里的这些方法
+*/
+function on(ele,type,fn){//创建数组并且把fn保存到数组里
+	if(!ele["aEvent"+type]){
+		ele["aEvent"+type]=[];//这个数组，如果事件类型相同，它只会创建一次。也就是相同的事件类型，这行代码只会执行一次	
+		ele.attachEvent("on"+type,function(){run.call(ele)});//这一行代码就取代bind了
+	}
+	for(var i=0;i<ele["aEvent"+type].length;i++){
+		if(ele["aEvent"+type][i]==fn)return;
+	}
+	
+	ele["aEvent"+type].push(fn);
+	/*
+	//bind(ele,type,run);
+	ele.attachEvent("on"+type,function(){run.call(ele)});
+	//这样绑定，事件触发的时候，run会被执行，并且this也是ele
+	//问题是：on每执行一次，这个“被改造”的run方法，就会重复绑定一次。
+	//假如on执行了5次，那“被改造”的run就会被重复绑定五次。当事件被触发的时候，ele["aEvent"+type]这个数组就会被重复遍历五次
+	//解决的思路：在同一个事件上，“被改造”的run方法，只能被绑定一次
+	*/
+}
+
+function run(){
+	var e=window.event;
+	var type=e.type;
+	var a=this["aEvent"+type];//this是被绑定的那个DOM元素
+	if(a)//这是在判断数组a是否存在
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function"){
+				a[i].call(this,e);	
+			}else{
+				a.splice(i,1);
+				i--;	
+			}
+		}	
+}
+
+function off(ele,type,fn){
+	var a=ele["aEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				break;	
+			}
+		}
+	}
+}
+
+
+
+
+</script>

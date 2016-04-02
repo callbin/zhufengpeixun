@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; position:absolute; background:red; cursor:move; top:0; left:0; overflow:hidden; -webkit-user-select:none;}
+</style>
+
+</head>
+
+<body>
+<div id="div1"><img src="帅哥.png" width="100" height="100"></div>
+</body>
+</html>
+<script src="event_self.js"></script>
+<script src="drag-单独的模块.js"></script>
+<script src="effect.js"></script>
+<script>
+on(div1,"mousedown",down);
+//要实现以下功能
+//当拖拽开始的时候，清除积累的效果
+//on(div1,"拖拽开始",clearEffect);
+on(div1,"selfdragstart",clearEffect);//"selfdragstart"用来标识down方法的执行，这是提前约定好的
+
+//当拖拽进行的时候，计算fly动画的速度
+//on(div1,"拖拽进行",getSpeed);
+on(div1,"selfdrag",getSpeed);//"selfdrag"来标识move方法
+
+//当拖拽结束的时候，执行drop和fly这两种效果
+//on(div1,"拖拽结束",fly);
+//on(div1,"拖拽结束",drop)
+on(div1,"selfdragend",fly);
+on(div1,"selfdragend",drop);
+
+
+//on干了那些事：创建一个以selfdragend为区分符的数组，把fly,drop等这个方法保存到数组里
+
+</script>

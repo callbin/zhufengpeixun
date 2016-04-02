@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#small{ width:300px; height:223px; margin:100px auto; position:relative;}
+#mask{ position:absolute; background:black; opacity:0.6;}
+#show{ position:absolute; width:300px; height:223px; background:blue; overflow:hidden;}
+</style>
+</head>
+
+<body>
+<div id="small">
+	<img src="img/smallPeony.jpg" width="300" height="223"></div>
+</div>
+<img src="img/peony.jpg" width="950" height="706">
+</body>
+</html>
+<script>
+//放大镜是按比例放大
+//遮罩比小图=右则的显示区比大图
+/*
+	300/950=遮罩宽/300
+	223/706=庶罩的高/223
+*/
+var w=300/950*300;
+var h=223/706*223;
+
+var oSmall=document.getElementById("small");
+oSmall.onmouseenter=function(e){
+	var oMask=document.createElement("div");
+	oMask.id="mask";
+	this.appendChild(oMask);
+	with(oMask.style){
+		
+		left=e.pageX-this.offsetLeft+"px";
+		top=e.pageY-this.offsetTop+"px";
+		width=w+"px";
+		height=h+"px";
+	}
+	
+	///以下是创建显示区
+	var oShow=document.createElement("div");
+	this.appendChild(oShow);
+	var oImg=document.createElement("img");
+	oImg.src="img/peony.jpg";
+	oShow.appendChild(oImg);
+	oShow.id="show";
+	with(oShow.style){
+		left=this.offsetWidth+10+"px";//给显示
+		top=0;	
+	}
+}
+oSmall.onmousemove=function(e){
+	var oMask=document.getElementById("mask");
+	var oShow=document.getElementById("show");
+	if(oMask){
+		var l=e.pageX-this.offsetLeft-oMask.offsetWidth/2;
+		var t=e.pageY-this.offsetTop-oMask.offsetHeight/2;
+		with(oMask.style){
+			if(l<=0){
+				left=0;
+				//oShow.scrollLeft=0;
+			}else if(l>=this.offsetWidth-oMask.offsetWidth){
+				//向右的最大边界
+				left=this.offsetWidth-oMask.offsetWidth+"px";
+				
+			}else{
+				left=l+"px";
+				oShow.scrollLeft=l*(950/300);//计算大画在显示区域的位置
+			}
+			if(t<=0){
+				top=0;	
+			}else if(t>=this.offsetHeight-oMask.offsetHeight){
+				//向下的最大边界
+				top=this.offsetHeight-oMask.offsetHeight+"px";
+			}else{
+				top=t+"px";
+				oShow.scrollTop=t*(706/223);//计算大画在显示区域的位置
+				}
+		}
+	}
+}
+
+oSmall.onmouseleave=function(e){
+	var oMask=document.getElementById("mask");
+	if(oMask){
+		this.removeChild(oMask);
+	}
+	var oShow=document.getElementById("show");
+	if(oShow){
+		this.removeChild(oShow);	
+	}
+}
+
+</script>

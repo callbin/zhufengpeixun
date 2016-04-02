@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:400px; height:400px; background:lightBlue; margin:50px auto; position:relative;}
+#inner{ position:absolute; width:80px; height:80px; background:red; }
+</style>
+</head>
+
+<body  style="
+height:5000px;">
+第一个事件:mouseover 创建一张小图-->在鼠标的位置
+
+第二个事件：mousemove 这张小图随鼠标移动而移动
+
+第三个事件：mouseout 小图消失（或隐藏或删除）
+<div id="div1"></div>
+
+</body>
+</html>
+<script>
+/*
+	先讲标准浏览器的事件对象
+*/
+
+var ele=document.getElementById("div1");
+
+//注意体会mouseover事件的影响
+//1、子元素的传播会影响到父元素
+//2、从子元素到父元素中，也会触发父元素的mouseover事件
+//mouseenter事件就是解决mouseover以上的问题的
+ele.onmouseenter=function(event){
+	
+	var oInner=document.createElement("div");
+	this.appendChild(oInner);
+	oInner.id="inner";
+	
+	oInner.style.left=arguments[0].clientX-this.offsetLeft+"px";
+	oInner.style.top=arguments[0].clientY-this.offsetTop+"px";
+}
+
+</script>

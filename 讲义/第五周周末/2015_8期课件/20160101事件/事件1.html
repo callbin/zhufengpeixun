@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body style="height:3000px;">
+</body>
+</html>
+<script>
+
+function fn(/* e */){
+	//只有这个方法由事件直接触发的情况下，才会得到一个由浏览器传进来的实参
+	//arguments[0]//肯定会有值，需不需用要看情况
+	///这个参数就是事件对象
+	//要理解事件是个对象：有方法有属性，是个复合的数据载体
+	/*e.target;;//触发这个事件源头
+	e.clientX;//鼠标相对浏览器的偏移
+	e.clientY;
+	e.pageX;e.pageY;//鼠标相对于文档的偏移*/
+	//e.preventDefault;e.stopPropagation这些都 是方法
+	//e.keyCode
+	//IE的事件对象是全局的window.event对象
+	
+	e=arguments[0];
+	e=e||window.event;
+	document.body.innerHTML="X:"+e.pageX+",Y:"+e.pageY;
+	
+	console.log(e.clientY,e.pageY);
+}
+//有一种情况，形参不人为的接受实参。
+document.documentElement.onclick=fn;//无法人为的给fn传参数，但这种情下，浏览器会自动的给它一个参数
+/*document.documentElement.onclick=function(){
+	fn();//这样的执行方法，fn不会自动得到一个事件对象参数	
+}*/
+
+function fn2(event){
+	
+	alert(event.keyCode);
+	
+}
+document.onkeydown=fn2;
+</script>

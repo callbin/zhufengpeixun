@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+var innerHTML="window";
+var ele=document.getElementById("div1");
+function fn1(){alert(this.innerHTML);
+	counter++;
+	if(counter==2){
+		off(ele,"click",fn1);
+		off(ele,"click",fn2);
+	}
+}
+function fn2(){alert(2)}
+function fn3(){alert(3)}
+var counter=0;
+function fn4(){alert(4)}
+function fn5(){alert(5);
+	/*counter++;
+	if(counter==2){
+		off(ele,"click",fn1);
+		off(ele,"click",fn2);
+	}*/
+}
+var fnTemp=null;
+function bind(ele,type,fn){//把fn方法绑定给ele的type这个事件
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);	
+	}else{
+		if(!ele["aEvent"+type]){
+			ele["aEvent"+type]=[];
+		}
+		var a=ele["aEvent"+type];
+		for(var i=0;i<a.length;i++){
+			if(a[i].photo==fn)return;
+		}
+		var fnTemp=function (){fn.call(ele)}//这样做就可以使fn在执行的时候，让fn的this指向ele
+		fnTemp.photo=fn;//加的这个photo属性，只是让fnTemp和fn有关联
+
+		a.push(fnTemp);//仅仅是保存
+		ele.attachEvent("on"+type,fnTemp);
+	}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+	}else{
+		
+		var a=ele["aEvent"+type];
+		if(a){
+			for(var i=0;i<a.length;i++){
+				if(a[i].photo==fn){
+					ele.detachEvent("on"+type,a[i]);
+					a.splice(i,1);
+					break;
+				}
+			}
+		}
+		
+	}
+}
+
+function on(ele,type,fn){
+	if(!ele["onEvent"+type]){
+		ele["onEvent"+type]=[];//如果数据不存在，则定义数组。	
+	}
+	var a=ele["onEvent"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	a.push(fn);//所谓的事件绑定，就是把方法保存到数组里
+	bind(ele,type,run);
+}
+function run(e){
+	e=e||window.event;
+	var type=e.type;
+	var a=this["onEvent"+type];
+	for(var i=0;i<a.length;i++){
+		if(typeof a[i]=="function"){
+			a[i].call(this);
+		}else{
+			a.splice(i,1);
+			i--;
+		}
+	}
+	
+	[fn1,fn2,fn3,fn4,fn5]
+	//第二次触发click事件
+	//从i=0开始遍历执行数据里的方法，fn1执行，删除fn1,fn2，
+	//[fn3,fn4,fn5] i++,i=1 a[i]()
+}
+
+function off(ele,type,fn){
+	var a=ele["onEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				//a.splice(i,1);//直接删除容易造成数组塌陷
+				a[i]=null;
+				break;	
+			}
+		}
+	}
+}
+on(ele,"click",fn1);
+on(ele,"click",fn2);
+on(ele,"click",fn3);
+on(ele,"click",fn4);
+on(ele,"click",fn5);
+
+
+
+
+</script>

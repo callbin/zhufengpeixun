@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+订阅发布模式
+订阅通知
+观察者
+</body>
+</html>
+<script>
+//手机充电，打电话，打扫卫生，泡方便面，洗漱，烧热水，喝开水
+
+//充电
+//，烧水
+//，打电话，打扫卫生
+//泡方便面，喝水，洗漱
+//水壶的方法--烧水--
+
+/*//同步模式是：A-->B--C-->d--E,所有的任务排在一个队列里，一个进程
+//异步模式有点像餐馆：
+//请求：---服务器接收到---交给数据库查询---再交给服务器---再应答给浏览器
+//50请求页面
+//50个下载文件的--10,500
+//101
+500ms,101
+500,3--,500*/
+
+function EventEmitter(){}//事件发射器类
+EventEmitter.prototype.on=function(type,fn){
+	if(!this["event"+type]){
+		this["event"+type]=[];
+	}
+	var a=this["event"+type];
+	a.push(fn);
+}
+EventEmitter.prototype.run=function(type){
+	var a=this["event"+type];
+/*	a.forEach(function(fn){
+		fn();
+		fn.call(this);
+	},this);*/
+	for(var i=0;i<a.length;i++){
+		a[i]();
+		//fn.call(this);	
+	}
+	
+}
+EventEmitter.prototype.off=function(type,fn){
+	var a=this["event"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+					a.splice(i,1);
+					break;
+			}	
+		}
+	}
+}
+
+function Kettle(material){
+	this.material=material;	
+}
+Kettle.prototype=new EventEmitter;
+//Kettle.prototype.__proto__=EventEmitter.prototype;
+Kettle.prototype.boiling=function(){
+	var _this=this;
+	console.log("开始烧水");
+	setTimeout(function(){
+		console.log("水开了！");
+		_this.run("boiling");
+		//this.run("boiling");
+	},5000);	
+	//所谓的“通知”(run的运行)，就是当这个行为发生的时候，去指定的数组里遍历执行已经保存在数组["event"+type]里的那些方法
+}
+//Kettle.prototype=new EventEmitter;
+function drink(){
+	console.log("喝杯82年的雪碧压压惊");
+}
+function noodles(){
+	console.log("专业泡面40年");
+}
+function washFace(){
+	console.log("开水洗脸去痘");
+}
+var k1=new Kettle;
+k1.on("boiling",drink);
+k1.on("boiling",noodles);
+k1.on("boiling",washFace);
+k1.boiling();
+
+///要在不同的行为之间，进行管理，使它们有关联
+//要在两组不同的行为之上有一套管理方式
+
+
+
+
+
+
+
+
+</script>

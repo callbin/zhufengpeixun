@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:100px; height:100px; background:red; position:absolute; top:0; left:0; cursor:move; -webkit-user-select:none;}
+
+body{ margin:0;}
+</style>
+</head>
+
+<body>
+<div id="div1" draggable="true">1</div>
+
+</body>
+</html>
+
+<script>
+var ele1=document.getElementById("div1");
+ele1.ondragstart=function(e){//准备拖拽的时候需要把一些值保存下来
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	console.log("start")
+}
+
+ele1.ondrag=function(e){//进行拖拽，就是进行拖拽的时候要干的事
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+"px";
+	console.log("drag");
+}
+ele1.ondragend=function(e){//拖拽结束的时候要干的事
+	this.style.left=this.x+(e.pageX-this.mx)+8+"px";
+	this.style.top=this.y+(e.pageY-this.my)+8+"px";
+}
+
+</script>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:140px; -webkit-user-select:none; cursor:move;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+	//鼠标按下准备拖拽：把盒子当前的位置和鼠标当前的位置保存下来
+	//按下并且移动，进行拖拽
+	//鼠标抬起来，结束拖拽
+	
+	var ele=document.getElementById("div1");
+	on(ele,"mousedown",down);
+	function down(e){//准备拖拽
+		this.x=this.offsetLeft;
+		this.y=this.offsetTop;
+		this.mx=e.pageX;
+		this.my=e.pageY;
+		if(this.setCapture){
+			this.setCapture();
+			on(this,"mousemove",move);
+			on(this,"mouseup",up);
+		}else{//chrome使用类似于“委托”的方式来解决
+		
+			//this
+			//this.MOVE=function(){this;move.call(this);}
+			/*var that=this;
+			this.MOVE=function(ee){move.call(that,ee)}
+			this.UP=function(e){up.call(that,e)}
+			
+			function processThis(obj,fn){
+				return function(a,e){fn.call(obj,e)}
+			}*/
+			
+		/*	this.MOVE=processThis(this,move);
+			this.UP=processThis(this,up);*/
+			this.MOVE=move.bind(this);
+			this.UP=up.bind(this);
+			//在Function类的原型上也定义着一个bind方法，功能和processThis相同
+			
+			
+			on(document,"mousemove",this.MOVE);
+			on(document,"mouseup",this.UP);
+			
+		}
+	}
+	
+/*	function fn3(a,b,c,d){};
+	ele.onclick=fn3;
+	ele.addEventListener("click",fn3,false);*/
+/*	var a=1,b=2,c=3;
+	//形参和实参没必要一样
+	fn(a)
+	
+	function fn(w){
+		
+	}*/
+	
+	function move(e){//进行拖拽
+		this.style.left=this.x+(e.pageX-this.mx)+"px";
+		this.style.top=this.y+(e.pageY-this.my)+"px";
+		
+	}
+	
+	function up(e){//结束拖拽
+		if(this.releaseCapture){
+			this.releaseCapture();
+			off(this,"mousemove",move);
+			off(this,"mouseup",up);
+		}else{
+			off(document,"mousemove",this.MOVE);
+			off(document,"mouseup",this.UP);	
+		}
+		
+	}
+
+</script>

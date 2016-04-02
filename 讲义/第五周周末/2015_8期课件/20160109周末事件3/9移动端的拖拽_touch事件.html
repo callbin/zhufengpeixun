@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:80%; height:100px; margin:0 auto; overflow:hidden;}
+#inner{ width:400%; height:100%; transform:translate(0,0); transition-duration:0.7s; }
+#inner div{ width:25%; height:100%; float:left; background:red; font-size:49px; color:white; font-weight:bold;}
+</style>
+</head>
+
+<body>
+<div id="outer">
+	<div id="inner">
+    	<div>一</div><div style="background:blue;">二</div><div style="background:green;">三</div><div style="background:orange">四</div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+var eles=document.getElementById("inner").getElementsByTagName("div");
+[].forEach.call(eles,function(ele,i){
+	ele.index=i;//把它们的索引保存到自定义属性上
+	ele.addEventListener("touchstart",start,false);
+	ele.addEventListener("touchmove",move,false);
+	ele.addEventListener("touchend",end,false);
+	
+});
+function start(e){
+	this.mx=e.changedTouches[0].pageX;//手指按下去的时候的坐标
+}
+
+function move(e){
+	//它的起点位置是它自己的索引号*-this.offsetWidth
+	var current=this.index*-this.offsetWidth;//起点，因为整帧动画，所以起点总是当前这一帧的起点。相当于拖拽里的this.x
+	var change=e.changedTouches[0].pageX-this.mx;//这是滑动的距离 
+	//console.log(e.changedTouches);
+	this.change=change;//把手势移动的距离保存下来，留到end方法里判断滑动的方向
+	
+	this.parentNode.style.transform="translate("+(current+change)+"px,0)";//计算滑动的位置
+	
+}
+function end(e){
+	if(this.change>0){//向右
+		var index=this.index-1;
+	}else if(this.change<0){//向左：0，1
+		var index=this.index+1;
+	}
+	var current=index*-this.offsetWidth;//终点=下一帧的索引*单帧宽度
+	this.parentNode.style.transform="translate("+current+"px,0)";
+}
+//大家自行把过界判断补齐
+
+</script>

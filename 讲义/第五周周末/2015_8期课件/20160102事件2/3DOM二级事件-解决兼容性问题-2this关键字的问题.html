@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+var innerHTML="window";
+var ele=document.getElementById("div1");
+function fn1(){alert(this.innerHTML);
+	counter++;
+	if(counter==2){
+		unbind(ele,"click",fn1);
+		unbind(ele,"click",fn2);//在移除fn2的时候，fn2还没有执行呢。来看：当事件触发的同时，能不能移除绑定在事件上的方法
+		//出现了各种浏览器不同结果(chrome的45版会有严重的bug)
+	}
+}
+function fn2(){alert(2)}
+function fn3(){alert(3)}
+var counter=0;
+function fn4(){
+
+	alert(4)
+}
+function fn5(){
+	alert(5);	
+}
+var fnTemp=null;
+function bind(ele,type,fn){//把fn方法绑定给ele的type这个事件
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);	
+	}else{
+		//call或 apply
+		if(!ele.aClick){
+			ele.aClick=[];
+		}
+		fnTemp=function(){fn.call(ele)}
+		ele.attachEvent("on"+type,fnTemp);
+		ele.aClick.push(fnTemp);
+		fnTemp.photo=fn;//就是在这个经过“手术”的方法上加一个自定义属性photo，让它指向它的“真身”fn
+	}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+	}else{
+		ele.aClick;//在这个数组里， 没法识别出那个方法是fn改装之后得来的。
+		//就要加一个识别的标识
+		if(ele.aClick){
+			for(var i=0;i<ele.aClick.length;i++){
+				if(ele.aClick[i].photo==fn){
+					ele.detachEvent("on"+type,ele.aClick[i]);//"click"
+				}
+			}
+		}
+		
+	}
+}
+
+bind(ele,"click",fn1);
+bind(ele,"click",fn2);
+bind(ele,"click",fn3);
+bind(ele,"click",fn4);
+bind(ele,"click",fn5);
+
+</script>

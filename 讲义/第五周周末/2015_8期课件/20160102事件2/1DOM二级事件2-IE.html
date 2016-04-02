@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+var innerHTML="window";
+var ele=document.getElementById("div1");
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2)}
+function fn3(){alert(3)}
+function fn4(){alert(4)}
+/*ele.addEventListener;
+ele.removeEventListener;*/
+//标准浏览器的方法
+ele.attachEvent("onclick",fn1);
+ele.attachEvent("onclick",fn2);
+ele.attachEvent("onclick",fn3);
+ele.attachEvent("onclick",fn4);
+//可以在同一事件上绑定多个方法，不按顺序执行，方法的this指向的window
+
+//IE浏览器和标准浏览器的事件处理方式有很多的不同
+//事件对象本身就一样：标准浏览器是浏览器自动给绑定在事件属性上的方法传进去一个事件对象当参数。IE是window.event
+//chrome是二者都采用
+
+function fn5(e){
+	//chrome用window.event同样是事件对象
+	e==window.event;
+}
+
+//事件源：e.target,e.srcElement;
+//阻止事件传播：e.stopPropagation(),IE是e.cancelBubble=true;
+//阻止事件默认行为：e.preventDefault();IE是e.returnValue=false;
+
+//特别强调，return false也可以阻止事件的默认行为，但是：如果是用addEventListener绑定的方法的，则一定要用e.preventDefault()来阻止事件的默认行为。IE没有关系
+
+//IE不支持e.pageX,e.pageY
+//DOM2级事件的绑定方法
+		//在DOM2级事件里的一些细节差别也很大：不按顺序执行，方法的this指向的window
+
+
+
+
+</script>
