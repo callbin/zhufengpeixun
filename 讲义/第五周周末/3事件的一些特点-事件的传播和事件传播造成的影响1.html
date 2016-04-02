@@ -30,12 +30,27 @@ var ele=document.getElementById("div1");
 //注意体会mouseover事件的影响
 //1、子元素的传播会影响到父元素
 //2、从子元素到父元素中，也会触发父元素的mouseover事件
-//mouseenter事件就是解决mouseover以上的问题的
-ele.onmouseenter=function(event){
+//下面用两种方式解决了这个问题
+ele.onmouseover=function(event){
+	event.relatedTarget;//当这个事件触发的时候，从那儿离开的，仅做了解
+	event.target;//到了那儿？
 	
+	//解决:从子元素到父元素中，也会触发父元素的mouseover事件
+	var relatedEle=event.relatedTarget;
+	var parent=relatedEle.parentNode;
+	while(parent){
+		if(parent==this)return;	//如果它离开的地方是它自己的后代，则不触发这个方法
+		//if(parent==event.target)return;
+		parent=parent.parentNode;
+	}
 	var oInner=document.createElement("div");
 	this.appendChild(oInner);
+	//document.body.appendChild(oInner);
 	oInner.id="inner";
+	
+	oInner.onmouseover=function(e){
+		e.stopPropagation();//这样就停止小div的事件传播：mouseover事件就不会传播给div1了	
+	}
 	
 	oInner.style.left=arguments[0].clientX-this.offsetLeft+"px";
 	oInner.style.top=arguments[0].clientY-this.offsetTop+"px";

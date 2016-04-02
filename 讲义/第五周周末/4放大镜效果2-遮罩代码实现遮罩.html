@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ width:300px; height:223px; background:url(2015_8%E6%9C%9F%E8%AF%BE%E4%BB%B6/20160101%E4%BA%8B%E4%BB%B6/img/smallPeony.jpg); position:relative; margin:50px auto; cursor:move;}
+#mask{ position:absolute; background:white; opacity:0.5;}
+</style>
+</head>
+
+<body>
+<div id="content">
+
+</div>
+
+</body>
+</html>
+<script>
+//大图是950*706 小图是300*223
+var scaleX=300/950;
+var scaleY=223/706;
+var content=document.getElementById("content");
+content.onmouseenter=function(e){
+	e=e||window.event;
+	var w=300*scaleX;
+	var h=223*scaleY;	
+	var oMask=document.createElement("div");
+	oMask.id="mask";
+	with(oMask.style){
+		left=e.clientX-this.offsetLeft+"px";
+		top=e.clientY-this.offsetTop+"px";
+		height=h+"px";
+		width=w+"px";
+	}
+	this.appendChild(oMask);
+	
+}
+
+content.onmousemove=function(e){
+	var oMask=document.getElementById("mask");
+	if(oMask){
+		var l=e.clientX-this.offsetLeft-oMask.offsetWidth/2;//正常情况mask的位置
+		var t=e.clientY-this.offsetTop-oMask.offsetHeight/2;//正常情况下mask垂直位置
+		var maxL=this.offsetWidth-oMask.offsetWidth;//mask能到达的最右边
+		var maxT=this.offsetHeight-oMask.offsetHeight;//mask能到达的最下边
+		with(oMask.style){
+			//设置让鼠标居中
+		/*left=e.clientX-this.offsetLeft-oMask.offsetWidth/2+"px";
+		top=e.clientY-this.offsetTop-oMask.offsetHeight/2+"px";
+		*/
+			if(l<=0){
+				left=0;	
+			}else if(l>=maxL){
+				left=maxL+"px";	
+			}else{
+				left=l+"px";
+			}
+			
+			if(t<=0){
+				top=0;
+			}else if(t>=maxT){
+				top=maxT+"px";
+			}else{
+				top=t+"px";
+			}
+		}
+	}
+}
+
+content.onmouseleave=function(){
+	var oMask=document.getElementById("mask");
+	if(oMask){
+		this.removeChild(oMask);	
+	}
+}
+
+</script>

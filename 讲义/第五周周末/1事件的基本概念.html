@@ -27,6 +27,7 @@ height:5000px;">
 
 var ele=document.getElementById("div1");
 ele.onmouseover=function(event){//这个函数是被事件触发的：则浏览会自动的把“事件”对象传给这个函数。要强调的是：这个方法必须是由事件驱动的才会传事件对象
+	/*
 	//既然“事件”是对象，它应该承载很多的信息：
 	event.clientX;//鼠标相对于浏览器的坐标
 	event.clientY;
@@ -40,7 +41,7 @@ ele.onmouseover=function(event){//这个函数是被事件触发的：则浏览�
 	
 	e.preventDefault();//标准浏览器的DOM2级事件中的取消事件的默认行为
 	e.returnValue=false;//IE的DOM2级事件中的取消事件的默认行为
-	
+	*/
 	//事件和事件处理方法（给事件上绑定的方法）是两码事
 	
 	var oInner=document.createElement("div");
@@ -48,8 +49,8 @@ ele.onmouseover=function(event){//这个函数是被事件触发的：则浏览�
 	oInner.id="inner";
 	//oInner应该在鼠标的位置
 	//事件
-	oInner.style.left=arguments[0].clientX+"px";
-	oInner.style.top=arguments[0].clientY+"px";
+	oInner.style.left=arguments[0].clientX-this.offsetLeft+"px";
+	oInner.style.top=arguments[0].clientY-this.offsetTop+"px";
 }
 
 function fn1(){

@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:400px; height:400px; background:lightBlue; margin:50px auto; position:relative;}
+#inner{ position:absolute; width:80px; height:80px; background:red; }
+</style>
+</head>
+
+<body  style="
+height:5000px;">
+第一个事件:mouseover 创建一张小图-->在鼠标的位置
+
+第二个事件：mousemove 这张小图随鼠标移动而移动
+
+第三个事件：mouseout 小图消失（或隐藏或删除）
+<div id="div1"></div>
+
+</body>
+</html>
+<script>
+/*
+	先讲标准浏览器的事件对象
+*/
+
+var ele=document.getElementById("div1");
+
+ele.onmouseover=function(event){
+	
+	var oInner=document.createElement("div");
+	this.appendChild(oInner);
+	
+	oInner.id="inner";
+		
+	oInner.style.left=arguments[0].clientX-this.offsetLeft+10+"px";
+	oInner.style.top=arguments[0].clientY-this.offsetTop+10+"px";
+}
+
+ele.onmousemove=function(e){
+	var oInner=document.getElementById("inner");
+	if(oInner){
+		oInner.style.left=e.pageX-this.offsetLeft+10+"px";
+		oInner.style.top=e.pageY-this.offsetTop+10+"px";
+		
+		
+	}
+}
+ele.onmouseout=function(){
+	var oInner=document.getElementById("inner");
+	if(oInner){
+		this.removeChild(oInner);	
+	}		
+}
+</script>
