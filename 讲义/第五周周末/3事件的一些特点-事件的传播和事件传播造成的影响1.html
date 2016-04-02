@@ -38,6 +38,7 @@ ele.onmouseover=function(event){
 	//解决:从子元素到父元素中，也会触发父元素的mouseover事件
 	var relatedEle=event.relatedTarget;
 	var parent=relatedEle.parentNode;
+	if(this==relatedEle)return;//确保从"自已"离开进入子元素不会触发此事件绑定的方法
 	while(parent){
 		if(parent==this)return;	//如果它离开的地方是它自己的后代，则不触发这个方法
 		//if(parent==event.target)return;
@@ -48,9 +49,9 @@ ele.onmouseover=function(event){
 	//document.body.appendChild(oInner);
 	oInner.id="inner";
 	
-	oInner.onmouseover=function(e){
+	/*oInner.onmouseover=function(e){
 		e.stopPropagation();//这样就停止小div的事件传播：mouseover事件就不会传播给div1了	
-	}
+	}*/
 	
 	oInner.style.left=arguments[0].clientX-this.offsetLeft+"px";
 	oInner.style.top=arguments[0].clientY-this.offsetTop+"px";

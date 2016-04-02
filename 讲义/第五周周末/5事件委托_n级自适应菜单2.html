@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#menu{ width:180px; margin:50px auto;}
+ul,li{ margin:0; padding:0; list-style:none;}
+
+li{ margin:10px; width:150px; }
+li span{ display:block; background:green; line-height:2em;}
+li span.open,li span.closed{ background:lightBlue}
+li span.closed:before{ content:"+"; font-size:24px; font-weight:bold; color:red;}
+li span.open:before{ content:"-"; font-size:24px; font-weight:bold; color:red;}
+
+</style>
+</head>
+
+<body>
+<ul id="menu">
+	<li><span>1第一级第一个</span>
+    	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span>
+            <ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span>
+            
+            <ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span>
+            	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span>
+            	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+            
+            </li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+            
+            
+            </li>
+        </ul>
+            </li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+            </li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+    </li>
+    <li><span>1第一级第二个</span>
+    	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+    
+    </li>
+    <li><span>1第一级第三个</span></li>
+    <li><span>1第一级第四个</span></li>
+    <li><span>1第一级第五个</span>
+    
+    <ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+    </li>
+
+
+</ul>
+</body>
+</html>
+
+<script>
+
+
+var oMenu=document.getElementById("menu");
+var oSpans=oMenu.getElementsByTagName("span");
+for(var i=0;i<oSpans.length;i++){
+	var oSpan=oSpans.item(i);
+	var oUl=oSpan.nextElementSibling;
+	if(oUl){
+		oUl.style.display="none";
+		oSpan.className="closed";
+	}
+}
+
+oMenu.onclick=function(e){
+	var target=e.target;
+	if(target.tagName=="SPAN"){
+			var oUl=target.nextElementSibling;
+			if(oUl){
+				if(oUl.style.display=="none"){
+					oUl.style.display="block";
+					target.className="open";
+				}else{
+					oUl.style.display="none";
+					target.className="closed";
+					
+					//在关闭本级菜单的同时，关闭所有的下边的子菜单
+					var otherUls=oUl.getElementsByTagName("ul");
+					for(var i=0;i<otherUls.length;i++){
+						otherUls[i].style.display="none";
+						otherUls[i].previousElementSibling.className="closed";
+					}
+				}
+			}
+	}
+	
+}
+
+</script>

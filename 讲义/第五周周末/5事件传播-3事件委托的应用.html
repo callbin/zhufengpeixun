@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body *{ padding:50px;}
+</style>
+</head>
+
+<body>
+<div id="tab">
+	<li class="tab">如果点到的是这些li，则选项卡切换</li>
+</div>
+<div id="animate">
+	<ul id="btn"><li>如果点到的是这个li，则让inner做动</li></ul>
+</div>
+</body>
+</html>
+<script>
+document.documentElement.onclick=function(e){
+	var ele=e.target;
+	if(ele.className=="tab"&&ele.parentNode.id=="tab"){
+		//则写选项卡的逻辑
+	}else if(ele.tagName=="LI"&&ele.parentNode.id=="btn"){
+		//则写动画的逻辑	
+	}
+}
+</script>
+

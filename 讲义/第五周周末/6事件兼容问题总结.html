@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<h1>事件兼容问题总结</h1>
+<a href="http://www.zhufengpeixun.cn"  target="_blank">珠峰培训</a>
+</body>
+</html>
+<script>
+var ele=document.getElementsByTagName("h1").item(0);;
+
+//事件对象本身 IE：window.event,内置的arguments[0]
+//阻事件默认行为：DOM0级事件中都一样 return false,DOM2
+	//DOM2级事件标准浏览器用e.preventDefault(),IE用e.returnValue=false;
+	//DOM2级事件只能用e.preventDefault()来阻止事件的默认
+ele.addEventListener
+var oA=document.getElementsByTagName("a").item(0)
+oA.addEventListener("click",function(e){
+	//return false;
+	e.preventDefault();
+	},false);
+oA.attachEvent("onclick",function(){
+	window.event.returnValue=false;
+	return false;
+	//在IE的DOM2的事件绑定中，以上两者皆可
+});
+//事件传播
+	//IE中用e.cancelBubble=true;标准浏览器用e.stopPropagation()
+//事件源
+	//标准浏览器用e.target,IE用e.srcElement;
+//e.pageX,e.pageY IE不支持
+
+//e.relatedTarget IE不支持
+
+//DOM2事件绑定的机制完全不同。
+	//addEventListener,removeEventListener
+	//attachEvent,detachEvent；
+	
+	
+
+
+
+
+
+</script>

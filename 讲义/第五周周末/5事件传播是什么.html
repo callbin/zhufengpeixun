@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body *{ padding:50px;}
+</style>
+</head>
+
+<body>
+<div id="outer" style="background:red;">red
+	<div id="middle" style="background:blue;">middle
+    	<div id="inner"  style="background:green;">inner
+        	<p id="p1"  style="background:purple;">p1
+            	<span id="span1"  style="background:pink;">span1</span>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+var eles=document.getElementsByTagName("*");
+function fn1(){
+			alert(this.id||this.tagName);
+		}
+for(var i=0;i<eles.length;i++){
+/*	eles.item(i).onclick=function(e){
+		
+		//事件源e.target,指事件本身发生在那一个元素上
+		alert(e.target);
+			alert(this.id||this.tagName);
+		}*/	
+		eles.item(i).addEventListener("click",fn1,false);//冒泡阶段
+		eles.item(i).addEventListener("click",fn1,false);//冒泡阶段，同一阶段绑定两个次同一个方法没有意义
+		eles.item(i).addEventListener("click",fn1,true);//指的是在捕获阶段引发事件上绑定的这个方法
+		//事件传播同时会有两个阶段
+}
+
+
+</script>
+

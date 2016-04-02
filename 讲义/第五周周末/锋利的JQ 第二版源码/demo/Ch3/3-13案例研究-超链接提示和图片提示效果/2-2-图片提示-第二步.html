@@ -38,33 +38,7 @@ li{
 }
 </style>
 <script type="text/javascript">
-//<![CDATA[
-$(function(){
-	var x = 10;
-	var y = 20;
-	$("a.tooltip").mouseover(function(e){
-		this.myTitle = this.title;
-		this.title = "";	
-		var imgTitle = this.myTitle? "<br/>" + this.myTitle : "";
-		var tooltip = "<div id='tooltip'><img src='"+ this.href +"' alt='产品预览图'/>"+imgTitle+"<\/div>"; //创建 div 元素
-		$("body").append(tooltip);	//把它追加到文档中						 
-		$("#tooltip")
-			.css({
-				"top": (e.pageY+y) + "px",
-				"left":  (e.pageX+x)  + "px"
-			}).show("fast");	  //设置x坐标和y坐标，并且显示
-    }).mouseout(function(){
-		this.title = this.myTitle;	
-		$("#tooltip").remove();	 //移除 
-    }).mousemove(function(e){
-		$("#tooltip")
-			.css({
-				"top": (e.pageY+y) + "px",
-				"left":  (e.pageX+x)  + "px"
-			});
-	});
-})
-//]]>
+
 </script>
 
 </head>
@@ -91,3 +65,24 @@ $(function(){
 	</ul>
 </body>
 </html>
+<script>
+$("a.tooltip").mouseover(function(e){
+	$("<div id='tooltip'><img src='"+this.href+"'/><br>"+this.title+"</div>").appendTo("body").css({left:e.pageX+10,top:e.pageY+20}).show();
+	this.tempTitle=this.title;//把此属性保存在一个临时属性里
+	this.title="";//然后将其清空，页面上就不会显示这个文字提示了
+	
+})
+.mousemove(function(e){
+	$("#tooltip").css({left:e.pageX+10,top:e.pageY+20});
+})
+.mouseout(function(){
+	$("#tooltip").remove();//和原生的removeChild不一样	
+	//var ele=document.getElementById("tooltip");
+	//ele.parentNode.removeChild(ele);
+	this.title=this.tempTitle;
+});
+
+</script>
+
+abcd
+<div></div>

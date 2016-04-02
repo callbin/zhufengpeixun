@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul id="menu">
+	<li><span>1第一级第一个</span>
+    	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span>
+            <ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span>
+            
+            <ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span>
+            	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span>
+            	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+            
+            </li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+            
+            
+            </li>
+        </ul>
+            </li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+            </li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+    </li>
+    <li><span>1第一级第二个</span>
+    	<ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+    
+    </li>
+    <li><span>1第一级第三个</span></li>
+    <li><span>1第一级第四个</span></li>
+    <li><span>1第一级第五个</span>
+    
+    <ul>
+            <li><span>2-1第一级第一个</span></li>
+            <li><span>2-1第一级第二个</span></li>
+            <li><span>2-1第一级第三个</span></li>
+            <li><span>2-1第一级第四个</span></li>
+            <li><span>2-1第一级第五个</span></li>
+        </ul>
+    </li>
+
+
+</ul>
+</body>
+</html>
+
+<script>
+var oMenu=document.getElementById("menu");
+oMenu.onclick=function(e){
+	var target=e.target;
+	if(target.tagName=="SPAN"){
+		var oUl=target.nextElementSibling;
+		if(oUl){
+			if(oUl.style.display=="none"){
+				oUl.style.display="block";
+			}else{
+				oUl.style.display="none";	
+			}
+		}
+	}
+	
+	
+	
+}
+
+</script>

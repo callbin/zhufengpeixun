@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body *{ padding:50px;}
+</style>
+</head>
+
+<body>
+<div id="outer" style="background:red;">red
+	<div id="middle" style="background:blue;">middle
+    	<div id="inner"  style="background:green;">inner
+        	<p id="p1"  style="background:purple;">p1
+            	<span id="span1"  style="background:pink;">span1</span>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+//要求：当点到某一个元素的时候，弹出这个元素的id名，但是不能弹出其祖先标签的id
+/*var eles=document.getElementsByTagName("*");
+[].forEach.call(eles,function(ele){
+	ele.onclick=function(e){
+		alert(this.id||this.tagName);
+		e.stopPropagation();
+	}
+});*/
+
+//事件委托正是利用的事件传播的机制
+document.documentElement.onclick=function(e){
+	//把所有元素的事件都委托给顶级标签或上级标签去处理
+	e=e||window.event;
+	target=e.target||e.srcElement;//后者是IE6/7/8的事件源
+	//e.target;//事件源，事件源和this不是一码事
+	alert(target.id);
+	
+}
+
+</script>
+
