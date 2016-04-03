@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:100px; background:red;}
+</style>
+
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+
+function bind(ele,type,fn){
+		if(ele.addEventListener){
+			ele.addEventListener(type,fn,false);
+		}else if(ele.attachEvent){
+			
+			if(!ele.fnEvent)ele.fnEvent=[];
+			
+			//避免重复绑定的判断
+			
+			for(var i=0;i<ele.fnEvent.length;i++){
+				if(ele.fnEvent[i].photo==fn)return;	
+			}
+			
+			var fnTemp=function(){fn.call(ele)};//做手术，在bind里有用的代码就这一句，其它代码都是为移除的事件准备
+			ele.fnEvent.push(fnTemp);//保存到数组里
+			fnTemp.photo=fn;//设置识别属性：贴照片
+			ele.attachEvent("on"+type,fnTemp);//把“做完手术”之后的方法绑定给type事件
+		}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);	
+	}else if(ele.detachEvent){
+		for(var i=0;i<ele.fnEvent.length;i++){
+			if(ele.fnEvent[i].photo==fn){
+				ele.detachEvent("on"+type,ele.fnEvent[i]);
+				ele.fnEvent.splice(i,1);
+				return;
+				//bind里的判断是避免重复绑定
+				//如果这里把方法从type移除了，但是在数组不删除，请问：第二次再绑定可行否？
+			}
+		}
+	}
+	
+}
+var innerHTML="window";
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2);}
+var counter=0;
+function fn3(){
+	counter++;
+	if(counter==3){
+		unbind(this,"click",fn1);
+		unbind(this,"click",fn2);
+	}
+	alert(3);
+}
+var ele=document.getElementById("div1");
+bind(ele,"click",fn1);
+bind(ele,"click",fn2);
+bind(ele,"click",fn3);
+
+
+
+
+
+
+</script>
