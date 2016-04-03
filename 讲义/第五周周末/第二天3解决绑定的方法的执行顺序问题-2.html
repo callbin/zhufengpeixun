@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:100px; background:red;}
+</style>
+
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script src="event1.js"></script>
+<script>
+var innerHTML="window";
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2);}
+var counter=0;
+function fn3(){
+	counter++;
+	if(counter==3){
+		unbind(this,"click",fn1);
+		unbind(this,"click",fn2);
+	}
+	alert(3);
+}
+function fn4(){alert(4)}
+function fn5(){alert(5)}
+function fn6(){alert(6)}
+function fn7(){alert(7)}
+function fn8(){alert(8)}
+function fn9(){alert(9)}
+function fn10(){alert(10)}
+function fn11(){alert(11)}
+function fn12(){alert(12)}
+function fn13(){alert(13)}
+var ele=document.getElementById("div1");
+//把IE事件机制重写，在IE的事件基础上 ，重新安排一套规则
+
+function on(ele,type,fn){
+	if(!ele["aEvent"+type])ele["aEvent"+type]=[];
+	var a=ele["aEvent"+type];
+	
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	a.push(fn);//这里的绑定，其实只是把这些方法放在一个数组里而已
+	bind(ele,type,run);//事件真正触发的方法是run，所以要把run绑定给事件。
+	//当前事件触发run的时候，再由run按顺序执行对应的数组里的方法
+}
+
+function run(e){//中介-->它负责协调管理其它方法的执行
+	//在run让fn1--fn13按顺序执行
+	//虽然真正绑定在事件上的是run方法，但是还要“假装”绑定的是fn1--fn13
+	e=e||window.event;
+	var a=this["aEvent"+e.type]
+	for(var i=0;i<a.length;i++){
+		a[i].call(this);//this是ele，这样当a[i]中的方法在运行的时候，方法里的this会指向当前的这个this
+		//那这儿的this是谁呢？要看run是怎么运行的
+		//a[i]();//
+		//window.event.srcElement
+		//arguments[0].target;
+	}
+}
+
+on(ele,"click",fn1);
+on(ele,"click",fn2);
+on(ele,"click",fn3);
+on(ele,"click",fn4);
+on(ele,"click",fn5);
+on(ele,"click",fn6);
+on(ele,"click",fn7);
+on(ele,"click",fn8);
+on(ele,"click",fn9);
+on(ele,"click",fn10);
+on(ele,"click",fn11);
+on(ele,"click",fn12);
+on(ele,"click",fn13);
+</script>
