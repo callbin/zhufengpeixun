@@ -28,19 +28,57 @@
 </html>
 <script src="event2.js"></script>
 <script>
-//拖拽是三个事件的组合：当鼠标按下的时候准备拖拽，当鼠标按着并移动的时候，进行拖拽（盒子可以随鼠标移动）；当鼠标抬起来的时候拖拽结束 
-function down(e){//准备拖拽
-	
-	
+//拖拽是三个事件的组合：当鼠标按下的时候准备拖拽，当鼠标按着并移动的时候，进行拖拽（盒子可以随鼠标移动）；当鼠标抬起来的时候拖拽结束
+var ele1=document.getElementById("div1");
+on(ele1,"mousedown",down); 
+function down(e){//准备拖拽,入口方法
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	if(this.setCapture){
+		this.setCapture();//专门解决mousemove事件会丢失鼠标的问题的
+		on(this,"mousemove",move);
+		on(this,"mouseup",up);
+	}else{
+		
+		this;
+		var _this=this;
+		this.MOVE=function(){move.call(_this,arguments[0])}
+		this.UP=function(e){up.call(_this,e);}
+		
+		//我用相同的逻辑制造了两个方法，既然逻辑相同，就应该把这两处相同的逻辑抽象成一个方法，这个方法的功能就是：
+		//保持原方法的功能不同，但让此方法执行的时候this指向规定的对象（这个方法在原生的es5中已经实现，叫Function.prototype.bind）
+		//如果用原生JS自己实现，方式如下
+		function processThis(fn,obj){
+			return function(e){fn.call(obj,e)}	
+		}
+		this.MOVE=processThis(move,this);
+		this.UP=processThis(up,this);
+		on(document,"mousemove",this.MOVE);
+		//this要指向被拖拽的元素
+		on(document,"mouseup",this.UP);	
 	}
-function move(e){//进行拖拽
 	
+}
+function move(e){//进行拖拽
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+"px";
 }
 
 function up(e){//结束拖拽
-	
+
+	if(this.releaseCapture){
+		this.releaseCapture();
+		off(this,"mousemove",move);
+		off(this,"mouseup",up);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
 }
-	
+//事件的性能：mousemove大约6-9ms响应一次，如果你在5ms内，从盒子内移到盒子外边，你说这个盒子还能响应到这次事件嘛？
+//鼠标的速度太快，可能会使盒子失去盒子
 	
 	
 	
