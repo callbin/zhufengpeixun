@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:100px; background:red;}
+</style>
+
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+function on(ele,type,fn){
+	if(ele.addEventListener){//如果支持标准浏览器的方法，则直接用此方法完成事件绑定
+		ele.addEventListener(type,fn,false);
+		return;	
+	}
+	
+	if(!ele["aEvent"+type]){
+		ele["aEvent"+type]=[];
+		
+		//下面这句代码代替了bind方法
+		ele.attachEvent("on"+type,function (){run.call(ele)});
+
+	}
+	var a=ele["aEvent"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	a.push(fn);
+	
+	
+}
+function run(){
+	var e=window.event;
+	var type=e.type;
+	var a=this["aEvent"+type];
+	if(a&&a.length){
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function"){
+				a[i].call(this,e);//为了和标准浏览器的事件对象取得方式保持一致：事件对象是一个被系统自动传进去的实参	
+			}else{
+				a.splice(i,1);
+				i--;
+			}
+		}	
+	}
+}
+
+function off(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+		return;	
+	}
+	var a=ele["aEvent"+type];
+	if(a&&a.length){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				return;	
+			}
+		}
+	}
+	
+}
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2);}
+var counter=0;
+function fn3(){
+	counter++;
+	if(counter==3){
+		off(this,"click",fn1);
+		off(this,"click",fn2);
+		off(this,"click",fn3);	
+	}
+	alert(3);}
+function fn4(){alert(4);}
+function fn5(){alert(5);}
+function fn6(){alert(6);}
+function fn7(){alert(7);}
+function fn8(){alert(8);}
+function fn9(){alert(9);}
+var ele=document.getElementById("div1");
+on(ele,"click",fn1);
+on(ele,"click",fn2);
+on(ele,"click",fn3);
+on(ele,"click",fn4);
+on(ele,"click",fn5);
+on(ele,"click",fn6);
+on(ele,"click",fn7);
+on(ele,"click",fn8);
+on(ele,"click",fn9);
+</script>

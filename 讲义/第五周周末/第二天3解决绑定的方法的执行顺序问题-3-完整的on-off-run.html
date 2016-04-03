@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:100px; background:red;}
+</style>
+
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script src="event1.js"></script>
+<script>
+var innerHTML="window";
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2);}
+var counter=0;
+function fn3(){
+	counter++;
+	if(counter==3){
+		off(this,"click",fn1);
+		off(this,"click",fn2);
+		off(this,"click",fn3);
+		//如果删除的是fn4,fn5,fn6则不会出现这个bug
+	}
+	alert(3);
+}
+function fn4(){alert(4)}
+function fn5(){alert(5)}
+function fn6(){alert(6)}
+function fn7(){alert(7)}
+function fn8(){alert(8)}
+function fn9(){alert(9)}
+function fn10(){alert(10)}
+function fn11(){alert(11)}
+function fn12(){alert(12)}
+function fn13(){alert(13)}
+var ele=document.getElementById("div1");
+//把IE事件机制重写，在IE的事件基础上 ，重新安排一套规则
+
+//on-run-off
+//不再直接把方法绑定给元素的事件了，而是把方法先保存一个数组里，然后再通过一个中介方法run，当事件触发的时候触发这个run方法，然后再由run方法统一执行事先保存在数组里的方法--事先把方法保存在数组里的方法叫on。
+//也就是说由on方法实现了一个“假”绑定
+
+
+function on(ele,type,fn){
+	//就是把fn放到一个和事件类型相对应的数组
+	//这个数组在那里呢？这是个自定义属性--由事件类型来区分的自定义属性
+	
+	if(!ele["aEvent"+type])ele["aEvent"+type]=[];
+	var a=ele["aEvent"+type];
+	
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	
+	a.push(fn);
+	
+	bind(ele,type,run);//当事件触发的时候，真正的运行的是run方法，再由run方法执行对应的数组里的这些方法
+	
+	
+}
+
+function run(e){
+	e=e||window.event;
+	var type=e.type;//这就是对应的事件类型
+	var a=this["aEvent"+type];
+	for(var i=0;i<a.length;i++){//遍历执行这个数组里的方法
+		a[i].call(this);	
+	}
+	
+}
+
+function off(ele,type,fn){//这个是和on相对应，它负责从数组里把指定的方法移除
+	var a=ele["aEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a.splice(i,1);
+				return;
+//第一次[fn1,fn2,fn3,fn4,fn5,fn6,fn7,fn8,fn9,fn10,fn11,fn12,fn13];
+//第二次[fn1,fn2,fn3,fn4,fn5,fn6,fn7,fn8,fn9,fn10,fn11,fn12,fn13];
+//第三次[fn1,fn2,fn3,fn4,fn5,fn6,fn7,fn8,fn9,fn10,fn11,fn12,fn13];
+		//i==2的时间执行fn3，fn3把数组的前三项都删了;然后i++执行下一个方法，如下一行所示
+//循环再往下执行时的数组[fn4,fn5,fn6,fn7,fn8,fn9,fn10,fn11,fn12,fn13];
+		//i累加之后是i==3，则从第四项开始执行，既从改变之后的第四个方法执行，所以执行fn7
+			}
+		}	
+	}
+	
+}
+
+
+on(ele,"click",fn1);
+on(ele,"click",fn2);
+on(ele,"click",fn3);
+on(ele,"click",fn4);
+on(ele,"click",fn5);
+on(ele,"click",fn6);
+on(ele,"click",fn7);
+on(ele,"click",fn8);
+on(ele,"click",fn9);
+on(ele,"click",fn10);
+on(ele,"click",fn11);
+on(ele,"click",fn12);
+on(ele,"click",fn13);
+</script>
