@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:100px; background:red;}
+</style>
+
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+//DOM0  为了区分最原始的操作网页结构的脚本,它们出现在DOM Core（DOM第一个版本）之前，称之为DOM0。
+//DOM API的版本也不断的在升级，DOM2,DOM3
+//DOM2版本里，增加了一些新的方法，主要就是事件相关的这些方法:addEventListener,removeEventListener,还有相关的一些事件类型，比如 "DOMContentLoaded"  $(document).ready();$(function(){})
+//document.forms;document.anchors;//DHTML
+//document.onclick;ele.onmouseover
+var fnTemp=null;
+function bind(ele,type,fn){
+		if(ele.addEventListener){
+			ele.addEventListener(type,fn,false);
+		}else if(ele.attachEvent){
+			//ele.attachEvent("on"+type,fn.call(ele));//让fn直接运行，然后把fn运行的结果绑定给ele的type事件了
+		
+			
+			//局部变量跨作用域访问不到，全局变量容易冲突
+			//需要一个：跨作用域可以访问的到，并且还不能被污染
+			if(!ele.fnEvent)//如果这个数组不存在，则创建
+				ele.fnEvent=[];//用来保存绑定在事件上的“变形”的方法
+			for(var i=0;i<ele.fnEvent.length;i++){
+				if(ele.fnEvent[i].photo==fn)return;
+			}
+			
+			var fnTemp=function (){fn.call(ele)}
+			
+			fnTemp.photo=fn;//这个所谓“照片”属性，保存的是它的“真身”
+			
+			ele.fnEvent.push(fnTemp);//保存下来的目的是为了移除的时候能找到它。如果不考虑移除则这里的保存就没有意义了
+			ele.attachEvent("on"+type,fnTemp);
+			//上句代码中绑定的已经不是fn了，是绑定fn的“变形”
+		}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);	
+	}else if(ele.detachEvent){
+		ele.fnEvent;//fn1,fn2,fn3
+		for(var i=0;i<ele.fnEvent.length;i++){
+			//这个循环是假定数组里保存的就是fn1,fn2,fn3(未变形的方法)
+			//但是数组保存的不是未变形的方法，现在需要把数组保存的方法，想办法识别出来
+			//见诸相无相，即见如来
+			if(ele.fnEvent[i].photo==fn){
+				ele.detachEvent("on"+type,ele.fnEvent[i]);	//从事件中移除绑定
+				ele.fnEvent.splice(i,1);//从数组移除
+				return;//因为没有重复绑定的方法，则一但移除，就可以结束了
+			}
+		}
+		
+	}
+	
+}
+var innerHTML="window";
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2);}
+var counter=0;
+function fn3(){
+	counter++;
+	if(counter==3){
+		unbind(this,"click",fn1);
+		unbind(this,"click",fn2);
+	}
+	fnEvent=[fn1,fn2,fn3]
+	if(counter==5){
+		bind(this,"click",fn1);	
+	}
+	fnEvent=[fn1,fn2,fn3,fn1]
+	if(counter==6){
+		unbind(this,"click",fn1);	
+	}
+	fnEvent=[fn1,fn2,fn3,fn1]
+	//fnTemp.photo==fn1 
+	alert(3);
+}
+var ele=document.getElementById("div1");
+bind(ele,"click",fn1);
+bind(ele,"click",fn2);
+bind(ele,"click",fn3);
+
+
+
+
+
+
+</script>

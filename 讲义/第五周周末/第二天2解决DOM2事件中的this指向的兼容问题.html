@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:100px; background:red;}
+</style>
+
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+//DOM0  为了区分最原始的操作网页结构的脚本,它们出现在DOM Core（DOM第一个版本）之前，称之为DOM0。
+//DOM API的版本也不断的在升级，DOM2,DOM3
+//DOM2版本里，增加了一些新的方法，主要就是事件相关的这些方法:addEventListener,removeEventListener,还有相关的一些事件类型，比如 "DOMContentLoaded"  $(document).ready();$(function(){})
+//document.forms;document.anchors;//DHTML
+//document.onclick;ele.onmouseover
+
+function bind(ele,type,fn){
+		if(ele.addEventListener){
+			ele.addEventListener(type,fn,false);
+		}else if(ele.attachEvent){
+			ele.attachEvent("on"+type,fn);
+		}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);	
+	}else if(ele.detachEvent){
+		ele.detachEvent("on"+type,fn);	
+	}
+	
+}
+var innerHTML="window";
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2);}
+var counter=0;
+function fn3(){
+	counter++;
+	if(counter==3){
+		unbind(this,"click",fn1);
+		unbind(this,"click",fn2);
+	}
+	alert(3);
+}
+var ele=document.getElementById("div1");
+bind(ele,"click",fn1);
+bind(ele,"click",fn2);
+bind(ele,"click",fn3);
+
+
+
+
+
+
+</script>
