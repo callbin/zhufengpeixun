@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1,#div2{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 245px;
+	height: 100px;
+	background: red;
+	cursor: move;
+	left: 534px;
+	overflow:hidden;
+}
+
+</style>
+</head>
+
+<body>
+<div id="div1"><img src="主要看气质.jpg" width="100" height="100">
+
+</div>
+
+<div id="div2" style="background:blue; top:300px; left:150px;"></div>
+</body>
+</html>
+<script src="event3-self.js"></script>
+<script src="drag4.js"></script>
+<script>
+
+var eles=document.getElementsByTagName("div");
+var zIndex=1;
+function increaseIndex(){
+	this.style.zIndex=++zIndex;	
+}
+for(var i=0;i<eles.length;i++){
+	on(eles[i],"mousedown",down);
+	
+	on(eles[i],"selfdragstart",clearEffect);//selfdragstart是拖拽开始的代号
+	on(eles[i],"selfdragging",getSpeed);//selfdragging拖拽进行中的代号
+	on(eles[i],"selfdragend",fly);
+	on(eles[i],"selfdragend",drop);
+	on(eles[i],"selfdragstart",increaseIndex);
+}
+
+
+
+</script>
