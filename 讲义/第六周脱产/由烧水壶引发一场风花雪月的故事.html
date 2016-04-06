@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+
+//说:烧水
+function Pot(){//水壶
+	
+}
+Pot.prototype.boiling=function (){
+	window.setTimeout(function(){
+		console.log("水烧开啦！");
+	},5000);
+	//报警器--产生一个回调
+}
+
+var pot1=new Pot();
+
+pot1.boiling();
+
+
+//烧水（30）--泡方便面(5)---洗澡(15)
+//扫地（10）
+//给手机充电（10小时）
+//给女朋友打电话(10)
+function noodles(){
+	console.log("泡方便面");
+}
+function shower(){
+	console.log("冲澡");
+}
+pot1.on("boiling",noodles);
+pot1.on("boiling",shower);
+pot1.boiling();
+
+
+
+</script>

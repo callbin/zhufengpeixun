@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; left:0; top:0; position:absolute;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event3-self.js"></script>
+<script>
+//原来面向过程的drag方法里，this指的是被拖拽的元素
+//但面向对象的drag里，this是指的这个类的实例，并且在完成这个类上的所有的方法时，都遵守这个原则
+function Drag(ele){//ele是被拖拽的DOM对象
+	this.ele=ele;//就是把被拖拽的元素保存在自己的实例上
+	this.x=null;
+	this.y=null;
+	this.mx=null;
+	this.my=null;
+	
+	this.DOWN=processThis(this.down,this);
+	this.MOVE=processThis(this.move,this);
+	this.UP=processThis(this.up,this);
+	//on(this.ele,"mousedown",this.down);//如果这样绑定事件，则this.down方法里的this会按着事件绑定的原则来处理，即：this指向this.ele。和刚才设定的面向对象this的原则冲突了
+	on(this.ele,"mousedown",this.DOWN);
+	
+	
+	
+}
+
+Drag.prototype.down=function(e){
+	this.x=this.ele.offsetLeft;
+	this.y=this.ele.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	
+	if(this.ele.setCapture){
+		this.ele.setCapture();
+		on(this.ele,"mousemove",this.MOVE);
+		on(this.ele,"mouseup",this.UP);
+	}else{
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+	}
+	e.preventDefault();
+}
+
+Drag.prototype.move=function(e){
+	this.ele.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.ele.style.top=this.y+(e.pageY-this.my)+"px";
+}
+
+Drag.prototype.up=function(e){
+	if(this.ele.releaseCapture){
+		this.ele.releaseCapture();
+		off(this.ele,"mousemove",this.MOVE);
+		off(this.ele,"mouseup",this.UP);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+}
+
+new Drag(div1);
+
+</script>
