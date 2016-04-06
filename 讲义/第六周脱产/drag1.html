@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1,#div2{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 245px;
+	height: 100px;
+	background: red;
+	cursor: move;
+	left: 534px;
+}
+
+</style>
+</head>
+
+<body>
+<div id="div1"><img src="主要看气质.jpg" width="100" height="100">
+
+</div>
+
+<div id="div2" style="background:blue; top:300px; left:150px;"></div>
+</body>
+</html>
+<script src="event2.js"></script>
+<script src="drag1.js"></script>
+<script>
+//如果计算出：单位时间内拖拽的距离-->单位时间内抛出去的距离叫速度
+//mousemove事件会在相隔指定的时间发生：6-8ms--7ms--计算这7ms的时间盒子被拖拽的距离--->叫速度--当结束拖拽的时候，以这个速度为盒子抛出去的速度
+
+var eles=document.getElementsByTagName("div");
+for(var i=0;i<eles.length;i++){
+	on(eles[i],"mousedown",down);
+}
+
+
+
+</script>
