@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+
+#div1{ width:100px; height:100px; background:red; position:absolute; top:100px; left:100px; cursor:move; -webkit-user-select:none; }
+
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event_20160407.js"></script>
+<script>
+//事件库里的原则是把一个方法绑定给ele，则这个方法运行的时候，this就会指向ele
+//面向对象编程原则是类方法里的this，一直要指向类的实例
+//在下边的编码里，如果this的指向问题出现的冲突，则按后者指定的原则处理
+
+function EventEmitter(){};
+EventEmitter.prototype.on=function(type,fn){
+	if(!this["emitter"+type])this["emitter"+type]=[];
+	var a=this["emitter"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	a.push(fn);
+}
+EventEmitter.prototype.run=function(type,e){
+	//type是自定义事件的事件类型，字符串；e是浏览器的事件对象
+	var a=this["emitter"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function"){
+				a[i].call(this,e);	
+			}else{
+				a.splice(i,1);
+				i--;	
+			}
+				
+		}
+	}
+	
+}
+EventEmitter.prototype.off=function(type,fn){
+	var a=this["emitter"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				return;	
+			}
+		}
+	}
+}
+
+function Drag(ele){
+	this.ele=ele;
+	this.x=null;
+	this.y=null;
+	this.mx=null;
+	this.my=null;
+	
+	this.DOWN=processThis(this.down,this);
+	this.MOVE=processThis(this.move,this);
+	this.UP=processThis(this.up,this);
+	
+	on(this.ele,"mousedown",this.DOWN);
+}
+
+Drag.prototype=new EventEmitter;
+Drag.prototype.down=function(e){//准备拖拽
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	this.x=this.ele.offsetLeft;
+	this.y=this.ele.offsetTop;
+	
+	if(this.ele.setCapture){
+		this.ele.setCapture();
+		on(this.ele,"mousemove",this.MOVE);
+		on(this.ele,"mouseup",this.UP);
+	}else{
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+	}
+	
+	e.preventDefault();
+	this.run("dragstart",e);
+}
+
+Drag.prototype.move=function(e){
+	this.ele.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.ele.style.top=this.y+(e.pageY-this.my)+"px";
+	this.run("dragging",e);
+}
+
+Drag.prototype.up=function(e){
+	if(this.ele.releaseCapture){
+		this.ele.releaseCapture();
+		off(this.ele,"mousemove",this.MOVE);
+		off(this.ele,"mouseup",this.UP);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+	this.run("dragend",e);
+}
+
+
+var zIndex=1;
+function increaseIndex(){//让被拖拽的元素在最上边
+	this.ele.style.zIndex=++zIndex;
+}
+function  clearEffect(){
+	clearTimeout(this.flyTimer);
+	clearTimeout(this.dropTimer);
+}
+function getSpeed(e){
+		if(this.prevPosi){
+			//在差不多的固定时间内，产生的距离，当成速度
+			this.flySpeed=e.pageX-this.prevPosi;
+			this.prevPosi=e.pageX;	
+		}else{
+			this.prevPosi=e.pageX;	
+		}
+}
+function fly(){
+	this.flySpeed*=.98;
+	var l=0;//左边的最小边界
+	var r=(document.documentElement.clientWidth||document.body.clientWidth)-this.ele.offsetWidth;//右边能到达的边界
+	var current=this.ele.offsetLeft+this.flySpeed;
+	if(current<=l){
+		this.ele.style.left=0;
+		this.flySpeed*=-1;
+	}else if(current>=r){
+		this.ele.style.left=r+"px";
+		this.flySpeed*=-1;
+	}else{
+		this.ele.style.left=current+"px";
+	}
+	
+	
+	if(Math.abs(this.flySpeed)>0.5)
+		this.flyTimer=window.setTimeout(processThis(fly,this),20);
+}
+function drop(){
+	if(this.dropSpeed){
+		this.dropSpeed+=9.8;	
+	}else{
+		this.dropSpeed=9.8;	
+	}
+	//b是这个小盒子能到达的下边界
+	this.dropSpeed*=.98;
+	var b=(document.documentElement.clientHeight||document.body.clientHeight)-this.ele.offsetHeight;
+	//current是正常运动的时候，盒子应到达的位置
+	var current=this.ele.offsetTop+this.dropSpeed;
+	if(current>=b){//如果到达了下边界
+		this.ele.style.top=b+"px";
+		this.dropSpeed*=-1;//调头的效果
+		this.flag++;//这是关键技巧。什么时候flag的值是2，是3，是4，……？只要是flag>1，则说明盒子已经连续的到达边界了，即：不动了
+		
+	}else{
+		this.ele.style.top=current+"px";
+		this.flag=0;//这是关键技巧
+	}
+	if(this.flag<2){//这个判断条件有意思：分别对应122、126行
+		this.dropTimer=window.setTimeout(processThis(drop,this),20);	
+	}
+		
+}
+
+var obj=new Drag(div1);
+obj.on("dragstart",clearEffect);
+obj.on("dragstart",increaseIndex);
+obj.on("dragging",getSpeed);
+obj.on("dragend",drop);
+obj.on("dragend",fly);
+
+
+
+
+</script>

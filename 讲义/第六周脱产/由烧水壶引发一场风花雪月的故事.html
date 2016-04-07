@@ -10,20 +10,80 @@
 </html>
 <script>
 
+function EventEmitter(){//事件发射器类
+	
+}
+
+EventEmitter.prototype.on=function(type,fn){//订阅
+	//on方法的工作就是：把fn登记在以type为区分符的一张清单（数组）
+	//if(!ele["aEvent"+type]);
+	if(!this["emitter"+type])this["emitter"+type]=[];
+	
+	var a=this["emitter"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+		
+	}
+	a.push(fn);
+	
+}
+
+EventEmitter.prototype.run=function(type){//通知，发布
+	var a=this["emitter"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function")
+				a[i].call(this);
+			else{
+				a.splice(i,1);
+				i--;	
+			}
+		}
+	}
+	
+}
+
+EventEmitter.prototype.off=function(type,fn){
+	var a=this["emitter"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				//a.splice(i,1);
+				a[i]=null;
+					
+			}
+				
+		}
+		
+	}
+}
+
+/*var obj=new EventEmitter;
+obj.on("click",fn);
+ele.addEventListener(type,fn,false);*/
+
 //说:烧水
 function Pot(){//水壶
 	
 }
+Pot.prototype=new EventEmitter;
+//Pot.prototype.__proto__=EventEmitter.prototype;
+
 Pot.prototype.boiling=function (){
+
+	var that=this;
 	window.setTimeout(function(){
 		console.log("水烧开啦！");
+		that.run("boiling");
 	},5000);
-	//报警器--产生一个回调
+	
 }
 
 var pot1=new Pot();
 
 pot1.boiling();
+
+
 
 
 //烧水（30）--泡方便面(5)---洗澡(15)
@@ -39,6 +99,12 @@ function shower(){
 pot1.on("boiling",noodles);
 pot1.on("boiling",shower);
 pot1.boiling();
+
+//run;//自动执行--就是当“水沸腾”这个件事发生的时候，自动执行run方法，由run方法来“通知”约定了“水沸腾”这件的各个方法来执行
+
+alert(1);
+window.setTimeout(function(){alert(2)},0);
+alert(3);
 
 
 
