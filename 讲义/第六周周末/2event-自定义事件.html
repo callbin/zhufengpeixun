@@ -18,6 +18,16 @@ div{ width:100px; height:100px; position:absolute; top:100px; left:100px; backgr
 //bind,unbind//this
 //on,off,run;//顺序问题
 function  on(ele,type,fn){//把需要绑定的方法保存到程序池（数组）
+	if(/^self/.test(type)){//处理自定义事件
+		if(!ele["aSelf"+type])ele["aSelf"+type]=[];
+		var a=ele["aSelf"+type];
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn)return;	
+		}
+		a.push(fn);
+		return;
+	}
+	
 	if(ele.addEventListener){
 		ele.addEventListener(type,fn,false);
 		return;	
@@ -102,28 +112,13 @@ function down(e){
 		on(document,"mouseup",this.UP);
 	}
 	e.preventDefault();	
-	clearTimeout(this.flyTimer);
-	clearTimeout(this.dropTimer);
 	
-	//动画里的定时器有条件执行的：到了目标值应该停止
-	//要考虑到动画积累的问题 clearTimeout(timer);
-	//边界判断或边界问题
-	//定时器驱动的方法里的this指向问题s
 }
 function move(e){
 	this.style.left=e.pageX-this.mx+this.x+"px";
 	this.style.top=e.pageY-this.my+this.y+"px";
 	
-	//速度=这一次的位置-上一次位置-->每次mousemove事件发生的间隔时间基本相同（相差大约是8ms）
-	e.pageX//上一次和这一次：
-	if(this.prevPosi){
-		this.flySpeed=e.pageX-this.prevPosi;
-		this.prevPosi=e.pageX;
-		
-		
-	}else{
-		this.prevPosi=e.pageX;	
-	}
+	
 	
 }
 function up(e){
@@ -135,14 +130,26 @@ function up(e){
 		off(document,"mousemove",this.MOVE);
 		off(document,"mouseup",this.UP);	
 	}
-	//fly();//借助求出来的this.flySpeed做运动的动画
-	fly.call(this);
-	drop.call(this);
+	
 }
 
 on(div1,"mousedown",down);
 on(div2,"mousedown",down);
 on(div3,"mousedown",down);
+
+function clearEffect(){
+	clearTimeout(this.flyTimer);
+	clearTimeout(this.dropTimer);	
+}
+
+function getSpeed(e){
+	if(this.prevPosi){
+		this.flySpeed=e.pageX-this.prevPosi;
+		this.prevPosi=e.pageX;
+	}else{
+		this.prevPosi=e.pageX;	
+	}
+}
 
 function fly(){
 		this.flySpeed*=.98;
@@ -188,6 +195,24 @@ function drop(){
 //2、通过修改move，实现了计算this.flySpeed的值
 //3、通过修改up方法，实现了在拖拽结束的时候的两个动画效果
 //4、通过修改down方法，实现了清除动画效果的积累问题
+
+//当拖拽开始的时候，清除积累的fly和drop的效果
+//当拖拽进行的时候，计算出速度来
+//当拖拽结束的时候，fly&&drop
+
+/*on(div1,"标识着拖拽开始的标识符",clearEffect);
+
+on(div1,"标识着拖拽进行的标识符",getSpeed);
+
+on(div1,"标识着拖拽结束的标识符",fly);
+on(div1,"标识着拖拽结束的标识符",drop);*/
+
+on(div1,"selfdragstart",clearEffect);
+
+on(div1,"selfdragging",getSpeed);
+
+on(div1,"selfdragend",fly);
+on(div1,"selfdragend",drop);
 
 
 </script>
