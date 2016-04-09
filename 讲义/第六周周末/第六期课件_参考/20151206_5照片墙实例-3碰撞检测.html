@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+ul,li{ margin:0; padding:0; list-style:none;}
+ul{ padding:5px; width:480px; height:640px; margin:100px auto; position:relative; background:#6F6;}
+li{ width:150px; height:150px; margin:5px; float:left; overflow:hidden; background:#39C; cursor:move; -webkit-user-select:none;}
+li img{ width:150px; height:150px; display:block; border:none;}
+</style>
+</head>
+
+<body>
+<ul>
+	<li><img src="img/1.png"></li>
+    <li><img src="img/2.png"></li>
+    <li><img src="img/3.png"></li>
+    <li><img src="img/4.png"></li>
+    <li><img src="img/5.png"></li>
+    <li><img src="img/6.png"></li>
+    <li><img src="img/7.png"></li>
+    <li><img src="img/8.png"></li>
+    <li><img src="img/9.png"></li>
+    <li><img src="img/10.png"></li>
+    <li><img src="img/11.png"></li>
+    <li><img src="img/12.png"></li>
+
+</ul>
+</body>
+</html>
+<script src="event.js"></script>
+<script src="drag_oop.js"></script>
+<script src="tween.js"></script>
+<script>
+var oLis=document.getElementsByTagName("li");
+
+for(var i=oLis.length-1;i>=0;i--){
+	var oLi=oLis.item(i);
+	oLi.style.top=(oLi.t=oLi.offsetTop)+"px";
+	oLi.style.left=(oLi.l=oLi.offsetLeft)+"px";
+	oLi.style.position="absolute";//定位要后做
+	oLi.style.margin=0;	
+	var obj=new Drag(oLi);
+	obj.border();//拖拽时加边框
+	obj.on("dragstart",increaseIndex);//让被拖拽的元素在最上面
+	obj.on("dragend",goHome);
+	obj.on("drag",getHited);
+}
+var index=0;
+function increaseIndex(){
+	this.ele.style.zIndex=++index;
+}
+function goHome(){
+	animate(this.ele,{left:this.ele.l,top:this.ele.t},600,2);	
+}
+
+function getHited(){//此方法对撞上的元素进行处理：加黄背景并且保存
+	var ele=this.ele;//这是当前被拖拽的元素
+	this.aHited=[];
+	for(var i=0;i<oLis.length;i++){
+		var oLi=oLis.item(i);
+		if(ele==oLi)continue;//自己不和自己做碰撞检测
+		oLi.style.background="";//把原来加上的颜色去掉，然后在下面重设
+		if(test(ele,oLi)){
+			oLi.style.background="yellow";
+			this.aHited.push(oLi);//把撞上的保存到数组里
+		}
+	}
+	
+}
+
+function test(r,b){
+	if(r.offsetLeft+r.offsetWidth<b.offsetLeft||r.offsetTop+r.offsetHeight<b.offsetTop||r.offsetLeft>b.offsetLeft+b.offsetWidth||r.offsetTop>b.offsetTop+b.offsetHeight){
+		return false;//以上情况是没有撞上的
+	}else{
+		return true;
+	}
+}
+//red,blue
+
+
+</script>

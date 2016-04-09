@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:100px; height:100px; background:red; position:absolute; top:0; left:0; cursor:move;}
+</style>
+</head>
+
+<body>
+<div id="div1" style=""></div>
+<div id="div2" style="left:100px; background:green;"></div>
+<div id="div3" style="top:140px; background:black;"></div>
+<div id="div4" style="top:200px; left:200px; background:blue;"></div>
+</body>
+</html>
+<script src="event.js"></script>
+moudle.exports.fn=on;
+moudle.exports=on;
+var event=require("event");
+event.fn();//19行的赋值方式对应这种调用方式
+event();//这个对应20行的
+
+<script>
+var eles=document.getElementsByTagName("div");
+
+/*for(var i=0;i<eles.length;i++){
+	var ele=eles[i];
+;(function(ele){
+	var x=null,y=null,mx=null,my=null;
+	 var x=y=mx=my=null;
+	 function down(e){
+		x=this.offsetLeft;
+		y=this.offsetTop;
+		mx=e.pageX;
+		my=e.pageY;
+		if(this.setCapture){
+			this.setCapture();
+			on(this,"mousemove",move);
+			on(this,"mouseup",up);
+		}else{
+			this.MOVE=move.bind(this);
+			this.UP=up.bind(this);
+			on(document,"mousemove",this.MOVE);
+			on(document,"mouseup",this.UP);
+		}
+		e.preventDefault();
+	}
+	
+	function move(e){
+		this.style.left=x+(e.pageX-mx)+"px";
+		this.style.top=y+(e.pageY-my)+"px";	
+	}
+	
+	function up(e){
+		if(this.releaseCapture){
+			off(this,"mousemove",move);
+			off(this,"mouseup",up);
+			this.releaseCapture();
+		}else{
+			off(document,"mousemove",this.MOVE);
+			off(document,"mouseup",this.UP);
+		}
+	}	
+	
+	on(ele,"mousedown",down);
+	
+})(ele);
+}*/
+//moudles modle 模块模式
+var moudles=(function(){
+	var x=null,y=null,mx=null,my=null;
+	 var x=y=mx=my=null;
+	 function down(e){
+		x=this.offsetLeft;
+		y=this.offsetTop;
+		mx=e.pageX;
+		my=e.pageY;
+		if(this.setCapture){
+			this.setCapture();
+			on(this,"mousemove",move);
+			on(this,"mouseup",up);
+		}else{
+			this.MOVE=move.bind(this);
+			this.UP=up.bind(this);
+			on(document,"mousemove",this.MOVE);
+			on(document,"mouseup",this.UP);
+		}
+		e.preventDefault();
+	}
+	
+	function move(e){
+		this.style.left=x+(e.pageX-mx)+"px";
+		this.style.top=y+(e.pageY-my)+"px";	
+	}
+	
+	function up(e){
+		if(this.releaseCapture){
+			off(this,"mousemove",move);
+			off(this,"mouseup",up);
+			this.releaseCapture();
+		}else{
+			off(document,"mousemove",this.MOVE);
+			off(document,"mouseup",this.UP);
+		}
+	}	
+	
+	//on(ele,"mousedown",down);
+	function init(ele){
+		on(ele,"mousedown",down);	
+	}
+	return {a:init,b:down}
+	//以上的方法定义，和方法的返回（暴露）
+	//还有下边应用，这是模块模式的原理
+	//有兴趣去看看requireJS
+	
+})();
+
+
+moudles.a(eles[0]);//this是什么和在那儿定义的没关系，变量是什么和在那儿执行没什么关系，看它在那儿定义的
+moudles.a(eles[1]);
+moudles.a(eles[2]);
+moudles.a(eles[3]);
+//模块模式适合用在什么场合：
+//多人协作的团队开发，复杂的开发环境里
+//在nodeJS里，外链的JS文件的引入和使用，就是这样的模式（requireJS风格）
+//requireJS就是模块模式的库
+
+</script>

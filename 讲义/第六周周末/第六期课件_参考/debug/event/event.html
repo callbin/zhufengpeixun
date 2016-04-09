@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: #FFF38F;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+on
+run
+bind
+
+</body>
+</html>
+<script src="myEvent.js"></script>
+<script>
+    var ele = document.getElementById("div1");
+    /*    function fn1(){console.log(1);}
+     function fn2(){console.log(2);}
+     on(ele,"click",fn1);
+     on(ele,"click",fn2);*/
+
+    function down(e) {
+        this.x = this.offsetLeft;
+        this.y = this.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+        console.log(this.x);
+        console.log(this.y);
+        console.log(this.mx);
+        console.log(this.my);
+
+        if (this.setCapture) {
+            on(this, "mousemove", move);
+            on(this, "mouseup", up);
+            this.setCapture();
+        } else {
+            this.MOVE = processThis(this, move);
+//            this.MOVE=move.bind(this);
+            this.UP = processThis(this, up);
+//            this.UP=up.bind(this);
+            document.documentElement.onmousemove = function () {
+                on(document, "mousemove", this.MOVE);
+            };
+            document.documentElement.onmouseup = function () {
+                on(document, "mouseup", this.UP);
+            };
+        }
+        e.preventDefault();//阻止事件的默认行为
+    }
+    function move(e) {
+
+        this.style.left = this.x + (e.pageX - this.mx) + "px";
+        this.style.top = this.y + (e.pageY - this.my) + "px";
+
+    }
+    function up(e) {
+        if (this.releaseCapture) {
+            off(this, "mousemove", move);
+            off(this, "mouseup", up);
+            this.releaseCapture();
+        } else {
+            off(document, "mousemove", this.MOVE);
+            off(document, "mouseup", this.UP);
+        }
+    }
+    function processThis(obj, fn) {
+        return function (e) {
+            fn.call(obj, e);
+        }
+    }
+
+    on(ele,"mousedown",down);
+
+</script>

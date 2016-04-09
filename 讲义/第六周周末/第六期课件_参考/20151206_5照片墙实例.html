@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+ul,li{ margin:0; padding:0; list-style:none;}
+ul{ padding:5px; width:480px; height:640px; margin:100px auto; position:relative; background:#6F6;}
+li{ width:150px; height:150px; margin:5px; float:left; overflow:hidden; background:#39C; cursor:move; -webkit-user-select:none;}
+li img{ width:150px; height:150px; display:block; border:none;}
+</style>
+</head>
+
+<body>
+<ul>
+	<li><img src="img/1.png"></li>
+    <li><img src="img/2.png"></li>
+    <li><img src="img/3.png"></li>
+    <li><img src="img/4.png"></li>
+    <li><img src="img/5.png"></li>
+    <li><img src="img/6.png"></li>
+    <li><img src="img/7.png"></li>
+    <li><img src="img/8.png"></li>
+    <li><img src="img/9.png"></li>
+    <li><img src="img/10.png"></li>
+    <li><img src="img/11.png"></li>
+    <li><img src="img/12.png"></li>
+
+</ul>
+</body>
+</html>
+<script>
+var oLis=document.getElementsByTagName("li");
+//第一步：把浮动布局改造成绝对定位布局，否则无法拖拽
+/*for(var i=0;i<oLis.length;i++){
+	var oLi=oLis.item(i);
+	///oLi.style.position="absolute";
+	oLi.style.top=oLi.offsetTop+"px";
+	oLi.style.left=oLi.offsetLeft+"px";
+	
+}
+
+for(var i=0;i<oLis.length;i++){
+	var oLi=oLis.item(i);
+	oLi.style.position="absolute";
+	//oLi.style.top=oLi.offsetTop+"px";
+	//oLi.style.left=oLi.offsetLeft+"px";
+	//oLi.style.margin=0;
+	
+}*/
+
+//为什么把offsetTop直接改成top的值，会有一些偏差？
+//offset的值包含margin，而绝对定位是在margin之外开始的，也就是说margin的值被重复计算了
+//
+
+for(var i=oLis.length-1;i>=0;i--){
+	var oLi=oLis.item(i);
+	oLi.style.top=oLi.offsetTop+"px";
+	oLi.style.left=oLi.offsetLeft+"px";
+	oLi.style.position="absolute";//定位要后做
+	oLi.style.margin=0;	
+}
+
+</script>

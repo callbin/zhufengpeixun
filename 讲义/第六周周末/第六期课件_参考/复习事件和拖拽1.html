@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:0;}
+</style>
+
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+/*
+on
+run,
+off
+bind
+unbind*/
+//on(div1,"click",fn);
+//要把chrome,firefox和IE处理事件的方式统一成相同的格式
+//这就是处理事件的兼容性
+var ele=document.getElementById("div1");
+function fn1(){
+	window.event;
+	
+	//e=e||window.event;
+	var e=arguments[0]||window.event;
+	this.innerHTML=e.pageX;	
+}
+
+function fn2(){alert(2);}
+function fn3(){alert(3);}
+function fn4(){alert(4);}
+on(ele,"click",fn2);
+on(ele,"click",fn3);
+on(ele,"click",fn4);
+//
+</script>

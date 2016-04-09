@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1{ width:300px; height:100px; background:red;}
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+    var ele=document.getElementById("div1");
+
+    //改造fn方法，this关键字强制指向obj，相同于浏览器自带的move.bind(this)方法
+    function processThis(obj,fn){
+        return function (e){fn.call(obj,e)}
+    }
+
+    function down(e){
+        this.x=this.offsetLeft;
+        this.y=this.offsetTop;
+        this.mx= e.pageX;
+        this.my= e.pageY;
+
+        if(this.setCapture){//支持鼠标事件
+            this.setCapture();
+
+            on(this,"mousemove",move);  //bind方法为浏览器自带的bind方法
+            on(this,"mouseup",up);
+
+        }else{  //不支持鼠标事件
+            //如果给动态创建元素绑定方法
+            //某种 场合下，需要创建一个div,并且这个div需要给它的click事件绑定fn1这个方法(动态绑定事件)
+            //要用事件委托
+            //自定义绑定属性
+            this.MOVE=proessThis(this,move);
+//            this.MOVE=move.bind(this);   //天生自带的属性
+            this.UP=processThis(this,up);
+//            this.Up=up.bind(this);
+
+            on(document,"mousemove",this.MOVE);
+            on(document,"mouseup",this.Up);
+
+        }
+        e.preventDefault();  //阻止图片默认行为
+    }
+
+
+    function move(e){
+        this.style.left=this.x+(e.pageX-this.mx) + "px";
+        this.style.top=this.y+(e.pageY-this.my) + "px";
+    }
+
+    function up(e){
+        if(this.releaseCapture){
+            off(this,"mousemove",move);
+            off(this,"mouseup",up);
+            this.releaseCapture();
+        }else{
+            off(document,"mousemove",this.MOVE);
+            off(document,"mouseup",this.UP);
+        }
+    }
+    on(ele,"mousedown",down);
+
+//    Function.prototype.bind(this)//这个方法和上面方法相同
+
+    //事件委托
+//    document.documentElement.onclick=function(e){
+//        if(e.target.id=="customer"){
+//
+//        }
+//    }
+</script>

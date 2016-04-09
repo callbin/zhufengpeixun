@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:0; cursor:move;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+为什么要用面向对象
+面向对象是世界观，也是方法论
+看待程序的方式：
+拖拽：看成一个动作，一个行为
+//不仅是行为，还是承载这个行为的载体
+面向对象：以对象类型的数据（就是以这种复合的数据类型，它可以承载很多的属性或方法）以导向的编程方式
+把有共同的特征的数据，进行抽象，形成一个类，然后通过这个类，对有共性的东西进行管理
+
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+//如果定义一个Drag,在这个类的实例上，承载拖拽的这个行为
+//着重的关注两点：它是如何承载行为的，它是如何进行管理的
+
+function processThis(obj,fn){//fn.bind
+	return function (e){fn.call(obj,e)}	
+}
+
+function Drag(ele){//构造函数，ele表示被拖拽的元素
+	this.ele=ele;//把要拖拽的元素保存在当前实例的属性ele上,以便于Drag类的其它方法也可以操作这个被拖拽的元素ele
+	this.x=null;//表示把这个属性提前准备好
+	this.y=null;
+	this.mx=null;
+	this.my=null;
+	
+	function processThis(obj,fn){return function (e){fn.call(obj,e)}	
+}
+	this.DOWN=processThis(this,this.down);
+	this.MOVE=processThis(this,this.move);
+	this.UP=processThis(this,this.up);
+	//on(ele,"mousedown",this.down);//this.down,this.down();
+	on(ele,"mousedown",this.DOWN);//事件里的this的原则是：这个方法绑定给谁，当这个方法在执行的时候，this就是谁
+	//面向对象的原则是：类上的方法里的this指向的当前实例
+	//我们现在的原则是采用面向对象的this的原则：这个类上方法里所有的this都是指的当前类的实例，如果出现的偏差，则用processThis方法解决
+}
+
+Drag.prototype.down=function(e){
+	this.x=this.ele.offsetLeft;
+	this.y=this.ele.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	
+	if(this.ele.setCapture){
+		this.ele.setCapture();
+		on(this.ele,"mousemove",this.MOVE);
+		on(this.ele,"mouseup",this.UP);
+	}else{
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+	}
+	e.preventDefault();
+	
+}
+Drag.prototype.move=function(e){
+	this.ele.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.ele.style.top=this.y+(e.pageY-this.my)+"px";
+	//控制的还是dom元素
+	
+}
+
+Drag.prototype.up=function(e){
+	if(this.ele.releaseCapture){
+		this.ele.releaseCapture();
+		off(this.ele,"mousemove",this.MOVE);
+		off(this.ele,"mouseup",this.UP);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+}
+
+new Drag(div1);
+/*obj.limit({left:100,right:500,top:0,bottom:400});//
+obj.addBorder();//
+obj.on("dragstart",clearEffect);
+obj.on("drag",getSpeed);
+obj.on("dragend",fly);
+obj.on("dragend",drop);*/
+
+
+
+</script>

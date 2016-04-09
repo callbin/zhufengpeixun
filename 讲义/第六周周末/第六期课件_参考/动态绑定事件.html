@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+
+<script>
+//如何给动态创建的元素绑定方法
+//某种场合下，需要创建一个div，customer并且这个div需要给它的click事件绑定fn1这个方法，
+
+document.documentElement.onclick=function(e){
+	if(e.target.id=="customer"){
+		//再做相应的处理	
+	}
+}
+
+</script>

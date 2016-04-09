@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:0;}
+</style>
+
+</head>
+
+<body>
+<div id="div1"><img src=""></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+var ele=document.getElementById("div1");
+function down(e){
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	
+	if(this.setCapture){
+		this.setCapture();
+		on(this,"mousemove",move);
+		on(this,"mouseup",up);
+	}else{
+		
+		//on(document,"mousemove",move.bind(this));
+		//on(document,"mouseup",up.bind(this));
+		this.MOVE=processThis(this,move);
+		//this.MOVE=move.bind(this);
+		this.UP=processThis(this,up);
+		//this.UP=up.bind(this);
+		
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+		
+	}
+	e.preventDefault();//阻止事件的默认行为
+}
+
+function move(e){
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+"px";
+}
+
+function up(e){
+	if(this.releaseCapture){
+		off(this,"mousemove",move);
+		off(this,"mouseup",up);
+		this.releaseCapture();
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+}
+on(ele,"mousedown",down);
+
+</script>

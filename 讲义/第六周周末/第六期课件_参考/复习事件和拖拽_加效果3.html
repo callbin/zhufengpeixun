@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:0;}
+</style>
+
+</head>
+
+<body>
+<div id="div1"><img src=""></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+var ele=document.getElementById("div1");
+function down(e){
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	
+	if(this.setCapture){
+		this.setCapture();
+		on(this,"mousemove",move);
+		on(this,"mouseup",up);
+	}else{
+		
+		
+		this.MOVE=processThis(this,move);
+		
+		this.UP=processThis(this,up);
+		
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+		
+	}
+	e.preventDefault();//阻止事件的默认行为
+}
+
+function move(e){
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+"px";
+	
+	if(!this.prevPosi){
+		this.prevPosi=this.offsetLeft;	
+	}else{
+		this.speed=this.prevPosi-this.offsetLeft;
+		this.prevPosi=this.offsetLeft;
+	}
+	
+	
+}
+
+function up(e){
+	if(this.releaseCapture){
+		off(this,"mousemove",move);
+		off(this,"mouseup",up);
+		this.releaseCapture();
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+	
+	fly.call(this);
+	drop.call(this);
+}
+on(ele,"mousedown",down);
+
+
+
+
+function fly(){
+	this.speed*=.97;
+	var val=this.offsetLeft+this.speed;
+	var maxR=document.documentElement.clientWidth-this.offsetWidth;
+	if(val>=maxR){
+		this.style.left=maxR+"px";	
+		this.speed*=-1;
+	}else if(val<=0){
+		this.style.left=0;
+		this.speed*=-1;
+	}else{
+		this.style.left=val+"px";
+	}
+	var that=this;
+	//window.setTimeout(function(){fly.call(that)},10);
+	//window.setTimeout(processThis(this,fly),20);
+	//下面的bind方法和processThis方法的实现原理、功能一样
+	if(Math.abs(this.speed)>=0.5){
+		this.flyTimer=window.setTimeout(fly.bind(this),20);
+	}
+	//100-0.4==100.4  offsetLeft=100
+	
+}
+	var counter=0;
+	function drop(){
+		if(!this.dropSpeed){
+			this.dropSpeed=9;	
+		}else{
+			this.dropSpeed+=9;	
+		}
+		this.dropSpeed*=.97;
+		
+		var maxBottom=document.documentElement.clientHeight-this.offsetHeight;
+		var val=this.offsetTop+this.dropSpeed;
+		if(val>=maxBottom){
+			this.style.top=maxBottom+"px";
+			this.dropSpeed*=-1;
+			counter++;
+		}else{
+			this.style.top=val+"px";
+			counter=0;//归零
+		}
+		if(counter<2)
+			this.dropTimer=window.setTimeout(drop.bind(this),20);
+		
+	}
+
+
+</script>

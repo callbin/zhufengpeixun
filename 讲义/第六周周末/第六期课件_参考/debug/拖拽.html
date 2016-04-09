@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1{
+            width:100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    <img src="smallPeony.jpg"/>
+
+</div>
+
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+    var ele=document.getElementById("div1");
+
+    on(ele,"mousedown",down);
+    function down(e){
+        this.x=this.offsetLeft;
+        this.y=this.offsetTop;
+        this.mx= e.pageX;
+        this.my= e.pageY;
+        if(this.setCapture){
+            this.setCapture();
+            on(this,"mousemove",move);
+            on(this,"mouseup",up);
+        }else{
+            //如何给动态创建的元素绑定方法
+            //某种场合下，需要创建一个div，并且这个div需要给它的click事件绑定fn这个方法
+            this.MOVE=processThis(this,move);
+            this.UP=processThis(this,up);
+            on(document,"mousemove",this.MOVE);
+            on(document,"mouseup",this.UP);
+        }
+        e.preventDefault();//阻止事件默认行为
+    }
+    function move(e){//进行拖拽
+        //计算盒子的新位置
+        this.style.left=this.x+(e.pageX-this.mx)+"px";
+        this.style.top=this.y+(e.pageY-this.my)+"px";
+        //盒子的新位置=盒子原来的位置+鼠标移动的距离
+    }
+    function up(e){
+        if(this.releaseCapture){
+            this.releaseCapture();
+            off(this,"mousemove",move);
+            off(this,"mouseup",up);
+        }else{
+            off(document,"mousemove",this.MOVE);
+            off(document,"mouseup",this.UP);
+        }
+    }
+    function processThis(obj,fn){
+        return function(e){fn.call(obj);}
+    }
+</script>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body,div{
+            margin: 0;
+            padding:0;
+        }
+        #div1{
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100px;
+            height: 100px;
+            background: yellowgreen;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript">
+
+    //为什么要用面向对象？
+    //面向对象是世界观，也是方法论，就是看待程序的方式。
+    //拖拽：看成一个动作，一个行为。不仅是行为，还是承载这个行为的载体。
+    //面向对象：以对象类型的数据（就是以这种复合的数据类型，它可以承载很多的属性或方法）为导向的编程方式。就是把有共同特称的数据，进行抽象，形成一个类的概念，然后通过这个类，对有共性的东西进行管理。
+    //例如：定义一个Drag,在这个类的实例上，至少承载拖拽的这个行为。
+    //着重的关注两点：它是如何承载行为的，它是如何进行管理的。
+
+    function Drag(ele){//ele：是指像拖拽谁就把谁放这里
+        this.ele=ele; //把要拖拽的元素保存在当前实例的属性ele上。
+        // on(ele,"mousedown",this.DOWN);//这个方法绑定给谁，当这个方法在执行的时候，this就是谁
+        //面向对象的原则是：类上的方法里的this指向的是当前类的实例。
+        this.DOWN=processThis(this,this.down);//不管down谁运行，把当前的this都变成当前类实例上的this。
+        this.MOVE=processThis(this,this.move);//这里面的this全都是当前类的一个实例。
+        this.UP=processThis(this,this.up);
+        this.x=null;//表示把这个属性提前准备好
+        this.y=null;
+        this.mx=null;
+        this.my=null;
+    }
+
+    Drag.prototype.down=function(e){
+        //控制的还是dom元素
+        this.x=this.ele.offsetLeft;
+        this.y=this.ele.offsetTop;
+        this.mx= e.pageX;
+        this.my= e.pageY;
+        //
+        if(this.ele.setCapture){
+            this.ele.setCapture();
+            on(this.ele,"mousemove",this.MOVE);
+            on(this.ele,"mouseup",this.UP);
+        }else{
+            on(document,"mousemove",this.MOVE);
+            on(document,"mouseup",this.UP);
+        }
+        e.preventDefault();
+
+    };
+
+    Drag.prototype.move=function(e){
+        this.ele.style.left=this.x+(e.pageX-this.mx)+"px";
+        this.ele.style.top=this.y+(e.pageY-this.my)+"px";
+    };
+
+    Drag.prototype.up=function(e){
+        if(this.ele.releaseCapture){
+            this.ele.releaseCapture();
+            off(this.ele,"mousemove",this.MOVE);
+            off(this.ele,"mouseup",this.UP);
+        }else{
+            off(document,"mousemove",this.MOVE);
+            off(document,"mouseup",this.UP);
+        }
+        e.preventDefault();
+
+    };
+
+    function processThis(obj,fn){
+        return function(e){fn.call(obj,e)};
+    }
+new Drag(div1);
+</script>
+</body>
+</html>

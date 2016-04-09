@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//原型继承只能实现对定义原型（prototype）上的方法的继承
+//如果是构造函数，无法用原型继承的方式实现
+//实现构造函数的继承，用借用构造函数的方式来完成
+function Person(name,gender,age){
+	this.name=name;
+	this.gender=gender;
+	this.age=age;
+		
+}
+Person.prototype.eat=function(){console.log("eat");}
+Person.prototype.cry=function(){console.log("cry");}
+
+function Police(name,gender,age,level){
+	/*
+	this.name=name;
+	this.age=age;
+	this.gender=gender;
+	//父类里已经完成的逻辑，在子类里就不应该再重复的工作了
+	*/
+	//用借用构造函数继承的方式
+	Person.call(this,name,gender,age);//父类的构造函数在这里执行，并且让父类的this指向子类的this
+	this.level=level;
+	
+}
+Police.prototype=new Person;
+Police.prototype.showID=function(){
+		console.log("我是警察，我的名字叫："+this.name);
+	}
+var obj=new Police("tom","male",28,6);
+obj.cry();
+obj.showID();
+</script>

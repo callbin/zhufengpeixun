@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript" src="js/event.js"></script>
+<script type="text/javascript">
+    var ele = document.getElementById("div1");
+    var down = function (e) {
+        this.x = this.offsetLeft;
+        this.y = this.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+
+        if (this.setCapture) {
+            this.setCapture();
+            on(this, "onmousemove", move);
+            on(this, "onmouseup", up);
+        } else {
+            this.MOVE = processThis(this.move);
+            //this.MOVE=move.bind(this);
+            this.UP = processThis(this.up);
+            //this.UP=processThis(this);
+            on(document, "onmousemove", this.MOVE);
+            on(document, "onmouseup", this.UP);
+            //on(document,"onmousemove",move);
+            //on(document,"onmouseup",up);
+        }
+        e.preventDefault();
+    };
+    var move = function (e) {
+        this.style.left = this.x + (e.pageX - this.mx)+"px";
+        this.style.top = this.y + (e.pageY - this.my)+"px";
+    };
+    var up = function (e) {
+       if(this.releaseCapture) {
+           this.releaseCapture();
+           off(this,"onmousemove",move);
+           off(this,"onmouseup",up);
+       }else{
+           off(document,"onmousemove",this.MOVE);
+           off(document,"onmouseup",this.UP);
+       }
+    };
+
+    on(ele,"mousedown",down);
+</script>
+</body>
+</html>

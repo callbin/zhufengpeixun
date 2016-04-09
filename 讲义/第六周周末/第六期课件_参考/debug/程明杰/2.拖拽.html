@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style type="text/css">
+    *{
+        margin: 0;
+        padding:0;
+    }
+    #div1{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background: red;
+    }
+</style>
+<body>
+<div id="div1"></div>
+
+</body>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript">
+    var ele=document.getElementById("div1");
+    function down(e){
+        this.x=this.offsetLeft;
+        this.y=this.offsetTop;
+        this.mx= e.pageX;
+        this.my= e.pageY;
+
+        if(this.setCapture){
+            this.setCapture();
+            on(this,"mouseup",up);
+        }else{
+            this.MOVE=processThis(this,move);
+            //this.MOVE=move.bind(this);
+            this.UP=processThis(this,up);
+            //this.UP=up.bind(this);
+
+            on(document,"mousemove",this.MOVE);
+            on(document,"mouseup",this.UP);
+            //如何给动态创建的元素绑定方法
+            //某种场合 需要创建一个div 并且给这个div需要给它的click的事件绑定fn1这个方法
+        }
+        e.preventDefault();
+    }
+    function processThis(obj,fn){
+        return function (e){fn.call(obj,e)}
+    }
+
+
+    function move(e){
+        this.style.left=this.x+(e.pageX-this.mx)+"px";
+        this.style.top=this.y+(e.pageY-this.my)+"px";
+    }
+    function up(e){
+        if(this.releaseCapture){
+            off(this,"mousemove",move);
+            off(this,"mouseup",up);
+            this.releaseCapture();
+        }else{
+            off(document,"mousemove",this.MOVE);
+            off(document,"mouseup",this.UP);
+        }
+    }
+    on(ele,"mousedown",down);
+</script>
+</html>

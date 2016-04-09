@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<style type="text/css">
+*{margin:0;padding:0}
+ul{list-style:none}
+#outer{width:80%;overflow:hidden;margin:100px 10%;}
+#inner{height:100px;width:500%;transition:.7s linear}
+#inner li{width:20%;height:100px;float:left;}
+#inner li:nth-child(1){background-color:red}
+#inner li:nth-child(2){background-color:green}
+#inner li:nth-child(3){background-color:blue}
+#inner li:nth-child(4){background-color:yellow}
+</style>
+</head>
+
+<body>
+<div id="outer">
+	<ul id='inner'>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    </ul>
+</div>
+</body>
+</html>
+<script>
+var oInner = document.getElementById("inner");
+var oLis = oInner.getElementsByTagName("li");
+[].forEach.call(oLis,function(ele,index){
+	ele.index = index;
+	ele.addEventListener("touchstart",start,false);
+	ele.addEventListener("touchmove",move,false);
+	ele.addEventListener("touchend",end,false);
+	
+	})
+	
+function start(e){
+	this.startX = e.changedTouches[0].pageX;//保存手势的原始位置
+}
+function move(e){
+	this.flag = true;
+	e.preventDefault();
+	var moveX = e.changedTouches[0].pageX;
+	var changePos = moveX-this.startX;//计算出手势移动的距离
+	
+	this.changePos = changePos;
+	var index =setPos(changePos,this.index);
+	var move  =-(this.index*this.offsetWidth-changePos);
+	this.parentNode.style.transform = 'translate('+move+'px,0)';
+	
+}
+function end(){
+	if(this.flag){		
+		var index = setPos(this.changePos,this.index)
+		this.parentNode.style.transform = 'translate('+index*(-this.offsetWidth)+'px,0)';
+			
+	}
+}
+function setPos(pos,cur){//计算当前应该停在第几帧上，
+	var index = null;
+	if(pos>0){
+		index = cur-1;
+		if(index < 0){//过界判断，如果向右走，走到了-1张，则停在0张上
+			index = 0;
+		}
+	}else if(pos<0){//过界判断
+		index = cur+1;
+		if(index >oLis.length-1){
+			index = oLis.length-1;
+		}
+			
+	}
+	return index;
+}
+</script>
+

@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+//订阅发布模式
+//是最常见的设计模式，它是行为型的设计模式中的一种
+//管理不同的行为（动作，方法，模块，function）的模式
+//设计模式是在逻辑之上的一套管理标准或方式
+
+//单例模式，工厂模式，构造函数模式，原型模式  -->创建型设计模式
+
+
+</body>
+</html>
+<script>
+function EventEmitter(){}//事件发射器类
+EventEmitter.prototype.on=function(type,fn){
+	if(!this["event"+type]){
+		this["event"+type]=[];	
+	}
+	
+	var a=this["event"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	
+	a.push(fn);
+	
+}
+
+EventEmitter.prototype.run=function(type){
+	var a=this["event"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			a[i].call(this);	
+		}
+	}
+}
+EventEmitter.prototype.off=function(type,fn){
+	var a=this["event"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a.splice(i,1);
+			}
+		}
+	}
+}
+
+function Kettle(){}
+//Kettle.prototype=new EventEmitter;
+Kettle.prototype.__proto__=EventEmitter.prototype;//IE不支持这样的继承方式。
+Kettle.prototype.boiling=function(){
+	console.log("开始烧水")
+	var that=this;
+	//this.run("boiling");//通知；
+	window.setTimeout(function(){
+		console.log("水已烧开!");
+		//this.run();//用定时器驱动执行的方法，this都是window，所以才提前把this赋给that
+		that.run("boiling");
+	},5000);
+	
+}
+function noodles(){
+	console.log("吃面条");	
+}
+function washface(){
+	console.log("洗脸");	
+}
+function drinkWater(){
+	console.log("喝水");	
+}
+var kettle1=new Kettle;
+//烧水
+//泡方便面，洗脸，喝
+//打扫卫生，看书，充电,给前女友打个电话 
+
+//充电--烧水--打电话--等水烧开了泡面洗脸喝，
+
+	//报警器 补充的作用  C
+//烧水            泡面，洗脸，喝
+//A                 B
+kettle1.on("boiling",noodles);
+kettle1.on("boiling",washface);
+kettle1.on("boiling",drinkWater);
+</script>
+
+
+
+
+

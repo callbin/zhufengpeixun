@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body{margin:0}
+#div1{width:100px; height:100px; background:red; position:absolute; top:0; left:0}
+</style>
+</head>
+
+<body>
+<div id="div1" draggable="true"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+ele.drag
+ele.ondragstart;//拖拽开始
+ele.ondrag;//拖拽中
+ele.ondragend;//拖拽结束
+//以上这三个事件中，不实现任何具体的操作
+ele.addEventListener("dragstart",start);
+ele.addEventListener("drag",drag);
+ele.addEventListener("dragend",end);
+
+function start(e){
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	
+}
+function drag(e){
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+"px";
+	e.preventDefault();
+}
+function end(e){
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+8+"px";
+	e.preventDefault();
+}
+
+</script>
