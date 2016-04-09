@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; position:absolute; top:100px; left:100px; background:red; -webkit-user-select:none; cursor:move;}
+</style>
+</head>
+
+<body>
+<div id="div1" draggable="true"></div>
+
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+ele.ondragstart=function(e){//拖拽开始
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+}
+function down(e){
+	
+	on(this,"mousemove",move);
+	on(this,"mouseup",up);
+}
+ele.ondrag=function(e){//拖拽进行
+	this.style.left=e.pageX-this.mx+this.x+"px";
+	this.style.top=e.pageY-this.my+this.y+"px";
+}
+
+function move(e){
+	
+}
+
+ele.ondragend=function(e){//拖拽结束
+	this.style.left=e.pageX-this.mx+this.x+"px";
+	this.style.top=e.pageY-this.my+this.y+"px";
+	
+}
+
+function up(e){//这是dragend的原理
+	//把this归位初始位置
+	//移除事件
+	off(this,"mousemove",move);
+	off(this,"mouseup",up);	
+}
+
+</script>

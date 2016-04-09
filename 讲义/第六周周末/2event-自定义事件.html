@@ -35,6 +35,7 @@ function  on(ele,type,fn){//把需要绑定的方法保存到程序池（数组�
 	if(!ele["aEvent"+type]){
 		ele.attachEvent("on"+type,processThis(run,ele));
 		ele["aEvent"+type]=[];
+		ele.aEventclick
 	}
 	var a=ele["aEvent"+type];
 	
@@ -74,6 +75,21 @@ function run(){//这是真正被绑定到事件上的方法，当事件触发时
 	
 }
 
+function selfRun(type,e){//type是指的自定义的事件类型，e是系统的事件对象
+	var a=this["aSelf"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function"){
+				a[i].call(this,e);
+			}else{
+				a.splice(i,1);
+				i--;
+			}
+		}
+	}
+}
+
+
 function off(ele,type,fn){//是和on方法相反的方法，它负责从程序池里把指定fn方法移除
 	if(ele.removeEventListener){
 		ele.removeEventListener(type,fn,false);
@@ -112,6 +128,9 @@ function down(e){
 		on(document,"mouseup",this.UP);
 	}
 	e.preventDefault();	
+	//selfRun("selfdragstart",e);//发布，通知
+	selfRun.call(this,"selfdragstart",e);
+	//on(div1,"selfdragstart",clearEffect);
 	
 }
 function move(e){
@@ -119,7 +138,7 @@ function move(e){
 	this.style.top=e.pageY-this.my+this.y+"px";
 	
 	
-	
+	selfRun.call(this,"selfdragging",e);
 }
 function up(e){
 	if(this.releaseCapture){
@@ -130,7 +149,7 @@ function up(e){
 		off(document,"mousemove",this.MOVE);
 		off(document,"mouseup",this.UP);	
 	}
-	
+	selfRun.call(this,"selfdragend",e);
 }
 
 on(div1,"mousedown",down);
@@ -200,7 +219,53 @@ function drop(){
 //当拖拽进行的时候，计算出速度来
 //当拖拽结束的时候，fly&&drop
 
-/*on(div1,"标识着拖拽开始的标识符",clearEffect);
+/*
+on(div1,"标识着拖拽开始的标识符",clearEffect);
+on(div1,"click",animate);//click只是个标识符，它标识的是鼠标点一下的那个行为。具体的操作上：是以click字符串为区分符，构造一个数组，把animate保存到了这个数组里
+ele.aEventclick=[];
+ele.aEventclick.push(animate);
+
+通知：
+
+对应到某个数组（以事件类型或以事件标识符来对应到某个数组）
+
+run(type){
+	var a=this["aEvent"+type];
+	for(var i=0;i<a.length;i++){
+		a[i].call(this,e);	
+		a[i]();
+	}
+}
+
+
+sing{
+	
+	
+	run("sing");
+}
+
+marry{
+	run("marry");
+}
+
+play{
+	
+}
+
+
+dragstart{
+	run("");	
+}
+ele.addEventListener("click",fn);
+
+EventTarget --->run
+
+click{
+	
+	run("click");//当run执行的时候，这会的"click"是规定好的事件规范	
+	
+}
+
 
 on(div1,"标识着拖拽进行的标识符",getSpeed);
 
@@ -213,6 +278,27 @@ on(div1,"selfdragging",getSpeed);
 
 on(div1,"selfdragend",fly);
 on(div1,"selfdragend",drop);
+
+//加拖拽限定（拖拽范围，0-1000）
+//当开始拖拽的时候加个虚线边框，结束拖拽的时候去掉边框
+
+function dragRange(){
+	if(this.offsetLeft>=1000){
+		this.style.left=1000+"px";	
+	}else if(this.offsetLeft<=0){
+		this.style.left=0;	
+	}
+}
+function addBorder(){
+	this.style.border="2px dashed black";
+}
+function removeBorder(){
+	this.style.border="none";
+	}
+on(div1,"selfdragging",dragRange);
+on(div1,"selfdragstart",addBorder);
+on(div1,"selfdragend",removeBorder);
+
 
 
 </script>
