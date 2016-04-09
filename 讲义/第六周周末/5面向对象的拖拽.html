@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; position:absolute; top:100px; left:100px; background:red; cursor:move; -webkit-user-select:none;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+
+</div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+//Drag这个类承载并且管理着定义在它的原型上的这些行为或属性
+
+//首先明确的原则：this指向问题。在面向对象的编程里，我们确定的原则是this指向当前类的实例。
+//这个原则会和event.js事件绑定时的处理原则冲突。在处理事件时this的原则是：方法绑定给谁，方法里的this就指向谁。如果发生冲突，则以上边的原则为准，即：类方法里的this要指向当前类的实例
+function Drag(ele){
+	this//
+	this.ele=ele;//首先把要拖拽的对象保存到实例的ele属性上
+	this.x=null;
+	this.y=null;
+	this.mx=null;
+	this.my=null;//把保存盒子和鼠标初始的属性都定义在实例上，而非被拖拽的元素上
+	/*on(this.ele,"mousedown",this.down);
+	
+	on(ele,"mousedown",this.down);//查找方法的定义的地址时，没有this的事。当方法执行的时候，才会有this的事
+	down,this.down;
+	var fn=this.down;
+	on(ele,"mousedown",fn);*/
+	
+	this.DOWN=processThis(this.down,this);
+	this.MOVE=processThis(this.move,this);
+	this.UP=processThis(this.up,this);
+	on(ele,"mousedown",this.DOWN);
+	
+}
+Drag.prototype.down=function(e){
+	this.x=this.ele.offsetLeft;
+	this.y=this.ele.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	if(this.ele.setCapture){
+		this.ele.setCapture();
+		on(this.ele,"mousemove",this.MOVE);
+		on(this.ele,"mouseup",this.UP);			
+	}else{
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);	
+	}
+	e.preventDefault();	
+}
+Drag.prototype.move=function(e){
+	this.ele.style.left=e.pageX-this.mx+this.x+"px";
+	this.ele.style.top=e.pageY-this.my+this.y+"px";
+}
+Drag.prototype.up=function(e){
+	if(this.ele.releaseCapture){
+		this.ele.releaseCapture();
+		off(this.ele,"mousemove",this.MOVE);
+		off(this.ele,"mouseup",this.UP);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+}
+
+new Drag(div1);
+//把上边的Drag类看成是一个完整独立成熟的模块。（是一个定型的产品，并且不能随意修改）
+//写以下方法是在明确了Drag模块的一些接口的前提下进行的，比如说this是谁，this.ele是谁，公开的事件有那些，系统（浏览器的事件如何传递的）事件是什么，
+//就是说你应该提前拿到一份Drag模块的说明书，用法已经掌握
+
+function clearEffect(){
+	clearTimeout(this.flyTimer);
+	clearTimeout(this.dropTimer);	
+}
+
+function getSpeed(e){
+	if(this.prevPosi){
+		this.speed=e.pageX-this.prevPosi;
+		this.prevPosi=e.pageX;	
+	}else{
+		this.prevPosi=e.pageX;	
+	}
+}
+
+
+function fly(){
+	this.flySpeed*=.98;//this是类的实例，
+	var current=this.ele.offsetLeft+this.flySpeed;
+	var r=(document.documentElement.clientWidth||document.body.clientWidth)-this.ele.offsetWidth;//盒子运动能到达的最右边
+	if(current>=r){
+		this.ele.style.left=r+"px";
+		this.flySpeed*=-1;	
+	}if(current<=0){
+		this.ele.style.left=0;
+		this.flySpeed*=-1;
+		
+	}else{
+		this.ele.style.left=current+"px";
+	}
+	
+	if(Math.abs(this.flySpeed)>=0.5){
+		this.flyTimer=window.setTimeout(processThis(fly,this),20);	
+	}
+	
+}
+
+function drop(){
+	if(this.dropSpeed){
+		this.dropSpeed+=9;	
+	}else{
+		this.dropSpeed=9;
+	}
+	this.dropSpeed*=.98;
+	var bottom=(document.documentElement.clientHeigh||document.body.clientHeight)-this.offsetHeight;//运动能到达的最下边
+	var current=this.dropSpeed+this.ele.offsetTop;//当前运动到达的位置
+	if(current>bottom){
+		this.ele.style.top=bottom+"px";
+		this.dropSpeed*=-1;//调头
+		this.flag++;	
+	}else{
+			this.ele.style.top=current+"px";
+			this.flag=0;
+	}
+	if(this.flag<2){
+		this.dropTimer=window.setTimeout(processThis(drop,this),20);	
+	}
+	
+}
+
+
+
+
+</script>

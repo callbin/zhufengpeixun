@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//一个水壶有烧水的功能，让你用代码描述：当水烧开了，可以泡方便，洗漱
+//用代码来描述：交通工具遇到红灯则停，绿灯则行
+//水壶  烧水
+
+function EventEmitter(){}
+EventEmitter.prototype.on=function(type,fn){//约定或绑定
+	if(!this["emitter"+type])this["emitter"+type]=[];
+	var a=this["emitter"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	a.push(fn);
+	
+}
+EventEmitter.prototype.run=function(type){//通知或执行
+	var a=this["emitter"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			//a[i].call(this);	
+			a[i]();
+		}
+	}
+	
+}
+EventEmitter.prototype.off=function(type,fn){//解除约定
+	var a=this["emitter"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a.splice(i,1);
+				return;
+			}
+		}
+	}
+}
+
+//var obj=new EventEmitter;
+//obj.on("abcd",fn);
+function Kettle(){console.log("我是个水壶");}
+Kettle.prototype.__proto__=EventEmitter.prototype;//这样的继承更好，它不会把Kettle上原有的prototype地址给改变
+//Kettle.prototype=new EventEmitter;//这样改变了Kettle原有的prototype的指向
+Kettle.prototype.boiling=function(){
+	var that=this;
+	window.setTimeout(function(){
+		console.log("水已开！")
+		that.run("boiling");
+		},5000);	
+	this.run();//当这一行代码执行的时候，水开了嘛？
+}
+var kettle1=new Kettle;
+
+
+
+function noodles(){
+	console.log("煮面");
+}
+
+function washFace(){
+	console.log("洗脸");
+}
+//在烧水之前就应该约定好，水烧开之后干嘛！
+kettle1.on("boiling",noodles);
+kettle1.on("boiling",washFace);
+kettle1.boiling();
+//相当于在水壶的功能和其它的功能之后，留了一个接口
+//水壶上的报警器就相当于一个通知作用的组件，这个组件的特点是它本身不属于水壶功能，而是一个第三方的功能焊接到水壶去的
+//约定功能，通知功能，解除约定的功能
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
