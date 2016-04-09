@@ -4,13 +4,180 @@
 <meta charset="utf-8">
 <title>无标题文档</title>
 <style type="text/css">
-div{ width:100px; height:100px; position:absolute; top:100px; left:100px; background:red;}
+div{ width:100px; height:100px; position:absolute; top:100px; left:100px; background:red; cursor:move; -webkit-user-select:none;}
 </style>
 </head>
 
 <body>
 <div id="div1"></div>
-<div id="div2"></div>
-<div id="div3"></div>
+<div id="div2" style="left:300px; background:blue;"></div>
+<div id="div3" style="top:300px; background:green;"></div>
 </body>
 </html>
+<script>
+//bind,unbind//this
+//on,off,run;//顺序问题
+function  on(ele,type,fn){//把需要绑定的方法保存到程序池（数组）
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);
+		return;	
+	}
+	if(!ele["aEvent"+type]){
+		ele.attachEvent("on"+type,processThis(run,ele));
+		ele["aEvent"+type]=[];
+	}
+	var a=ele["aEvent"+type];
+	
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;//避免重复绑定此方法	
+	}
+	
+	a.push(fn);//核心代码
+	//系统事件和自定义程序池里的方法如何关联：
+	
+	
+	
+	
+}
+function run(){//这是真正被绑定到事件上的方法，当事件触发时候，执行这run方法，由run方法按顺序遍历执行保存到程序池里的方法
+	var e=window.event;
+	var type=e.type;
+	var a=this["aEvent"+type];//这个数组是从那儿来的
+	if(!e.target){
+		e.target=e.srcElement;
+		e.stopPropagation=function(){e.cancelBubble=true;}
+		e.preventDefault=function(){e.returnValue=false;}
+		e.pageX=(document.documentElement.scrollLeft||document.body.scrollLeft)+e.clientX;
+		e.pageY=(document.documentElement.scrollTop||document.body.scrollTop)+e.clientY;
+			
+	}
+	if(a){
+		for(var i=0;i<a.length;i++){//核心代码
+			if(typeof a[i] == "function"){
+				a[i].call(this,e);	
+			}else{
+				a.splice(i,1);
+				i--;	
+			}
+		}
+	}
+	
+}
+
+function off(ele,type,fn){//是和on方法相反的方法，它负责从程序池里把指定fn方法移除
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);
+		return;	
+	}
+	var a=ele["aEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				return;
+			}
+		}
+	}
+	
+}
+function processThis(fn,obj){
+	return function(e){fn.call(obj,e);}	
+}
+
+function down(e){
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;//保存盒子的起始坐标
+	this.mx=e.pageX;
+	this.my=e.pageY;//保存鼠标的起始坐标
+	
+	if(this.setCapture){
+		this.setCapture();//专门处理mousemove事件，防止元素丢失鼠标	
+		on(this,"mousemove",move);
+		on(this,"mouseup",up);
+	}else{
+		//Function.prototype.bind;
+		this.MOVE=move.bind(this);
+		this.UP=up.bind(this);
+		on(document,"mousemove",this.MOVE);//this指向当前被拖拽的元素
+		on(document,"mouseup",this.UP);
+	}
+	e.preventDefault();	
+}
+function move(e){
+	this.style.left=e.pageX-this.mx+this.x+"px";
+	this.style.top=e.pageY-this.my+this.y+"px";
+	
+	//速度=这一次的位置-上一次位置-->每次mousemove事件发生的间隔时间基本相同（相差大约是8ms）
+	e.pageX//上一次和这一次：
+	if(this.prevPosi){
+		this.flySpeed=e.pageX-this.prevPosi;
+		this.prevPosi=e.pageX;
+		
+		
+	}else{
+		this.prevPosi=e.pageX;	
+	}
+	
+}
+function up(e){
+	if(this.releaseCapture){
+		this.releaseCapture();
+		off(this,"mousemove",move);
+		off(this,"mouseup",up);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);	
+	}
+	//fly();//借助求出来的this.flySpeed做运动的动画
+	fly.call(this);
+	drop.call(this);
+}
+
+on(div1,"mousedown",down);
+on(div2,"mousedown",down);
+on(div3,"mousedown",down);
+
+function fly(){
+		this.flySpeed*=.98;
+		var current=this.offsetLeft+this.flySpeed;//正常情况下本次运动到达的位置
+		var r=(document.documentElement.clientWidth||document.body.clientWidth)-this.offsetWidth;
+		if(current<=0){
+			this.style.left=0;
+			this.flySpeed*=-1;//折返	
+		}else if(current>=r){
+			this.style.left=r+"px";
+			this.flySpeed*=-1;	
+		}else{
+			this.style.left=this.offsetLeft+this.flySpeed+"px";
+		}
+		if(Math.abs(this.flySpeed)>=0.5)
+			this.flyTimer=window.setTimeout(processThis(fly,this),20);
+};
+function drop(){
+	if(this.dropSpeed){
+		this.dropSpeed+=9.8;	
+	}else{
+		this.dropSpeed=9.8
+	}
+	
+	var bottom=(document.documentElement.clientHeight||document.body.clientHeight)-this.offsetHeight;
+	this.dropSpeed*=.98;
+	var current=this.offsetTop+this.dropSpeed;
+	if(current>=bottom){
+		this.style.top=bottom+"px";
+		this.dropSpeed*=-1;	
+		this.flag++;//如果撞到边界，则让flag累加
+		//this.flag是用来判断盒子是否连续到达边界的依据
+		//什么时候flag会大2
+	}else{
+		this.style.top=current+"px";
+		this.flag=0;//如果是正常运行，则让flag归0
+	}
+	if(this.flag<2)
+		this.dropTimer=window.setTimeout(processThis(drop,this),20);
+	
+}
+
+
+
+</script>
