@@ -5,7 +5,8 @@ EventEmitter.prototype.on=function(type,fn){
 	for(var i=0;i<a.length;i++){
 	    if(a[i]==fn){return}
 	}
-	a.push(fn)
+	a.push(fn);
+	return this;
 }
 
 EventEmitter.prototype.run=function(type,e){
@@ -20,6 +21,7 @@ EventEmitter.prototype.run=function(type,e){
 				}
 			}
 	}
+	
 }
 
 EventEmitter.prototype.off=function(type,fn){
@@ -32,7 +34,7 @@ EventEmitter.prototype.off=function(type,fn){
 			}
 		}
 	}
-	
+	return this;
 }
 
 

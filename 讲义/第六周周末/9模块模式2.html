@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1,#div2,#div3{ width:100px; height:100px; position:absolute; top:0; left:0; background:red; cursor:move;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2" style="background:blue; left:140px; "></div>
+
+<div id="div3"  style="background:green; left:140px; top:150px; "></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+//module model
+
+;var MODULE=(function(){
+	//var ele=document.getElementById("div1");
+	
+	//on(ele,"mousedown",down);
+	var x=null,y=null,mx=null,my=null,MOVE=null,UP=null;
+	function down(e){
+		
+		x=this.offsetLeft;
+		y=this.offsetTop;
+		mx=e.pageX;
+		my=e.pageY;
+		
+		if(this.setCapture){
+			this.setCapture();
+			on(this,"mousemove",move);
+			on(this,"mouseup",up);
+		}else{
+			MOVE=move.bind(this);
+			UP=up.bind(this);
+			on(document,"mousemove",MOVE);
+			on(document,"mouseup",UP);
+			
+		}
+		e.preventDefault();
+	}
+	
+	function move(e){
+		this.style.left=e.pageX-mx+x+"px";
+		this.style.top=e.pageY-my+y+"px";
+		
+	}
+	
+	function up(e){
+		if(this.releaseCapture){
+			this.releaseCapture();
+			off(this,"mousemove",move);
+			off(this,"mouseup",up);	
+		}else{
+			off(document,"mousemove",MOVE);
+			off(document,"mouseup",UP);	
+		}
+	}
+	
+	function init(ele){
+		on(ele,"mousedown",down);	
+	};
+	return init;//这是关键一步
+	
+})();
+MODULE(div1);
+MODULE(div2);
+MODULE(div3);
+
+
+
+</script>
