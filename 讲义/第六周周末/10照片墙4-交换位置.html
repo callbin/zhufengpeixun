@@ -94,6 +94,7 @@ function changePosition(){
 	}
 	a.sort(function(a,b){return a.hitedLength-b.hitedLength});
 	var shortest=a[0];//距离this.ele最短的元素
+	
 	shortest.style.backgroundColor="black";
 	
 	animate(shortest,{left:this.ele.l,top:this.ele.t},700,3);
