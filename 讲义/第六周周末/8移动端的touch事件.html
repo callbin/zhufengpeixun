@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:70%; height:25%; margin:10px auto; overflow:hidden;}
+#inner{width:500%; height:100%; }
+#inner div{ width:20%; height:100%; text-align:center; font-size:24px; background:blue; float:left; }
+</style>
+</head>
+
+<body>
+<div id="outer">
+	<div id="inner">
+    	<div>一</div><div style="background:red; ">二</div><div style="background:green;">三</div><div style="background:#ccc; ">四</div><div style="background:purple">五</div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+var h=document.documentElement.clientHeight;
+document.body.style.height=h+"px";
+function start(e){//手指按下去 touchstart --dragstart
+	e.pageX;
+	e.changedTouches[0].pageX
+	e.changedTouches//手势坐标的集合，所有触点的集合
+	this.mx=e.changedTouches[0].pageX;
+	this.x=this.parentNode.offsetLeft;
+	console.log(this.x);
+}
+
+function move(e){//手指移动 touchmove  ---drag
+	this.style.left=e.changedTouches[0].pageX-this.mx+this.x+"px";
+	
+	var current=(e.changedTouches[0].pageX-this.mx+this.x)+"px"
+	this.parentNode.style.transform="translate("+current+",0)";
+	console.log(this.x);
+}
+function end(e){//手指抬起 touchend  ---dragend
+	var current=e.changedTouches[0].pageX-this.mx+this.x+"px"
+	this.parentNode.style.transform="translate("+current+",0)";
+}
+
+var eles=document.getElementById("inner").getElementsByTagName("div");
+[].forEach.call(eles,function(ele,i){
+	ele.addEventListener("touchstart",start,false);
+	ele.addEventListener("touchmove",move,false);
+	ele.addEventListener("touchend",end,false);
+});
+
+</script>
