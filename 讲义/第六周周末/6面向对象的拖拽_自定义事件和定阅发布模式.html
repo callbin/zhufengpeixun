@@ -16,10 +16,45 @@
 </html>
 <script src="event.js"></script>
 <script>
-//Drag这个类承载并且管理着定义在它的原型上的这些行为或属性
 
-//首先明确的原则：this指向问题。在面向对象的编程里，我们确定的原则是this指向当前类的实例。
-//这个原则会和event.js事件绑定时的处理原则冲突。在处理事件时this的原则是：方法绑定给谁，方法里的this就指向谁。如果发生冲突，则以上边的原则为准，即：类方法里的this要指向当前类的实例
+function EventEmitter(){}
+EventEmitter.prototype.on=function(type,fn){
+	if(!this["selfEvent"+type])this["selfEvent"+type]=[];
+	var a=this["selfEvent"+type];
+	for(var i=0;i<a.length;i++){
+	    if(a[i]==fn){return}
+	}
+	a.push(fn)
+}
+
+EventEmitter.prototype.run=function(type,e){
+	var a=this["selfEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;){
+			if(typeof a[i]=="function"){
+				a[i].call(this,e);
+				i++;
+				}else{
+					a.splice(i,1);
+				}
+			}
+	}
+}
+
+EventEmitter.prototype.off=function(type,fn){
+	var a=this["selfEvent"+type];
+	if(a&&a.length){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				return;
+			}
+		}
+	}
+	
+}
+
+
 function Drag(ele){
 	this//
 	this.ele=ele;//首先把要拖拽的对象保存到实例的ele属性上
@@ -40,7 +75,10 @@ function Drag(ele){
 	on(ele,"mousedown",this.DOWN);
 	
 }
+
+Drag.prototype=new EventEmitter;//继承
 Drag.prototype.down=function(e){
+	
 	this.x=this.ele.offsetLeft;
 	this.y=this.ele.offsetTop;
 	this.mx=e.pageX;
@@ -54,10 +92,12 @@ Drag.prototype.down=function(e){
 		on(document,"mouseup",this.UP);	
 	}
 	e.preventDefault();	
+	this.run("abcd",e);
 }
 Drag.prototype.move=function(e){
 	this.ele.style.left=e.pageX-this.mx+this.x+"px";
 	this.ele.style.top=e.pageY-this.my+this.y+"px";
+	this.run("efg",e);
 }
 Drag.prototype.up=function(e){
 	if(this.ele.releaseCapture){
@@ -68,12 +108,20 @@ Drag.prototype.up=function(e){
 		off(document,"mousemove",this.MOVE);
 		off(document,"mouseup",this.UP);
 	}
+	this.run("xyz",e);
 }
 
-new Drag(div1);
-//把上边的Drag类看成是一个完整独立成熟的模块。（是一个定型的产品，并且不能随意修改）
-//写以下方法是在明确了Drag模块的一些接口的前提下进行的，比如说this是谁，this.ele是谁，公开的事件有那些，系统（浏览器的事件如何传递的）事件是什么，
-//就是说你应该提前拿到一份Drag模块的说明书，用法已经掌握
+//new Drag(div1);//变量有没有没关系
+var obj=new Drag(div1);
+obj.on("abcd",clearEffect);
+obj.on("efg",getSpeed);
+obj.on("xyz",fly);
+obj.on("xyz",drop);
+
+/*
+	自已发布的“拖拽开始”的事件和mousedown事件有什么区别呢？我直接用mousedown事件不是挺好嘛？为什么还要小题大作自己再整个“拖拽开始”事件呢？
+
+*/
 
 function clearEffect(){
 	clearTimeout(this.flyTimer);
@@ -82,10 +130,10 @@ function clearEffect(){
 
 function getSpeed(e){
 	if(this.prevPosi){
-		this.speed=e.pageX-this.prevPosi;
+		this.flySpeed=e.pageX-this.prevPosi;
 		this.prevPosi=e.pageX;	
 	}else{
-		this.prevPosi=e.pageX;	
+		this.prevPosi=e.pageX;
 	}
 }
 
@@ -115,7 +163,7 @@ function drop(){
 		this.dropSpeed=9;
 	}
 	this.dropSpeed*=.98;
-	var bottom=(document.documentElement.clientHeigh||document.body.clientHeight)-this.offsetHeight;//运动能到达的最下边
+	var bottom=(document.documentElement.clientHeight||document.body.clientHeight)-this.ele.offsetHeight;//运动能到达的最下边
 	var current=this.dropSpeed+this.ele.offsetTop;//当前运动到达的位置
 	if(current>bottom){
 		this.ele.style.top=bottom+"px";

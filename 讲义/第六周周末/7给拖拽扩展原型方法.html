@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1,#div2{ width:100px; height:100px; position:absolute; top:100px; left:100px; background:red; cursor:move; -webkit-user-select:none;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+</div>
+<div id="div2" style="left:0; background:black;">
+</div>
+</body>
+</html>
+<script src="event.js"></script>
+<script src="drag.js"></script>
+<script>
+/*
+  买了一件成熟产品：它已经具备了完善，但是厂家还可以继续升级它的产品：
+  1.0版本不具备拖定范围的拖拽功能和给拖拽加边框。
+  2.0版里加上上述功能
+  3.0版里还要加上动画，fly，drop
+  
+  用户也可以自己来扩展完善功能
+
+*/
+
+var obj=new Drag(div1);
+obj.on("dragstart",clearEffect);
+obj.on("drag",getSpeed);
+obj.on("dragend",fly);
+obj.on("dragend",drop);
+
+
+
+function clearEffect(){
+	clearTimeout(this.flyTimer);
+	clearTimeout(this.dropTimer);	
+}
+
+function getSpeed(e){
+	if(this.prevPosi){
+		this.flySpeed=e.pageX-this.prevPosi;
+		this.prevPosi=e.pageX;	
+	}else{
+		this.prevPosi=e.pageX;
+	}
+}
+
+
+function fly(){
+	this.flySpeed*=.98;//this是类的实例，
+	var current=this.ele.offsetLeft+this.flySpeed;
+	var r=(document.documentElement.clientWidth||document.body.clientWidth)-this.ele.offsetWidth;//盒子运动能到达的最右边
+	if(current>=r){
+		this.ele.style.left=r+"px";
+		this.flySpeed*=-1;
+	}if(current<=0){
+		this.ele.style.left=0;
+		this.flySpeed*=-1;
+	}else{
+		this.ele.style.left=current+"px";
+	}
+	if(Math.abs(this.flySpeed)>=0.5){
+		this.flyTimer=window.setTimeout(processThis(fly,this),20);	
+	}
+}
+
+function drop(){
+	if(this.dropSpeed){
+		this.dropSpeed+=9;
+	}else{
+		this.dropSpeed=9;
+	}
+	this.dropSpeed*=.98;
+	var bottom=(document.documentElement.clientHeight||document.body.clientHeight)-this.ele.offsetHeight;//运动能到达的最下边
+	var current=this.dropSpeed+this.ele.offsetTop;//当前运动到达的位置
+	if(current>bottom){
+		this.ele.style.top=bottom+"px";
+		this.dropSpeed*=-1;//调头
+		this.flag++;	
+	}else{
+			this.ele.style.top=current+"px";
+			this.flag=0;
+	}
+	if(this.flag<2){
+		this.dropTimer=window.setTimeout(processThis(drop,this),20);	
+	}
+	
+}
+
+
+var obj2=new Drag(div2);
+obj2.addRange({left:100,right:800,top:100,bottom:100})
+obj.border();
+</script>
