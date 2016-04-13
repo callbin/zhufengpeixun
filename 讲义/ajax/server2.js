@@ -1,6 +1,5 @@
 var http=require("http");
 var fs=require("fs");
-//var mime=require("mime");//url
 var url=require("url");
 
 http.createServer(function(request,response){
@@ -20,11 +19,7 @@ http.createServer(function(request,response){
 			response.end("404,文件未发现");	
 		}
 	}
-	
-	//response.write(JSON.stringify(objUrl));
-	
-	
-	//response.end("<h1>演出开始了！</h1>");
+
 }).listen(8080,function(){
 	console.log("service start");
 });

@@ -7,5 +7,55 @@
 
 <body>
 <h1>假装我是主页</h1>
+<p>使网站实现保存记录和查询记录的功能</p>
+<form method="get">
+姓名:<input name="name" type="text" value="陈旭" ><br>
+性别:<input name="gender" type="radio" value="男">男
+<input name="gender" type="radio" value="女">女<input name="gender" type="radio" checked value="其它">其它<br>
+年龄：<input type="text" name="age" value="24"><br>
+爱好:<input type="checkbox" name="hobby" value="抽烟">抽烟<input type="checkbox" name="hobby" value="喝酒">喝酒<input type="checkbox" name="hobby" value="学JS">学JS<input type="checkbox" name="hobby" value="同学">同学<br>
+所学课程
+<select multiple name="course">
+<option>英语</option>
+<option>语文</option>
+<option>数学</option>
+<option>物理</option>
+<option>营养学</option>
+</select><br>
+
+学历
+<select name="degree">
+<option>脖子后</option>
+<option>肚子后</option>
+<option>脖子</option>
+<option>脚后跟</option>
+<option>脚脖子后</option>
+</select>
+
+<input type="submit" value="提交" name="btn">
+</form>
+
+<div id="content">
+这里面显示服务器端保存的数据
+
+
+</div>
+<div >
+我是其它div,不要惹我
+</div>
+<div >
+我是其它div,不要惹我
+</div>
+
+当触发 类型为submit的按钮时，会触发form的submit默认行为
+如果在后台（服务器端接收到浏览器传过来的数据并且做相应的处理）
 </body>
 </html>
+http://localhost:8080/?name=%E9%99%88%E6%97%AD&gender=%E5%85%B6%E5%AE%83&age=24&hobby=%E5%96%9D%E9%85%92&hobby=%E5%AD%A6JS&hobby=%E5%90%8C%E5%AD%A6&course=%E8%8B%B1%E8%AF%AD&course=%E8%AF%AD%E6%96%87&course=%E6%95%B0%E5%AD%A6&degree=%E8%84%96%E5%AD%90%E5%90%8E&btn=%E6%8F%90%E4%BA%A4
+<script >
+document.forms.item(0).onsubmit=function(e){
+	//当触发 类型为submit的按钮时，会触发form的submit默认行为
+	//return false;	
+}
+
+</script>
