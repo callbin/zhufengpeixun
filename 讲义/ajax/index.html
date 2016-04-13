@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>无标题文档</title>
+<script>
+alert("stop");
+
+</script>
 </head>
 
 <body>
@@ -17,7 +21,7 @@
 所学课程
 <select multiple name="course">
 <option>英语</option>
-<option>语文</option>
+<option value="语文">语文</option>
 <option>数学</option>
 <option>物理</option>
 <option>营养学</option>
@@ -57,5 +61,34 @@ document.forms.item(0).onsubmit=function(e){
 	//当触发 类型为submit的按钮时，会触发form的submit默认行为
 	//return false;	
 }
-
+//XMLHttpRequest();//浏览器的form才可以发起请求（submit行为），它会使网页刷新。为了解决这个问题，JS实现XMLHttpRequest对象
+var oBtn=document.getElementsByName("btn").item(0);
+oBtn.onclick=function(){
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","ajax?nama=rose",true);
+	xhr.send()//应该是把需要发送到服务器端的数据写成send的参数，但是get方法不需要
+	
+	//以上代码，就可以完成浏览器的和服务器的通讯
+	
+	xhr.onreadystatechange=function(){
+		xhr.readyState//xhr这个对象本身的状态信息
+		xhr.status;//HTTP的状态信息
+		if(xhr.readyState==4&&xhr.status==200){
+			console.log(xhr.responseText);
+			//responseText是指文本方式的应答信息
+			document.getElementById("content").innerHTML=xhr.responseText;
+		}
+	}
+	
+	
+	
+}
+//表单序列化：
+//问题1：我们要用JS来完成数据提交，如何用JS实现表单序列化
+//问题2：如何把用ajax提交上来的数据保存到data.txt文件中，
+//问题3：如何把提交到后台数据以异步的方式显示到页上
+//问题4：什么跨域？JSONP跨域是怎么回事
 </script>
+//对于网页来说：同步是指整个网页由同一次请求应答生成的
+//网页的异步是指局部刷新
+//传统的动态网站就是同步的，每一次请求和应答必然会对应一次页面的刷新

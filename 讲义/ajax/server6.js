@@ -4,9 +4,13 @@ var url=require("url");
 
 http.createServer(function(request,response){
 	var objUrl=url.parse(request.url,true);
+	
+	response.writeHead(200,{"content-type":"text/html;charset=utf-8"});
 	console.log(objUrl.pathname);
-	console.log(objUrl.query);
-	if(objUrl.pathname=="/"){
+	if(objUrl.pathname=="/ajax"){
+		response.end("我悄悄滴告诉你：你找不到我！");
+		
+	}else 	if(objUrl.pathname=="/"){
 		if(typeof objUrl.query.btn == "undefined"){
 			response.end(fs.readFileSync("index.html"));
 		}else{
