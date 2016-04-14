@@ -5,6 +5,7 @@
 <title>无标题文档</title>
 <style type="text/css">
 #content{ font-size:28px; color:blue; text-align:center;}
+table,tr,td{ border:1px solid orange; border-collapse:collapse;}
 </style>
 <script>
 alert("stop");
@@ -67,15 +68,11 @@ xhr异步的对象要实现以下的效果：
 1、把真实的表单的数据提交服务器端
 2、服务端保存提交上来的数据在data.txt数据文件（这是后台做的，跟前端没有关系）
 <script >
-document.forms.item(0).onsubmit=function(e){
-	//当触发 类型为submit的按钮时，会触发form的submit默认行为
-	//return false;	
-}
-//XMLHttpRequest();//浏览器的form才可以发起请求（submit行为），它会使网页刷新。为了解决这个问题，JS实现XMLHttpRequest对象
+
 var oBtn=document.getElementsByName("btn").item(0);
 oBtn.onclick=function(){
 	var xhr=new XMLHttpRequest();
-	
+	var queryStr=serialize(this.parentNode);
 	xhr.open("GET","ajax?"+queryStr,true);
 	console.log(queryStr);
 	xhr.send()
@@ -83,9 +80,41 @@ oBtn.onclick=function(){
 		xhr.readyState//xhr这个对象本身的状态信息
 		xhr.status;//HTTP的状态信息
 		if(xhr.readyState==4&&xhr.status==200){
-			console.log(xhr.responseText);
-			//responseText是指文本方式的应答信息
-			document.getElementById("content").innerHTML=xhr.responseText;
+			var content=document.getElementById("content");
+			var oTable=content.getElementsByTagName("table").item(0);
+			if(oTable){
+				var oTbody=oTable.tBodies.item(0);
+				
+				var oTr=document.createElement("tr");
+				var obj=JSON.parse(xhr.responseText);
+				for(var attr in obj){
+					var oTd=document.createElement("td");
+					oTd.innerHTML=obj[attr];
+					oTr.appendChild(oTd);
+				}
+				oTbody.appendChild(oTr);
+				
+				
+				
+				
+			}else{//没有表格创建表格、行、列
+				var oTable=document.createElement("table");
+				var oTbody=document.createElement("tbody");
+				
+				var oTr=document.createElement("tr");
+				var obj=JSON.parse(xhr.responseText);
+				for(var attr in obj){
+					var oTd=document.createElement("td");
+					oTd.innerHTML=obj[attr];
+					oTr.appendChild(oTd);
+				}
+				oTbody.appendChild(oTr);
+				oTable.appendChild(oTbody);
+				content.appendChild(oTable);
+				
+			}
+			
+			
 		}
 	}
 	
@@ -99,7 +128,7 @@ oBtn.onclick=function(){
 //XML序列化，JSON序列化{"name":"chenxu","age":22,"height":178}
 
 //表单的type有多少：HTML5 text,password,hidden,button,submit,reset
-name+"="+value;
+//name+"="+value;
 //下拉菜单和选择按钮（radio和checkbox）区别对待，剩下所有的其它表单元素都按name+"="+value;原则来处理
 
 function serialize(form){
@@ -108,32 +137,36 @@ function serialize(form){
 	var a=[];
 	var str="";
 	for(var i=0;i<eles.length;i++){
+		//str+=name+"="+value+"&"
 		var ele=eles[i];
 		if(ele.name)//表单必需要写name属性
 		switch(ele.type){
 			case "select-one":
 			case "select-multiple":
 				//处理多选菜单
+				var options=ele.options;
+				for(var j=0;j<options.length;j++){
+					if(options[j].selected){
+					str=encodeURIComponent(ele.name)+"="+encodeURIComponent(options[j].value);
+					a.push(str);	
+					}
+				}
 				break;
 			case "radio":
 			case "checkbox":
 				//处理单选或多选按钮
-				break;
+				if(!ele.checked)
+					break;
 			default:
 				//普通按钮则正常处理
-				
-				
-				
-			
-			
-			
-			
+				str=encodeURIComponent(ele.name)+"="+encodeURIComponent(ele.value);
+				a.push(str);
 			
 		}
 			
 	}
 	
-	
+	return a.join("&");
 }
 
 
