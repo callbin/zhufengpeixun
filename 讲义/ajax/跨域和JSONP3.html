@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ height:200px; background:#9FF;}
+#content table,#content tr,#content td{ border:1px solid red; border-collapse:collapse;}
+</style>
+</head>
+
+<body>
+//JSONP JSON padding 以JSON格式的数据做为填充（做为参数）
+//其实可以和JSON没有任何关系
+<div id="content">开始没有数据</div>
+</body>
+</html>
+<script >
+function fn(data){
+	content.innerHTML="";
+	var a=JSON.parse(data);
+	var oTable=document.createElement("table");
+	var oTbody=document.createElement("tbody");
+	oTable.appendChild(oTbody);
+	for(var i=0;i<a.length;i++){
+		var oTr=document.createElement("tr");
+		for(var attr in a[i]){
+			var oTd=document.createElement("td");
+			oTd.innerHTML=a[i][attr];
+			oTr.appendChild(oTd);	
+		}
+		oTbody.appendChild(oTr);
+	}
+	content.appendChild(oTable);
+	
+}
+document.getElementById("content").onclick=function(){
+	var oScript=document.createElement("script");
+	oScript.src="http://old.zhufengpeixun.cn/ajax/jsonphp.php?processFn=fn";
+	document.body.appendChild(oScript);
+}
+</script>
+
+<script>
+ 
+
+</script>

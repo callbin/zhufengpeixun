@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+//JSONP JSON padding 以JSON格式的数据做为填充（做为参数）
+//其实可以和JSON没有任何关系
+<div id="content">开始没有数据</div>
+</body>
+</html>
+<script >
+function fn(data){
+	content.innerHTML=data;
+}
+
+</script>
+<script src="http://old.zhufengpeixun.cn/ajax/jsonphp.php?processFn=fn"></script>
+<script>
+/*
+alert(' fn');fn('[{"id":"36","name": "王大胆" ,"gender":"1" ,"hobby":"睡觉,写代码,打豆豆" ,"age":"33" ,"skill":"CSS,javaScript,PHP,C " ,"class":"随到随学班" ,"remark":"没有备注" ,"date":"2012-11-25 17:13:43"},{"id":"36","name": "王大胆" ,"gender":"1" ,"hobby":"睡觉,写代码,打豆豆" ,"age":"33" ,"skill":"CSS,javaScript,PHP,C " ,"class":"随到随学班" ,"remark":"没有备注" ,"date":"2012-11-25 17:13:43"},{"id":"36","name": "王大胆" ,"gender":"1" ,"hobby":"睡觉,写代码,打豆豆" ,"age":"33" ,"skill":"CSS,javaScript,PHP,C " ,"class":"随到随学班" ,"remark":"没有备注" ,"date":"2012-11-25 17:13:43"}]');
+
+//1、同学信息已经公开到这个网址了，数据可以在这儿得到http://old.zhufengpeixun.cn/ajax/jsonphp.php
+//2、得到这些信息，你要自己去处理，处理的方法你要定义好，并且用queryString参数的方式指定
+http://old.zhufengpeixun.cn/ajax/jsonphp.php?processFn=fn&year=2013
+公开几个参数(JSONP的接口)：比如回调方法怎么传：把回调方法名赋给processFn
+如果想把查询具体到年，则把相应的值赋给year；
+当然还要公开它提供的数据格式
+
+*/
+</script>

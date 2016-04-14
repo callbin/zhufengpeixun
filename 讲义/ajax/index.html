@@ -73,7 +73,7 @@ var oBtn=document.getElementsByName("btn").item(0);
 oBtn.onclick=function(){
 	var xhr=new XMLHttpRequest();
 	var queryStr=serialize(this.parentNode);
-	xhr.open("GET","ajax?"+queryStr,true);
+	xhr.open("GET","http://localhost:8080/ajax?"+queryStr,true);
 	console.log(queryStr);
 	xhr.send()
 	xhr.onreadystatechange=function(){
