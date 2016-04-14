@@ -19,10 +19,7 @@ alert("stop");
 姓名:<input name="name" type="text" value="陈旭" ><br>
 性别:<input name="gender" type="radio" value="男">男
 <input name="gender" type="radio" value="女">女<input name="gender" type="radio" checked value="其它">其它<br>
-<div></div>
-<p></p>
-<label for="age">
-年龄：<input id="age" type="text" name="age" value="24"></label><br>
+年龄：<input type="text" name="age" value="24"><br>
 爱好:<input type="checkbox" name="hobby" value="抽烟">抽烟<input type="checkbox" name="hobby" value="喝酒">喝酒<input type="checkbox" name="hobby" value="学JS">学JS<input type="checkbox" name="hobby" value="同学">同学<br>
 所学课程
 <select multiple name="course">
@@ -75,10 +72,51 @@ document.forms.item(0).onsubmit=function(e){
 var oBtn=document.getElementsByName("btn").item(0);
 oBtn.onclick=function(){
 	var xhr=new XMLHttpRequest();
+	var oName=document.getElementsByName("name").item(0);
+	var oAge=document.getElementsByName("age").item(0);
+	var oGender=document.getElementsByName("gender");
+	var queryStr=oName.name+"="+oName.value;
+	queryStr+="&"+oAge.name+"="+oAge.value;
+	//下面处理单选按钮组
+	for(var i=0;i<oGender.length;i++){
+		if(oGender.item(i).checked){//表示把选中项值累加到queryStr中
+		queryStr+="&"+oGender.item(i).name+"="+oGender.item(i).value;	
+		}
+	}
+	var oHobby=document.getElementsByName("hobby");
+	//处理复选按钮组
+	for(var i=0;i<oHobby.length;i++){
+		if(oHobby.item(i).checked){
+			//有可能出现多个key相同的对
+			queryStr+="&"+oHobby[i].name+"="+oHobby[i].value;
+		}
+		
+	}
+	//处理单选或多选下拉菜单
+	
+	var oCourse=document.getElementsByName("course").item(0);
+	var options=oCourse.options;//菜单的属性，表示菜单项集合
+	for(var i=0;i<options.length;i++){
+		if(options[i].selected){
+			queryStr+="&"+oCourse.name+"="+options[i].value;
+		}
+	}
+	
+	var oDegree=document.getElementsByName("degree").item(0);
+	options=oDegree.options;
+	for(var i=0;i<options.length;i++){
+		if(options[i].selected){
+			queryStr+="&"+oDegree.name+"="+options[i].value;
+		}
+	}
+	queryStr+="&"+this.name+"="+this.value;
 	
 	xhr.open("GET","ajax?"+queryStr,true);
 	console.log(queryStr);
-	xhr.send()
+	xhr.send()//应该是把需要发送到服务器端的数据写成send的参数，但是get方法不需要
+	
+	//以上代码，就可以完成浏览器的和服务器的通讯
+	
 	xhr.onreadystatechange=function(){
 		xhr.readyState//xhr这个对象本身的状态信息
 		xhr.status;//HTTP的状态信息
@@ -89,49 +127,6 @@ oBtn.onclick=function(){
 		}
 	}
 	
-	
-	
-}
-
-
-//表单序列化：
-//序列化：按着某种指定的格式拼接字符串
-//XML序列化，JSON序列化{"name":"chenxu","age":22,"height":178}
-
-//表单的type有多少：HTML5 text,password,hidden,button,submit,reset
-name+"="+value;
-//下拉菜单和选择按钮（radio和checkbox）区别对待，剩下所有的其它表单元素都按name+"="+value;原则来处理
-
-function serialize(form){
-	//表单就是指form标签，表单元素是指form里边"有效"的按钮
-	var eles=form.elements;
-	var a=[];
-	var str="";
-	for(var i=0;i<eles.length;i++){
-		var ele=eles[i];
-		if(ele.name)//表单必需要写name属性
-		switch(ele.type){
-			case "select-one":
-			case "select-multiple":
-				//处理多选菜单
-				break;
-			case "radio":
-			case "checkbox":
-				//处理单选或多选按钮
-				break;
-			default:
-				//普通按钮则正常处理
-				
-				
-				
-			
-			
-			
-			
-			
-		}
-			
-	}
 	
 	
 }
