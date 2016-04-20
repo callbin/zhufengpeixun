@@ -16,16 +16,16 @@ td,th{  width:80px;  text-align:center;}
 <body>
 
 <div id="content">
-<!--
-<div id="nav">
 
+<div id="nav">
+<!--
 	<span >总10页</span><span>上一页</span>
     <p>
     	<span>第1页</span><span>第2页</span><span>第3页</span><span>第4页</span>
     </p>
     <span>下一页</span>
-
-</div>-->
+-->
+</div>
 </div>
 </body>
 </html>
@@ -41,7 +41,6 @@ xhr.onreadystatechange=function(){
 }
 
 function init(data,recordNum){//data是传进来的数据，recordNum是每一页的记录数
-	var currentPage=0;
 	var a=JSON.parse(data);
 	var content=document.getElementById("content");
 	//创建表格
@@ -66,20 +65,8 @@ function init(data,recordNum){//data是传进来的数据，recordNum是每一�
 		oTr.innerHTML+="<th>"+attr+"</th>";
 	}
 	
-	
-	
-	
 	//计算出一共多少页
 	var totalPage=Math.ceil(a.length/recordNum);
-	
-	
-	//showPage运行的位置很关键
-	var oTbody=document.createElement("tbody");
-	oTable.appendChild(oTbody);
-	showPage(currentPage);
-	
-	
-	
 	var nav=document.createElement("div");
 	nav.id="nav";
 	content.appendChild(nav);
@@ -102,12 +89,10 @@ function init(data,recordNum){//data是传进来的数据，recordNum是每一�
 		oPage.innerHTML="第"+(i+1)+"页";
 		oPage.onclick=function(e){
 			"第3页"
-			showPage(currentPage=this.innerHTML.match(/\d+/)[0]-1)
+			showPage(this.innerHTML.match(/\d+/)[0]-1)
 			return false;//阻止a的默认行为
 		}
 		container.appendChild(oPage);
-		//下边是默认让第0项为选中页（当前页）
-		if(!i)oPage.className="current";
 	}
 	
 	//创建下一页
@@ -115,55 +100,27 @@ function init(data,recordNum){//data是传进来的数据，recordNum是每一�
 	nav.appendChild(oNext);
 	oNext.innerHTML="下一页";
 	oNext.onclick=nextPage;
-		
 	
 	
 	
 	
-	//核心方法，用来显示指定页的数据
+	
+	var oTbody=document.createElement("tbody");
+	oTable.appendChild(oTbody);
+	var oTr=document.createElement("tr");
+	oTbody.appendChild(oTr);
+	oTable.appendChild(oTr);
+	
+	
 	function showPage(n){///显示当前页
-		oTbody.innerHTML="";//清空原来的数据
-		for(var i=recordNum*n;i<(n+1)*recordNum;i++){
-			//i的起始值是当前页*每页的记录数
-			var oTr=document.createElement("tr");
-			
-			for(var attr in a[i]){
-				var oTd=document.createElement("td");
-				oTd.innerHTML=a[i][attr];	
-				oTr.appendChild(oTd);
-			}
-			oTbody.appendChild(oTr);
-		}
-		
-		var nav=document.getElementById("nav");
-		//以下判断：nav存在,并且nav下有显示页码的a
-		if(nav){
-			var eles=nav.getElementsByTagName("a");
-			
-			if(eles.length){//必须要存在a
-				for(var i=0;i<eles.length;i++){
-					eles[i].className="";	
-				}
-				eles[n].className="current";
-			}
-		}
-		
 		
 	}
 	function prevPage(){
-		//最小页码是0
-		if(currentPage-1>=0){
-			showPage(--currentPage);
-			
-		}
+		
 	}
 	
 	function nextPage(){
-		//最大页码是totalPage
-		if(currentPage+1<=totalPage-1){
-			showPage(++currentPage);
-			
-		}
+		
 	}
 }
 

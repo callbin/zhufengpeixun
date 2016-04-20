@@ -16,16 +16,6 @@ td,th{  width:80px;  text-align:center;}
 <body>
 
 <div id="content">
-<!--
-<div id="nav">
-
-	<span >总10页</span><span>上一页</span>
-    <p>
-    	<span>第1页</span><span>第2页</span><span>第3页</span><span>第4页</span>
-    </p>
-    <span>下一页</span>
-
-</div>-->
 </div>
 </body>
 </html>
@@ -39,61 +29,33 @@ xhr.onreadystatechange=function(){
 		init(data,10);//把需要处理的数据传进去，然后再指定每页有10条记录
 	}
 }
-
 function init(data,recordNum){//data是传进来的数据，recordNum是每一页的记录数
 	var currentPage=0;
 	var a=JSON.parse(data);
 	var content=document.getElementById("content");
-	//创建表格
 	var oTable=document.createElement("table");
 	content.appendChild(oTable);
-	
-	//创建表头
 	var oHead=document.createElement("thead");
 	oTable.appendChild(oHead);
 	var oTr=document.createElement("tr");
 	oHead.appendChild(oTr);
 	for(var attr in a[0]){
-		/*
-		var oTh=document.createElement("th");
-		//var oText=document.createTextNode(attr);
-		var oText=document.createTextNode();
-		oText.nodeValue=attr;//nodeValue这个属性只有文本节点才有，元素节点无此属性
-		oTh.appendChild(oText);	
-		oTr.appendChild(oTh);
-		//对于创建HTML标签来说，什么情况下用字符串拼接，什么时候用创建元素对象的方式呢？
-		*/
 		oTr.innerHTML+="<th>"+attr+"</th>";
 	}
-	
-	
-	
-	
-	//计算出一共多少页
 	var totalPage=Math.ceil(a.length/recordNum);
-	
-	
-	//showPage运行的位置很关键
 	var oTbody=document.createElement("tbody");
 	oTable.appendChild(oTbody);
 	showPage(currentPage);
-	
-	
-	
 	var nav=document.createElement("div");
 	nav.id="nav";
 	content.appendChild(nav);
-	//创建总页数
 	var oTotal=document.createElement("span");
 	nav.appendChild(oTotal);
 	oTotal.innerHTML="总"+totalPage+"页";
-	//创建上一页
 	var oPrev=document.createElement("span");
 	oPrev.innerHTML="上一页";
 	oPrev.onclick=prevPage;
 	nav.appendChild(oPrev);
-	
-	//创建很多个页码
 	var container=document.createElement("div");
 	nav.appendChild(container);
 	for(var i=0;i<totalPage;i++){
@@ -106,27 +68,16 @@ function init(data,recordNum){//data是传进来的数据，recordNum是每一�
 			return false;//阻止a的默认行为
 		}
 		container.appendChild(oPage);
-		//下边是默认让第0项为选中页（当前页）
 		if(!i)oPage.className="current";
 	}
-	
-	//创建下一页
 	var oNext=document.createElement("span");
 	nav.appendChild(oNext);
 	oNext.innerHTML="下一页";
 	oNext.onclick=nextPage;
-		
-	
-	
-	
-	
-	//核心方法，用来显示指定页的数据
 	function showPage(n){///显示当前页
 		oTbody.innerHTML="";//清空原来的数据
 		for(var i=recordNum*n;i<(n+1)*recordNum;i++){
-			//i的起始值是当前页*每页的记录数
 			var oTr=document.createElement("tr");
-			
 			for(var attr in a[i]){
 				var oTd=document.createElement("td");
 				oTd.innerHTML=a[i][attr];	
@@ -134,12 +85,9 @@ function init(data,recordNum){//data是传进来的数据，recordNum是每一�
 			}
 			oTbody.appendChild(oTr);
 		}
-		
 		var nav=document.getElementById("nav");
-		//以下判断：nav存在,并且nav下有显示页码的a
 		if(nav){
 			var eles=nav.getElementsByTagName("a");
-			
 			if(eles.length){//必须要存在a
 				for(var i=0;i<eles.length;i++){
 					eles[i].className="";	
@@ -147,25 +95,16 @@ function init(data,recordNum){//data是传进来的数据，recordNum是每一�
 				eles[n].className="current";
 			}
 		}
-		
-		
 	}
 	function prevPage(){
-		//最小页码是0
 		if(currentPage-1>=0){
-			showPage(--currentPage);
-			
+			showPage(--currentPage);	
 		}
 	}
-	
 	function nextPage(){
-		//最大页码是totalPage
 		if(currentPage+1<=totalPage-1){
 			showPage(++currentPage);
-			
 		}
 	}
 }
-
-
 </script>
