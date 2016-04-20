@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<p>
+1、服务器端有一个数据文件叫data.txt（是复杂的JSON格式），客户端对此文件发起请求，得到此文件的内容。
+1.1，当然，你发起请求的路径名可以不叫这个名称，但是要得到这个数据文件里的内容
+</p>
+<div id="content">
+
+</div>
+</body>
+</html>
+<script>
+/*
+1、服务器端有一个数据文件叫data.txt（是复杂的JSON格式），客户端对此文件发起请求，得到此文件的内容。
+1.1，当然，你发起请求的路径名可以不叫这个名称，但是要得到这个数据文件里的内容
+
+
+
+
+*/
+document.documentElement.onclick=function(){
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","data.txt",false);
+}
+
+</script>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+table,tr,td,th{ border:1px blue solid; border-collapse:collapse;}
+th,td{ min-width:80px;}
+#content p span{ display:block; float:left; width:50px; height:1.3em; background:#3FF; color:black; line-height:1.3em; text-align:center; margin:5px; cursor:pointer;}
+#content p span.current{ color:white; background:black; font-weight:bold; }
+</style>
+</head>
+
+<body>
+<p>
+1、服务器端有一个数据文件叫data.txt（是复杂的JSON格式），客户端对此文件发起请求，得到此文件的内容。
+1.1，当然，你发起请求的路径名可以不叫这个名称，但是要得到这个数据文件里的内容
+</p>
+<div id="content">
+
+</div>
+</body>
+</html>
+<script>
+/*
+1、服务器端有一个数据文件叫data.txt（是复杂的JSON格式），客户端对此文件发起请求，得到此文件的内容。
+1.1，当然，你发起请求的路径名可以不叫这个名称，但是要得到这个数据文件里的内容
+2、把数据放到表格里显示
+3、对数据进行分页处理，每页五条
+4、用JS自动算出总页数，并且能够时行分页
+    当点上一页的时候，翻到上一页，
+	当点下一页的时候，翻到下一页
+	
+
+
+*/
+
+var a=null;
+document.documentElement.onclick=function(){
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","data.txt",true);
+	xhr.onreadystatechange=function(){
+		
+		if(xhr.readyState==4&&xhr.status==200){
+		
+		
+		var data=xhr.responseText;
+		var a=JSON.parse(data);//局部变量
+		var oTable=document.createElement("table");
+		content.appendChild(oTable);
+		//创建表头
+		var oHead=document.createElement("thead");
+		oTable.appendChild(oHead);
+		
+		
+		var oTr=document.createElement("tr");
+		for(var attr in a[0]){
+			var oTh=document.createElement("th");
+			oTh.innerHTML=attr;
+			oHead.appendChild(oTh);
+		}
+		init(a.length,5,oTable,a);		
+	}
+	
+	
+	}
+	xhr.send();
+}
+//每页五（动态指定的）条记录，一共有多少页，并且把页码自动生成
+//生成“上一页”，“下一页”按钮
+//57，
+
+function init(total,num,table,a){//total是总记录数，num是每页的条数,table是指记录显示的表格
+	var pageCount=Math.ceil(total/num);
+	
+	//创建页码导航
+	var nav=document.createElement("p");
+	content.appendChild(nav);
+	var totalPage=document.createElement("span");
+	totalPage.innerHTML="共"+pageCount+"页";
+	nav.appendChild(totalPage);
+	var upPage=document.createElement("span");
+	upPage.innerHTML="上一页"
+	upPage.onclick=up;//向上翻页的方法绑定在这儿
+	nav.appendChild(upPage);
+	//中间页码
+	for(var i=0;i<pageCount;i++){
+		
+		var oPage=document.createElement("span");
+		oPage.innerHTML=i+1;
+		//让第1页样式上成为默认第一页
+		if(!i)oPage.className="current";
+		nav.appendChild(oPage);
+	}
+	
+	
+	
+	var downPage=document.createElement("span");
+	downPage.innerHTML="下一页"
+	downPage.onclick=down;//向下翻页的方法绑定在这儿
+	nav.appendChild(downPage);
+	showPage(0);
+
+//以下这三个方法，都是init的闭包方法
+	function up(){}
+	function down(){}
+	function showPage(n){//显示指定的第n页，n从0开始。0表示第一页
+		
+		var oTbody=table.tBodies[0];
+		if(oTbody){//如果表格里存在tbody，则tbody清空
+			oTbody.innerHTML=""
+		}else{
+			
+			oTbody=document.createElement("tbody");
+			table.appendChild(oTbody);
+			
+		}
+		//每5条记录一页，请问：第0页显示那几条？第3显示那几条？
+		//当前页显示那几条记录的算法确定如下：
+		//for(var i=n*5;i<(n+1)*5;i++){//比如5条
+		for(var i=n*num;i<(n+1)*num;i++){//比如num条，num是init方法里指定的每页的记录数量
+		var oTr=document.createElement("tr");
+		oTbody.appendChild(oTr);
+		for(var attr in a[i]){//里面是创建单元格
+			var oTd=document.createElement("td");
+			oTd.innerHTML=a[i][attr];
+			oTr.appendChild(oTd);
+				
+		}
+				
+		}
+		
+	}
+
+}
+
+</script>

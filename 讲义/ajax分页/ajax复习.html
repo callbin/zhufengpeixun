@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+AJAX是什么？干什么的？怎么实现？
+
+使用xhr对象的同步请求，页面是什么效果
+如何实现AJAX：两种方式都要熟练：原生JS的和jQuery的
+
+
+</body>
+</html>
+<script>
+
+1、创建xhr对象(XMLHttpRequest)
+2、使用open方法用指定的请求的方式和指定的链接发起请求（还要指定是否使用异步的方式，当然，必然的时候还要指定用户名和密码）。open的五个参数，其中后两个是可选的
+2.1 对服务器发起请求的方式有几种，这几种方式是如何分类的？具体描述一下
+2.2xhr.open("get","/ajax",false);//当open的第三个参数是false的时候，跟true有什么区别（网页的反应有什么区别）
+
+3、xhr.send();
+3.1在向服务器端发送数据的时候，get方式和post方式有什么不同？
+4、xhr.onreadystatechange事件响应之后，做相应的处理
+
+4.1、xhr.readyState是什么意思 ？这个属性的值是多少，分别表示什么意义？
+4.2、xhr.status是什么意思？这个属性的值可能是多少？分别表示什么意思？
+  什么情况下数据已经成功的得到了呢？
+  
+5、用什么属性来得到应答的数据？xhr.responseText,xhr.responseXML,xhr.response
+
+6、注意工作中要和后台程序员约定好交互的数据的格式（数据接口）
+
+
+</script>

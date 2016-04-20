@@ -7,7 +7,13 @@ http.createServer(function(request,response){
 	
 	response.writeHead(200,{"content-type":"text/html;charset=utf-8"});
 	console.log(objUrl.pathname);
-	if(objUrl.pathname=="/ajax"){
+	
+	if(objUrl.pathname=="/data.txt"){
+		var strData=fs.readFileSync("data.txt").toString();
+		//setTimeout(function(){
+			response.end(strData);
+		//},10000);
+	}else if(objUrl.pathname=="/ajax"){
 		var obj=objUrl.query;
 		try{
 			var strData=fs.readFileSync("data.txt").toString();

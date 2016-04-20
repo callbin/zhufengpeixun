@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+table,tr,td,th{ border:1px blue solid; border-collapse:collapse;}
+th,td{ min-width:80px;}
+#content p span{ display:block; float:left; width:50px; height:1.3em; background:#3FF; color:black; line-height:1.3em; text-align:center; margin:5px; cursor:pointer;}
+#content p span.current{ color:white; background:black; font-weight:bold; }
+</style>
+</head>
+
+<body>
+<p>
+1、服务器端有一个数据文件叫data.txt（是复杂的JSON格式），客户端对此文件发起请求，得到此文件的内容。
+1.1，当然，你发起请求的路径名可以不叫这个名称，但是要得到这个数据文件里的内容
+</p>
+<div id="content">
+
+</div>
+</body>
+</html>
+<script>
+/*
+1、服务器端有一个数据文件叫data.txt（是复杂的JSON格式），客户端对此文件发起请求，得到此文件的内容。
+1.1，当然，你发起请求的路径名可以不叫这个名称，但是要得到这个数据文件里的内容
+2、把数据放到表格里显示
+3、对数据进行分页处理，每页五条
+4、用JS自动算出总页数，并且能够时行分页
+    当点上一页的时候，翻到上一页，
+	当点下一页的时候，翻到下一页
+	
+
+
+*/
+document.documentElement.onclick=function(){
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","data.txt",true);
+	xhr.onreadystatechange=function(){
+		
+		if(xhr.readyState==4&&xhr.status==200){
+		
+		
+		var data=xhr.responseText;
+		var a=JSON.parse(data);
+		var oTable=document.createElement("table");
+		content.appendChild(oTable);
+		//创建表头
+		var oHead=document.createElement("thead");
+		oTable.appendChild(oHead);
+		
+		page(a.length,5,oTable)
+		
+		var oTr=document.createElement("tr");
+		for(var attr in a[0]){
+			var oTh=document.createElement("th");
+			oTh.innerHTML=attr;
+			oHead.appendChild(oTh);
+		}
+		
+		//创建表体（显示数据）
+		var oTbody=document.createElement("tbody");
+		
+		for(var i=0;i<a.length;i++){
+			var oTr=document.createElement("tr");
+			for(var attr in a[i]){
+				oTd=document.createElement("td");
+				oTd.innerHTML=a[i][attr];
+				oTr.appendChild(oTd);	
+			}
+			oTbody.appendChild(oTr);
+			
+		}
+		oTable.appendChild(oTbody);
+		
+	}
+	
+	
+	}
+	xhr.send();
+}
+//每页五（动态指定的）条记录，一共有多少页，并且把页码自动生成
+//生成“上一页”，“下一页”按钮
+//57，
+
+function page(total,num,table){//total是总记录数，num是每页的条数,table是指记录显示的表格
+	var pageCount=Math.ceil(total/num);
+	
+	//创建页码导航
+	var nav=document.createElement("p");
+	content.appendChild(nav);
+	var totalPage=document.createElement("span");
+	totalPage.innerHTML="共"+pageCount+"页";
+	nav.appendChild(totalPage);
+	var upPage=document.createElement("span");
+	upPage.innerHTML="上一页"
+	upPage.onclick=up;//向上翻页的方法绑定在这儿
+	nav.appendChild(upPage);
+	//中间页码
+	for(var i=0;i<pageCount;i++){
+		
+		var oPage=document.createElement("span");
+		oPage.innerHTML=i+1;
+		//让第1页样式上成为默认第一页
+		if(!i)oPage.className="current";
+		nav.appendChild(oPage);
+	}
+	
+	
+	
+	var downPage=document.createElement("span");
+	downPage.innerHTML="下一页"
+	downPage.onclick=down;//向下翻页的方法绑定在这儿
+	nav.appendChild(downPage);
+}
+
+
+function up(){}
+function down(){}
+
+</script>
