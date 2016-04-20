@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .container{
+            transform-style: preserve-3d;
+
+        }
+        .container  div{
+            width: 100px;
+            height: 100px;
+            background: red;
+            float: left;
+            margin:0  10px ;
+            /*transform:perspective(50px);*/
+            /*-webkit-transform:perspective(50px);*/
+            /*transform:rotateY(10deg);*/
+            transform:  perspective(50px) rotateY(10deg);/*复合性的属性*/
+
+        }
+    </style>
+    <!--
+    变形属性的方法(2D/3D)
+    2D: 平面效果
+    transform:rotate(45deg); 旋转
+    transform:skew(15deg,45deg); 倾斜
+    transform:scale(1);缩放 默认值是1 >1放大 <1缩小
+    transform:translate(100px,200px)  回流/重排(reflow)和重绘
+    transform-origin:right  设置基准点
+    3D: 立体效果
+    transform-style:preserve-3d 元素在3D空间里展示
+    perspective :800px; 视距 500-2000 3d效果呈现最佳  (必须作用在父级或祖先元素上的)
+    transform:perspective(800px);作用在子元素
+    transform :rotateX(45deg) ;
+    transform:rotateY(45deg);
+    transform:translateZ(100px) //远小近大
+
+    css3动画  transition/animation 配合着keyframes
+    transition-property 属性
+    transition-duration 动画执行的时间
+    transition-timing-function:linear/ease-in/ease-out/ease-in-out 动画类型
+    transition-delay 延迟执行的时间
+
+    @keyframes 关键帧动画名称{
+        0%{}
+        50%{}
+        100%{}
+    }
+    animation-name 动画名称
+    animation-duration 动画执行的时间
+    animation-timing-function 动画类型
+    animation-delay 延迟执行的时间
+    animation-iteration-count 动画执行的次数
+    animation-direction:normal/alternate /reverse 动画运行的方向
+    animation-play-state :running/paused   动画的运动还是停止
+    animation-fill-mode:forwards/backwards/both 动画执行完之后是停留在最后一帧还是第一帧
+
+     animation:move 1s linear 1s 1
+     animation:move 1s linear 1s infinite
+
+    animate.css (动画库)
+
+    :nth-child(even)
+    :nth-child(3n+1)
+    :nth-of-type(odd)
+    :empty()
+    :not()
+    :last-child
+    :target
+    ::before
+    ::after
+     box-shadow
+    text-shadow
+    background-size
+    box-sizing:content-box(标准模式)/border-box(混杂模式)/padding-box(仅火狐支持);
+    div{
+    width:100%;
+    padding:10px;
+    border:1px solid #fff;
+    box-sizing:border-box;
+    }
+   -->
+</head>
+<body>
+    <div class="container">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
+
+</body>
+</html>
