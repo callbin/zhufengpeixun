@@ -1,0 +1,140 @@
+*{
+    margin: 0;
+    padding:0;
+}
+ul{
+    list-style: none;
+}
+html,body{
+    width:100%;
+    height: 100%;
+    font-family: "Microsoft yahei";
+}
+.headerLayout{
+   width: 100%;
+    position:fixed;
+    height: 80px;
+    line-height: 80px;
+    background: #fff;
+    box-shadow:  0 0 3px 3px rgba(0, 0, 0, 0.3);
+}
+.header{
+    width: 100%;
+}
+.header a{
+    width: 132px;
+    height: 80px;
+    float: left;
+    display: block;
+    background: url(images/logo2.png) no-repeat center;
+}
+.header ul{
+    float: right;
+}
+.header ul li{
+    float: left;
+    margin: 0 10px;
+}
+@media all and (min-width: 1000px) {
+    .header{
+        width: 1000px;
+        margin: 0 auto;
+    }
+}
+.channel{
+    padding-top: 100px;
+}
+.channel ul{
+    text-align: center;
+
+}
+.channel ul li{
+    display: inline-block;
+    margin: 0 10px;
+}
+.service ul{
+    text-align: center;
+}
+.service ul li{
+    width: 263px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+@media screen and (max-width:999px) {
+    .channel ul li{
+        max-width: 23%;/*如果图片大于li的宽度,则图片的大小等于li的宽度,如果小于li宽度,则按照图片原有大小显示*/
+        margin: 0 1%;
+    }
+    .channel ul li img{
+        width: 100%;
+    }
+    .channel ul li:nth-child(1) img{
+        max-width: 50px;
+    }
+    .channel ul li:nth-child(2) img{
+        max-width: 50px;
+    }
+    .service {
+        font-size: 14px;
+    }
+    .service ul li{
+        max-width: 30%;
+
+    }
+    .service ul li img{
+        width: 100%;
+    }
+    
+}
+@media all and (max-width: 480px) {
+    .headerLayout{
+        position: absolute;
+        box-shadow: none;
+    }
+    .header{
+        height: 50px;
+        line-height: 50px;
+        background: palegreen;
+    }
+    .header ul{
+        float: left;
+        width: 100%;
+        display: none;
+    }
+    .header a{
+        height: 50px;
+    }
+    .header ul li{
+        float: none;
+        width: 100%;
+        background: palegreen;
+        color: #fff;
+        margin: 0;
+    }
+    .channel ul li{
+        width: 41%;
+        max-width: 100%;
+        margin: 0 2%;
+    }
+    .service {
+        font-size: 12px;
+    }
+    .service ul li{
+        max-width: 100%;
+        width:100%;
+        text-align: left;
+
+    }
+    .service ul li img{
+        width:30px;
+        height: 30px;
+        float: left;
+        margin: 0 10px;
+    }
+
+}
+
+
+

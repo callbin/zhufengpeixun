@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!--<meta name = "viewport" content="initial-scale = 1 ">-->
+    <!--<meta name="viewport" content="width=device-width">-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable = no">
+    <!--user-scalable禁止页面缩放,如果设置成no,就不可以放大缩小了,响应式页面一般不允许用户去缩放页面-->
+    <!--<link rel="stylesheet" media="screen and (max-width: 600px)" href="small.css" /> -->
+    <style type="text/css">
+        #div1{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+
+        @media all  and (max-width: 600px) {/*窗口宽度最大是600px或者小于600px*/
+            #div1{
+                background: green;
+            }
+        }
+        @media all  and (min-width: 1000px) {/*窗口宽度大于等于1000px*/
+            #div1{
+                background: pink;
+            }
+        }
+    </style>
+    <!--
+    initial-scale = device-width/layoutviewport
+
+    -->
+</head>
+<body>
+<!--
+    1.移动设备基本上默认的layoutviewport值是980,移动设备的宽度都没有980大,因此这么大的页面在移动设备看的时候就会滚动条,为了防止滚动条的出现,默认会去缩小页面,缩放的比例 = 设备的宽度/980   是通过initial-scale这个属性来设置的
+    2.layoutviewport值就是html的宽度
+
+    媒体查询:在不同设备/不同窗口下,无缝的实现在不同样式集之间切换
+    device-pixel-ratio 设备像素比
+    css像素(px)
+    物理像素
+    分辨率 = device-width*设备像素比
+    设备像素比 =  css像素/物理像素
+    1个css像素 = 设备像素比(device-pixel-ratio)的平方个物理像素
+      1px= 2*2(物理像素)
+      如果设备像素比是1说明1个css像素 = 1个物理像素
+
+      window.orientation 如果值是0,或者180 portrait(竖向的) 90(往左转)和-90(往右转) landscape(横向的)
+      orientationchange 手机旋转的时候会触发的这个是事件
+      如果设备宽<设备的高 竖着拿
+      如果设备宽>设备的高 横着拿的
+      window.resize
+
+
+      处理图片
+
+      * 普通显示屏(设备像素比例小于等于1)使用1倍的图 */
+        .css{
+            background-image: url(img_1x.png);
+        }
+
+        /* 高清显示屏(设备像素比例大于等于2)使用2倍图  */
+        @media only screen and (-webkit-min-device-pixel-ratio:2){
+            .css{
+                background-image: url(img_2x.png);
+            }
+        }
+
+        /* 高清显示屏(设备像素比例大于等于3)使用3倍图  */
+        @media only screen and (-webkit-min-device-pixel-ratio:3){
+            .css{
+                background-image: url(img_3x.png);
+            }
+        }
+
+        <!-- css3属性处理图片-->
+    <!--.css {
+    background-image: url(1x.png);    /*不支持image-set的情况下显示*/
+    background: -webkit-image-set(
+        url(1x.png) 1x,/* 支持image-set的浏览器的[普通屏幕]下 */
+        url(2x.png) 2x,/* 支持image-set的浏览器的[2倍Retina屏幕] */
+        url(3x.png) 3x/* 支持image-set的浏览器的[3倍Retina屏幕] */
+    );
+    }-->
+
+-->
+    <div id="div1"></div>
+</body>
+</html>
