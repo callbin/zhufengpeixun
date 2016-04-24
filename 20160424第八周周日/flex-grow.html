@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+       *{
+           margin: 0;
+           padding: 0;
+       }
+        #box{
+            width: 600px;
+            display: flex;
+            /*flex-direction: row;*/
+            /*flex-wrap: wrap;*/
+            flex-flow: row nowrap;
+            background: palegreen;
+        }
+        #box li {
+            width: 100px;
+            border:1px solid #999;
+            flex-grow: 1;/*每个li分为1份*/
+        }
+       #box li:nth-child(3){/*第三个li分了2份*/
+           flex-grow: 2;
+       }
+        /*对剩余的空间就分成4份*/
+       /*
+       (600-102*3)/(1+1+2) = 73.5
+       第一个li的宽度 = 102+73.5
+       第二个li的宽度 = 102+73.5
+       第三个li的宽度 = 102+73.5*2 = 249
+
+
+       */
+
+    </style>
+</head>
+<body>
+    <ul id="box">
+        <li>11</li>
+        <li>22</li>
+        <li>333</li>
+    </ul>
+</body>
+</html>

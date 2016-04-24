@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name = "viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <style type="text/css">
+        html{
+            font-size: 20px;
+        }
+        @media all and (max-width: 800px) {
+             html{
+                 font-size: 30px;
+             }
+        }
+        button{
+            width:10rem;
+            height: 3rem;
+            background:deepskyblue;
+            border-radius: 5px;
+        }
+
+        @media all  and (device-width: 320px){
+            html{
+                font-size: 42.7px
+            }
+
+        }
+        @media all  and (device-width: 480px){
+            html{
+                font-size: 64px;
+            }
+        }
+        @media all  and (device-width: 750px){
+            html{
+                font-size: 100px;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+<button>确定</button>
+</body>
+</html>
+<script>
+
+//    rem是相对于根元素的字体大小,em是相对于父元素的字体大小
+//    640px  --- > 100px  其他设备 640/100 = 6.4
+//    750px  ----> 100px   其他设备 750/100 = 7.5
+
+    //每个设备的宽度/根元素的字体大小都是相等
+    var winW = document.documentElement.clientWidth;
+    var desW = 640;/*设计稿的宽度*/
+    //把根元素的字体大小设置成100px就是为了好算,比如量的设计稿里的宽度是188px -->1.88rem
+    var scale = 640/100;/*缩放的比例*/
+    if(winW>640){
+        winW = 640;
+    }
+    document.documentElement.style.fontSize = winW/scale+"px";
+
+</script>

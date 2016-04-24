@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #box{
+            width: 400px;
+            display: flex;
+            flex-flow: row nowrap;
+        }
+        #box li{
+            width: 100px;
+            border:1px solid #999;
+        }
+        #box li:nth-child(2){
+            flex-shrink: 2;
+        }
+        #box li:nth-child(3){
+            flex-shrink: 3;
+        }
+        /*
+        超出父容器的宽度怎么分配
+        //超出了多少: 102*5-400 = 110
+        //超出的内容分成多少份(注意flex-shrink默认值是1) :(1+1+2+3+1)= 8
+        //每一份 110/8 = 13.75
+        //第一个,第四个,第五个 102-13.75 = 88.25
+        //第二个 102-13.75*2 = 74.5
+        //第三个 102 - 13.75*3 = 60.75
+
+
+
+        */
+
+    </style>
+</head>
+<body>
+<ul id="box">
+    <li>11</li>
+    <li>22</li>
+    <li>333</li>
+    <li>444</li>
+    <li>555</li>
+</ul>
+</body>
+</html>
