@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、事件:
+    //->行为:一些操作 click、mouseover、mouseenter...
+    //->绑定:给行为绑定方法,当行为触发的时候执行方法
+
+
+    //2、
+    //->DOM0中的事件行为在DOM2中依然可以进行使用,但是DOM2还单独的提了一些DOM0中没有的行为：DOMContentLoaded...
+
+    //面试题：window.onload和$(document).ready()的区别?
+    //window.onload:只有页面中的HTML结构、图片、文字等所有资源都加载完成才会触发这个行为;在同一个页面中只能使用一次;
+    //->因为window.onload是DOM0事件绑定,只能给其绑定一个方法(只能执行一次),onload就是所有资源都加载完成才会执行;
+    //->他也可以使用多次,需要使用DOM2绑定
+    //    window.addEventListener("load", function () {
+    //        console.log(1);
+    //    }, false);
+    //    window.addEventListener("load", function () {
+    //        console.log(2);
+    //    }, false);
+
+    //$(document).ready():jQuery中的方法,只要HTML结构加载完成就会触发对应的行为;在同一个页面中可以使用多次;
+    //->因为jQuery中使用的是DOM2绑定所以可以执行多次;因为使用的是DOMContentLoaded这个行为,所以只需要HTML结构加载完成就会触发;
+    //    window.addEventListener("DOMContentLoaded", function () {
+    //        console.log(1);
+    //    }, false);
+    //    window.addEventListener("DOMContentLoaded", function () {
+    //        console.log(2);
+    //    }, false);
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>高级单例模式(基于惰性编程思想)</title>
+</head>
+<body>
+<script type="text/javascript">
+    //module model 模块模式
+    var utils = (function () {
+        var flag = "getComputedStyle" in window;
+
+        function getCss(curEle, attr) {
+            if (flag) {
+                return window.getComputedStyle(curEle, null)[attr];
+            }
+            return curEle.currentStyle[attr];
+        }
+
+        function children(curEle) {
+            if (flag) {
+                return curEle.children;
+            }
+            //IE6~8
+            var nodeList = curEle.childNodes, ary = [];
+            for (var i = 0, len = nodeList.length; i < len; i++) {
+                var curNode = nodeList[i];
+                if (curNode.nodeType === 1) {
+                    ary.push(curNode);
+                }
+            }
+            return ary;
+            //curEle.children//IE6~8下获取的内容和标准浏览器中是不一样的
+            //curEle.childNodes
+        }
+
+        return {
+            getCss: getCss,
+            children: children
+        }
+    })();
+
+
+    //    var obj = {
+    //        fn: function () {
+    //
+    //        }
+    //    };
+    //    function Fn() {
+    //        this.fn = function () {
+    //
+    //        };
+    //    }
+    //    var f1 = new Fn;
+    //    var f2 = new Fn;
+
+    /*function createXHR() {
+     if (window.XMLHttpRequest) {
+     return new XMLHttpRequest;
+     } else if (new ActiveXObject('Microsoft.XMLHTTP')) {
+     return new ActiveXObject('Microsoft.XMLHTTP');
+     } else if (new ActiveXObject('Msxml2.XMLHTTP')) {
+     return new ActiveXObject('Msxml2.XMLHTTP');
+     } else if (new ActiveXObject('Msxml3.XMLHTTP')) {
+     return new ActiveXObject('Msxml3.XMLHTTP');
+     } else {
+     throw new Error("Your browser is not support Ajax!");
+     }
+     }*/
+
+    /*function createXHR() {
+     if (window.XMLHttpRequest) {
+     createXHR = function () {
+     return new XMLHttpRequest;
+     };
+     } else if (new ActiveXObject('Microsoft.XMLHTTP')) {
+     createXHR = function () {
+     return new ActiveXObject('Microsoft.XMLHTTP');
+     };
+     } else if (new ActiveXObject('Msxml2.XMLHTTP')) {
+     createXHR = function () {
+     return new ActiveXObject('Msxml2.XMLHTTP');
+     };
+     } else if (new ActiveXObject('Msxml3.XMLHTTP')) {
+     createXHR = function () {
+     return new ActiveXObject('Msxml3.XMLHTTP');
+     };
+     } else {
+     createXHR = function () {
+     throw new Error("Your browser is not support Ajax!");
+     };
+     }
+     return createXHR();
+     }
+
+     var xhr = createXHR();
+     console.log(xhr);
+
+     xhr = createXHR();
+     console.log(xhr);*/
+
+
+    function getElementsByClass(strClass, context) {
+        if (document.getElementsByClassName) {
+            getElementsByClass = function (strClass, context) {
+                context = context || document;
+                return context.getElementsByClassName(strClass);
+            };
+        } else {
+            getElementsByClass = function (strClass, context) {
+                context = context || document;
+                strClass = strClass.replace(/(^ +| +$)/g, "").split(/ +/g);
+                var nodeList = context.getElementsByTagName("*"), ary = [];
+                for (var i = 0, len = nodeList.length; i < len; i++) {
+                    var curNode = nodeList[i];
+                    var isOk = true;
+                    for (var k = 0; k < strClass.length; k++) {
+                        var reg = new RegExp("(^| +)" + strClass[k] + "( +|$)");
+                        if (!reg.test(curNode.className)) {
+                            isOk = false;
+                            break;
+                        }
+                    }
+                    isOk ? ary.push(curNode) : null;
+                }
+                return ary;
+            };
+        }
+        return getElementsByClass(strClass, context);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+http://www.baidu.com/
+1)先准备服务器(一到几亿台),把我们的项目放在服务器上,通过一些服务发布的工具把项目发布了(IIS、Apache、nginx...)
+  服务器有自己的外网IP地址
+2)买一个域名,在域名管理平台上进行DNS服务器解析(把我们的域名和服务器的外网IP关联到一起)
+
+->当用户在浏览器输入一个域名地址后,发生了什么?
+1)到DNS服务器上通过输入的域名找到对应的外网IP地址(端口号)
+2)通过外网的IP地址找到对应的服务器,在找到对应端口号的那个项目,把主页面的内容通过HTTP请求下载到用户的本地(浏览器)
+3)浏览器开始渲染HTML页面,在渲染的过程中还可能会重复多次的向服务器发送请求获取CSS/JS/IMG/Ajax/JSONP...
+
+
+珠峰培训GitHub发布静态页面
+1、登录GitHub,在这里面新建一个远程仓库(创建完成后,当前仓库默认的分支是master(主分支),我们在仓库下创建的内容都在master这个分支下)
+2、在本仓库中找到Settings->Options(左侧第一个菜单)->GitHub Pages->Launch Automatic page generator->进入到编辑页面后什么都不用管,直接点击右下角的Continue to layouts即可->模板也不需要选择,直接的点击Publish page即可
+
+前两步完成后,我们发现和原有的区别:
+1)出现了一个地址 ->http://zhufengpeixun.github.io/zhufengBanner/ 这个地址就是以后别人访问我们的页面需要的地址
+  ->这个地址的完整版是:http://zhufengpeixun.github.io/zhufengBanner/index.html 这里面我们可以把index.html省略掉,即使我们不写,它也是会默认的去找index.html,但是除了index.html,其他的页面不能省略这个地址
+
+  一个仓库只能发布一个项目(一个项目中可以有多个HTML页面),但是我们的一个GitHub账号可以建立N多个仓库,所以也就可以发布N多个项目
+
+2)在我们当前仓库的分支中新增加了一个gh-pages这样的分支,这个分支是GitHub自动创建的,目的就是用来管理我们发布的页面 ->欢句话说,我们发布的项目源码都在gh-pages这个分支下进行管理
+
+
+3、我们把仓库的默认分支修改为gh-pages: Settings->Branches->Default branch->选择gh-pages进行修改即可,修改完成后我们当前仓库的默认分支就是gh-pages了
+
+4、把gh-pages下的源码克隆到本地($ git clone https://github.com/zhufengpeixun/zhufengBanner.git)
+
+   把原来默认生成的模板文件,如果你不想用的话都删除掉(.git不能删除),把自己要发布的文件放进来
+
+   把自己本地的最新文件推送到远程仓库的gh-pages分支下
+   $ git add -A
+   $ git commit -m""
+   $ git push origin gh-pages
+
+草料二维码生成:cli.im
+
+
+很多时候,我们修改了JS/CSS代码,从新上传到服务器上,但是用户刷新页面后获取的JS/CSS文件还是没有改之前的->"浏览器默认缓存问题"
+
+如何清除默认的缓存->给JS/CSS文件在引入的时候加版本号 "?v=201604271204"每一修改后,都把HTML页面中的引入加一个版本号(加一个时间戳)
+
+<script charset="utf-8" type="text/javascript" src="js/banner.js?v=201604271204"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

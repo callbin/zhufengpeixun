@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            margin: 10px auto;
+            width: 90%;
+            height: 50px;
+            line-height: 50px;
+            background: lightskyblue;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    document.write("<a href='https://www.baidu.com/'>百度</a>");
+</script>
+
+<div id="div1">
+    <script type="text/javascript">
+        document.write("<a href='https://www.baidu.com/'>百度</a>");
+    </script>
+</div>
+
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    document.write("<a href='https://www.baidu.com/'>百度</a>");//->不可以oDiv.write,write方法的上下文只能是document
+    //->write:每一次都是重新的增加内容,不能覆盖之前的
+
+    //oDiv.innerHTML = "<a href='https://www.baidu.com/'>百度</a>";
+    //->innerHTML:既可以获取之前的,也可以把之前的进行覆盖
+
+
+    //1、一个字符串的规则如下：第一个是字母、后面的可以是数字字母下划线、总长度5~20位
+    //var reg = /^[a-zA-Z]\w{4,19}$/;
+
+    //2、如何规避JS多人开发函数重名的问题(重载复习一下)
+    //->使用单例模式:把我们写的函数放到不同的命名空间下
+    //    var nameSpaceFir = (function () {
+    //        return {
+    //            fn: function () {
+    //
+    //            }
+    //        }
+    //    })();
+    //    var nameSpaceTwo = (function () {
+    //        return {
+    //            fn: function () {
+    //
+    //            }
+    //        }
+    //    })();
+
+    //->使用闭包
+    //    ~function () {
+    //        function fn() {
+    //
+    //        }
+    //
+    //        window.xxxFn = fn;
+    //    }();
+    //
+    //    ~function () {
+    //        function fn() {
+    //
+    //        }
+    //
+    //        xxxFn();
+    //    }();
+
+
+    function fun(){
+        this.a=0;
+        this.b=function(){
+            alert(this.a);
+        }
+    }
+    fun.prototype={
+        b:function(){this.a=20;alert(this.a);},
+        c:function(){this.a=30;alert(this.a);}
+    };
+    var my_fun=new fun;
+    my_fun.b();//this->my_fun  alert(my_fun.a) ->'0'
+    my_fun.c();//this->my_fun  my_fun.a=30(把私有的a设置为30) alert(my_fun.a)->'30'
+    my_fun.b();//this->my_fun  alert(my_fun.a) ->'30'
+
+
+
+
+</script>
+</body>
+</html>
