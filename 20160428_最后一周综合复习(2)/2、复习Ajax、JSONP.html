@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //1、ajax/jsonp是干啥用的?
+    //->我们通过Ajax/JSONP从后台获取数据(后台需要给我们一个URL地址->API接口,我们通过地址找到对应的后台,把需要的数据获取到即可);获取到数据后分析数据和做页面的数据绑定;
+
+    //2、AJAX同源请求,JSONP是非同源(跨域)请求
+    //->同源/跨域:协议、域名、端口号一模样是同源，只要有一个不一样就是跨域请求
+    //http(协议)://www.baidu.com(域名):80(端口号)/
+
+    //3、如何用
+    //->Ajax
+    //    $.ajax({
+    //        url: "json/banner.txt?_=" + Math.random(),
+    //        type: "get",
+    //        dataType: "json",//->请求回来的数据类型:text、json
+    //        async: true,//->true:异步(默认) false:同步
+    //        success: function (data) {
+    //            //->当请求数据成功后执行匿名函数这个方法,方法中传递进来的第一个参数值就是我们请求回来的数据
+    //            console.log(data);
+    //        }
+    //    });
+
+    //->跨域
+    //    $.ajax({
+    //        url: "http://matchweb.sports.qq.com/kbs/calendar?columnId=100000?_=" + Math.random(),
+    //        type: "get",
+    //        dataType: "jsonp",
+    //        success: function (data) {
+    //            console.log(data);
+    //        }
+    //    });
+
+
+    //->Ajax
+    var xhr = new XMLHttpRequest;
+    //->xhr.open([METHOD]、[APIURL]、[ASYNC]、[USERNAME]、[USERPASS])
+
+    //->[METHOD]:get、post...
+    //GET和POST请求的区别:
+    //HTTP请求分为起始行、首部、主体三部分;
+    //如果我们前端需要通过AJAX给后台传递数据,GET请求是把发送给后台的数据拼接到APIURL的后面(通过问号传参的方式传递给后台);POST是把需要给后台的内容放在请求主体中传过去的;
+    //1)URL的长度限制:由于浏览器对于URL有长度限制(谷歌8kb、火狐是7kb,IE是2kb),如果我们需要传递给后台的内容过多的话,导致URL超出限制长度,超出的部分浏览器会进行自动裁剪,对于这种情况我们需要使用POST请求(例如：注册页面的表单提交)
+    //2)GET请求存在缓存,如果我下一次请求的URL地址和上一次一模一样的话,很多情况下,浏览器会把上一次缓存下来的数据传递给前台,这样无法更新最新的数据了;POST是不存在缓存的;->所有我们使用GET请求的时候一般都在URL的后面拼接一个随机数来保证每一次请求的地址是有区别;
+    //3)安全问题:由于GET是把给后台的数据拼接在URL的后面,这样我们就可以看到这些数据了,还可以做URL劫持等非法操作;POST是把内容放在请求体中了,我们看不见;
+    //->虽然GET没有POST完整,但是项目中一般都使用的是GET请求,而且JSONP只能使用GET请求;
+
+    //->[ASYNC]
+    //默认的值是true(异步)、写成false(同步)
+
+    xhr.open("get", "json/banner.txt?name=aaa&age=12&_=" + Math.random());
+
+    xhr.onreadystatechange = function () {
+        //->AJAX请求状态码:xhr.readyState
+        //0 UNSENT 未发送
+        //1 OPENED 已经打开了URL地址
+        //2 HEADERS_RECEIVED 已经把服务器返回给前端数据部分的头部信息获取到了
+        //3 LOADING 请求回来的主体内容正在处理加载中
+        //4 DONE 主体内容请求成功
+
+        //->HTTP网络状态码:xhr.status
+        //200/201/202...请求成功
+        //301 永久转移(重定向)
+        //302 临时转移(重定向)     ->负载均衡
+        //304 获取的是缓存的数据
+        //400 参数错误
+        //401 没有认证身份(没有登录)
+        //403 没有访问的权限
+        //404 当前的URL地址(文件)不存在
+        //500 未知的服务器错误
+        //503 服务器压力过大,并发过多
+
+        if (xhr.readyState === 2) {
+            console.log(xhr.getResponseHeader("date"));//->在真实的项目中我们获取的时间一般都是格林尼治时间,背景时间是GMT+0800,格林尼治时间是GMT
+        }
+
+        if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+            var val = xhr.responseText;//->获取请求回来的内容,内容的格式是一个字符串;还有responseXML;
+            console.log(val);
+        }
+    };
+
+    xhr.send(null);//->发送,而且可以把需要给后台的内容放在请求主体中传递过去(POST);null是什么都不传,如果需要传递的话,传递的数据格式是一个字符串格式的内容;
+
+
+    //->JSONP
+    //->http://matchweb.sports.qq.com/kbs/calendar?columnId=100000
+    //->利用了SCRIPT不存在跨域,我们把后台的URL地址放在SRC中,并且传递一个callback=方法名,后台接收到请求后,把callback后面的这个方法获取到,并且把这个方法给执行了,并且给这个方法传递了一些数据值,而这些数据就是我们需要获取的数据
+    function fn(data) {
+        console.log(data);
+    }
+</script>
+<script type="text/javascript" src="http://matchweb.sports.qq.com/kbs/calendar?columnId=100000&callback=fn"></script>
+
+<!--JS中的SCRIPT不存在跨域,它的SRC属性值可以是任何一个地址-->
+<!--<script type="text/javascript" src="http://imgcache.qq.com/bossweb/ipay/js/api/cashier.js"></script>-->
+</body>
+</html>

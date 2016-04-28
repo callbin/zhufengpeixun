@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第一周内容考试题(补考/第二版)</title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、
+    if ("num" in window) {
+        var num = 12;
+    }
+    console.log(num);
+    
+    //2、
+    var a = 1, b = 2, c = 3;
+    function fn(a) {
+        a = 10;
+        b = 20;
+        var c = 30;
+    }
+    fn(a);
+    console.log(a);
+    console.log(b);
+    console.log(c);
+
+
+    //3、
+    var name = "zhufeng";
+    ~function (name) {
+        var name = name || "peixun";
+        console.log(name);
+    }();
+    console.log(name);
+
+    //4、
+    var a = 20;
+    function fn() {
+        var a = 15;
+        return function (b) {
+            console.log(b + (++a));
+        }
+    }
+    var f = fn();
+    f(10);
+    fn()(20);
+    fn()(30);
+    f(40);
+    console.log(a);
+
+    //5、
+    var num = 10;
+    var obj = {
+        num: 10,
+        fn: (function () {
+            this.num *= 2;
+            num *= 3;
+            var num = 10;
+            return function () {
+                this.num *= 2;
+                num *= 3;
+                console.log(num);
+            }
+        })()
+    };
+    var fn = obj.fn;
+    fn();
+    obj.fn();
+    console.log(num);
+    console.log(obj.num);
+
+    //6、
+    function Fn() {
+        this.x = 10;
+        this.f = function () {
+            console.log(this.x);
+        }
+    }
+    Fn.prototype = {
+        x: 20,
+        g: function () {
+            console.log(this.x);
+        }
+    };
+    var f1 = new Fn();
+    var f2 = new Fn();
+    console.log(f1.__proto__ == f2.__proto__);
+    console.log(f1.__proto__ == Function.prototype);
+    console.log(f1.f == f2.f);
+    console.log(f1.g == f2.g);
+    console.log(f1 instanceof Fn);
+    console.log(f2 instanceof Object);
+    console.log(f1.constructor);
+    f2.f();
+    f2.g();
+    f2.__proto__.g();
+
+    //7、简述：document.parentNode  和   document.parentnode 的值是什么，为什么？
+
+    //8、prototype是谁的属性，它起什么作用？__proto__是谁的属性，它有什么作用？prototype和__proto__有什么联系？
+    
+</script>
+</body>
+</html>

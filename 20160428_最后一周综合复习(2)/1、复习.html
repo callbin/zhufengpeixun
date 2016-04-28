@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="left">5</div>
+<script type="text/javascript">
+    //    window.val = 1;
+    //    var json = {
+    //        val: 10,
+    //        dbl: function () {
+    //            this.val *= 2;
+    //        }
+    //    };
+    //    json.dbl();//->this是json
+    //    var dbl = json.dbl;
+    //    dbl();//->this是window
+    //    json.dbl.call(window);//->this是window
+    //    alert(window.val + json.val);
+
+    //    (function () {
+    //        var val = 1;
+    //        var json = {
+    //            val: 10,
+    //            dbl: function () {
+    //                val *= 2;
+    //            }
+    //        };
+    //        json.dbl();
+    //        alert(json.val + val);
+    //    })();
+
+    //    function C1(name) {
+    //        if (name) this.name = name;
+    //    }
+    //    function C2(name) {
+    //        this.name = name;
+    //    }
+    //    function C3(name) {
+    //        this.name = name || 'join';
+    //    }
+    //    C1.prototype.name = 'Tom';
+    //    C2.prototype.name = 'Tom';
+    //    C3.prototype.name = 'Tom';
+    //    console.log(new C1().name + new C2().name + new C3().name);
+
+    //    var oDiv = document.getElementById("left");
+    //    var timer = window.setInterval(function () {
+    //        oDiv.innerHTML--;
+    //        if(oDiv.innerHTML==1){
+    //            window.clearInterval(timer);
+    //        }
+    //    }, 1000);
+
+    //    var a = 1;
+    //    function fn(a) {
+    //        console.log(a);
+    //        var a = 2;
+    //
+    //        function a() {
+    //        }
+    //    }
+    //    fn(a);
+
+    //    var foo = {
+    //        bar: function () {
+    //            console.log(this);
+    //        }
+    //    };
+    //    foo.bar();//->this是foo
+    //    (foo.bar)();//->this是foo
+    //    (function(){},foo.bar)();//->this是window
+
+
+    //    Array.prototype.unique = function unique() {
+    //        var obj = {};
+    //        for (var i = 0; i < this.length; i++) {
+    //            var cur = this[i];
+    //            if (obj[cur] == cur) {
+    //                this[i] = this[this.length - 1];
+    //                this.length--;
+    //                i--;
+    //                continue;
+    //            }
+    //            obj[cur] = cur;
+    //        }
+    //        obj = null;
+    //        return this;
+    //    };
+    //    ary.unique().sort();
+
+    //获取1~100之间所有能被三整除数的和
+    //    var total = null;
+    //    for (var i = 1; i <= 100; i++) {
+    //        i % 3 === 0 ? total += i : null;
+    //    }
+
+    //    function sum(n) {
+    //        if (n === 0) {
+    //            return 0;
+    //        }
+    //        if (n % 3 === 0) {
+    //            return n + sum(n - 1);
+    //        }
+    //        return sum(n - 1);
+    //    }
+    //    var total = sum(10);
+
+    //->http://www.szyc.com/
+</script>
+</body>
+</html>

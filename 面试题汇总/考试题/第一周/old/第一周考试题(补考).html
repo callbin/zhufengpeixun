@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    console.log(num);
+    if (!("num" in window)) {
+        var num = 12;
+    }
+    console.log(num);
+
+
+    var name = "china";
+    var age = 5000;
+    ~function (name, age) {
+        arguments[0] = "zhuFeng";
+        age = age || this.age;
+        console.log(name, age);
+    }(name);
+    console.log(name, age);
+
+    var i = 1;
+    function fn(i) {
+        return function (n) {
+            console.log(n + i++);
+        }
+    }
+    var f = fn(i);
+    f(1);
+    f(2);
+    fn(i)(3);
+    fn(4)(5);
+
+    var num = 1;
+    var obj = {
+        num: 2,
+        fn: (function (num) {
+            this.num = num * 2;
+            num += 3;
+            return function () {
+                this.num = num * 2;
+                num++;
+                console.log(num);
+            }
+        })(num)
+    };
+    var fn = obj.fn;
+    fn();
+    obj.fn();
+    console.log(num);
+    console.log(obj.num);
+
+
+    var ary = [1, 2];
+    ~function (ary) {
+        ary.length -= 1;
+        ary = [3];
+        ary[1] = 100;
+        alert(ary);
+    }(ary);
+    alert(ary);
+
+
+    function Fn() {
+        this.x = 1;
+        this.y = 2;
+    }
+    Fn.prototype = {
+        constructor: Fn,
+        getY: function () {
+            console.log(this.y);
+        }
+    };
+    Fn.prototype.getX = function () {
+        console.log(this.x);
+    }
+    var f = new Fn;
+    console.log(f.getY === Fn.prototype.getY);
+    f.getX();
+    f.getY();
+    f.__proto__.getY();
+    console.log(f.constructor);
+</script>
+</body>
+</html>
