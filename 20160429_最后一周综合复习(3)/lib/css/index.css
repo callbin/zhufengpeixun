@@ -1,0 +1,271 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 14px;
+    color: #424242;
+}
+
+ul, li {
+    list-style: none;
+}
+
+img {
+    display: block;
+    border: none;
+}
+
+a, a:hover, a:active, a:visited, a:target {
+    display: block;
+    color: #424242;
+    text-decoration: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: #f4f4f4;
+}
+
+.match {
+    margin: 20px auto;
+    width: 800px;
+    background: #fff;
+}
+
+/*日期*/
+.matchTop {
+    width: 798px;
+    height: 80px;
+    border: 1px solid #dcdcdc;
+}
+
+.matchTop a, .matchTop .outer {
+    float: left;
+}
+
+.matchTop a {
+    width: 31.5px;
+    height: 100%;
+    line-height: 80px;
+    text-align: center;
+    font-size: 26px;
+    color: lightblue;
+}
+
+.matchTop a:hover {
+    background: #F4F4F4;
+}
+
+.matchTop .outer {
+    position: relative;
+    width: 735px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.matchTop .outer .inner {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    overflow: hidden;
+}
+
+.matchTop .outer .inner li {
+    float: left;
+    margin: 0 12px;
+    width: 81px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.matchTop .outer .inner li span {
+    display: block;
+    text-align: center;
+}
+
+.matchTop .outer .inner li span.week {
+    margin-top: 10px;
+    height: 19px;
+    line-height: 19px;
+    color: #b9b9b9;
+}
+
+.matchTop .outer .inner li span.date {
+    margin-top: 5px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 18px;
+}
+
+.matchTop .outer .inner li.bg, .matchTop .outer .inner li.bg:hover {
+    background: #1c90f2;
+}
+
+.matchTop .outer .inner li.bg span, .matchTop .outer .inner li.bg:hover span {
+    color: #fff;
+}
+
+.matchTop .outer .inner li:hover {
+    background: #e4f0fa;
+}
+
+.matchTop .outer .inner li:hover span {
+    color: blue;
+}
+
+/*比赛列表区域*/
+.matchList {
+    position: relative;
+    overflow: hidden;
+}
+
+.matchList-demo h2 {
+    height: 45px;
+    line-height: 45px;
+    background: #f4f4f4;
+    font-weight: 700;
+}
+
+.matchList-demo ul {
+    border-bottom: 1px solid #eee;
+}
+
+.matchList-demo li {
+    height: 80px;
+    color: #515151;
+    border: 1px solid #eee;
+    border-bottom: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.matchList-demo li:hover {
+    background: #fafafa;
+}
+
+.matchList-demo li .demoLeft, .matchList-demo li .demoCenter {
+    float: left;
+}
+
+.matchList-demo li .demoRight {
+    float: right;
+}
+
+.matchList-demo li .demoLeft {
+    width: 238px;
+}
+
+.matchList-demo li .demoLeft span {
+    display: block;
+    float: left;
+    height: 80px;
+    line-height: 80px;
+}
+
+.matchList-demo li .demoLeft span.startTime {
+    padding-left: 18px;
+    width: 80px;
+}
+
+.matchList-demo li .demoLeft span.matchTitle {
+    width: 140px;
+    color: #a0a0a0;
+    font-size: 13px;
+}
+
+.matchList-demo li .demoRight {
+    padding-top: 15px;
+    width: 125px;
+    height: 65px;
+}
+
+.matchList-demo li .demoRight a {
+    display: block;
+    margin-left: 20px;
+    height: 20px;
+    line-height: 20px;
+    color: #1c90f2;
+    font-size: 13px;
+    text-align: center;
+}
+
+.matchList-demo li .demoRight a:hover {
+    text-decoration: underline;
+}
+
+.matchList-demo li .demoRight a.videoList {
+    background: url("http://mat1.gtimg.com/sports/kbsweb/statics/video_post_game_3128c9.png") no-repeat left center;
+}
+
+.matchList-demo li .demoRight a.matchVideo {
+    margin-top: 10px;
+    background: url("http://mat1.gtimg.com/sports/kbsweb/statics/video_post_playback_4b7dc5.png") no-repeat left center;
+}
+
+.matchList-demo li .demoCenter {
+    width: 370px;
+    height: 80px;
+}
+
+.matchList-demo li .demoCenter div {
+    float: left;
+    width: 145px;
+}
+
+.matchList-demo li .demoCenter div.score {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    color: #1b87e2;
+    font-size: 20px;
+}
+
+.matchList-demo li .demoCenter div.away {
+    float: right;
+    text-align: right;
+}
+
+.matchList-demo li .demoCenter div.home img, .matchList-demo li .demoCenter div.home span, .matchList-demo li .demoCenter div.away span, .matchList-demo li .demoCenter div.away img {
+    display: inline-block;
+}
+
+.matchList-demo li .demoCenter div.home img, .matchList-demo li .demoCenter div.away img {
+    margin-top: 17px;
+    width: 48px;
+    height: 46px;
+}
+
+.matchList-demo li .demoCenter div.home span, .matchList-demo li .demoCenter div.away span {
+    height: 80px;
+    line-height: 80px;
+    font-size: 16px;
+    vertical-align: top;
+}
+
+.matchList-demo li .demoCenter div.home span:hover, .matchList-demo li .demoCenter div.away span:hover {
+    color: #1c90f2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
