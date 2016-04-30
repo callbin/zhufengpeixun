@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>练习页面</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 12px;
+            color: #424242;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+            -webkit-overflow-scrolling: touch;
+            -webkit-text-size-adjust: 100%;
+            -webkit-user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #e4f0fa;
+            overflow: hidden;
+        }
+
+        #musicBtn {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background: url("file/music.svg") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .musicMove {
+            -webkit-animation: musicMoveFrm 1s linear 0s infinite;
+            animation: musicMoveFrm 1s linear 0s infinite;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        @-webkit-keyframes musicMoveFrm {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes musicMoveFrm {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <title>AUDIO</title>
+</head>
+<body>
+<div id="musicBtn"></div>
+<!--<audio id="audioDemo" src="file/beyond.mp3" preload="none" loop/>-->
+
+<audio id="audioDemo" preload="none" loop>
+    <source src="file/beyond.mp3" type="audio/mpeg"/>
+    <source src="file/beyond.wav" type="audio/wav"/>
+    <source src="file/beyond.ogg" type="audio/ogg"/>
+    Your browser is not support audio tag~~
+</audio>
+
+<script type="text/javascript">
+    var audioDemo = document.querySelector("#audioDemo"), musicBtn = document.querySelector("#musicBtn");
+    //->1s后在开始播放音乐加载音频文件,在此期间我们先加载其他的内容
+    window.setTimeout(function () {
+        audioDemo.play();//->开始播放:此时需要先加载音频文件
+        audioDemo.addEventListener("canplay", function () {
+            //->canplay:当前可以播放音乐了
+            musicBtn.style.display = "block";
+            musicBtn.className = "musicMove";
+        }, false);
+
+        //->这一块应该写一个完正的单击行为,我此时先用touchend代替(不是正常的写法)
+        musicBtn.addEventListener("touchend", function () {
+            if (audioDemo.paused) {//->当前处于暂停状态
+                audioDemo.play();
+                musicBtn.className = "musicMove";
+                return;
+            }
+            audioDemo.pause();
+            musicBtn.className = "";
+        }, false);
+    }, 1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿[常用的网站]
+  gitHub:因为所有优秀类库的源码都在这里面托管着
+  w3cplus:http://www.w3cplus.com/ 关于css/css3/svg等方面介绍比较详细和深入的网站
+  w3cschool:http://www.w3cschool.cn/
+  w3cfuns:http://www.w3cfuns.com/
+  css88:http://www.css88.com/
+  web骇客:http://www.webhek.com/
+
+  知乎、CSDN、慕课网(免费视频)、极客学院、珠峰学堂
+
+  [css]
+  预处理器:less/sass + compass
+  animate.css 提供了常用的CSS3帧动画
+
+  [js->pc]
+  jQuery、bootstrap(既可以做移动端也可以做PC端 http://www.bootcss.com/ UI组件,我们只需要引入css和js,在按照它的结构编写，就可以实现了对应的操作效果)、React.js(Facebook公司研发的一款前端类库)、Ext.js(UI组件)、EasyUI(UI组件)、prototype.js、YahooUI、underscore
+
+  [js->移动端]
+  Zepto.js(移动端的小jQuery)、jQuery mobile、touch.js、fastClick、swipe.js、hammer.js、妹子UI(http://amazeui.org/getting-started 移动端使用的UI组件)
+
+  [js->模板引擎 绑定数据的]
+  template、jade、ember...
+
+  [Node->基于nodejs使用的]
+  自动化平台:grunt、gulp、fis、webpack...
+  模块化开发：require.js(AMD)、sea.js(CMD)
+
+  大型的框架(既有模块化开发也有模板引擎)：backbone.js(MVC三层开发)、angular.js(MVVM ->双向数据绑定引擎)
+
+  微信的二次开发：在微信平台中开发页面，调用微信提供好的相关的接口实现相关的功能(目前微信要求非常的严格，需要使用后台语言配合完成接口的调用) http://mp.weixin.qq.com/wiki/home/

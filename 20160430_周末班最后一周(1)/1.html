@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <!--禁止浏览器自己把页面中的数字识别为电话号码-->
+    <meta name="format-detection" content="telephone=no"/>
+    <!--把苹果手机浏览器中的菜单栏工具栏隐藏-->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+    <!--http://www.admin10000.com/document/6304.html-->
+    <!--设置苹果手机到头后在下来出现的那个黑色背景框中的标题的-->
+    <meta name="apple-mobile-web-app-title" content="标题">
+
+
+    <!--检测是PC的浏览器还是移动端的浏览器-->
+    <script type="text/javascript">
+        var curURL = window.location.href;
+        if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {
+            //手机端浏览器
+//            if (/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+//
+//            } else if (/iPad/i.test(navigator.userAgent)) {
+//
+//            }
+            if (curURL.indexOf("xw.qq.com") === -1) {
+                window.location.href = "http://xw.qq.com/";
+            }
+        } else {
+            //pc端浏览器
+        }
+    </script>
+
+
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: pink;
+            overflow: hidden;
+        }
+
+        @media all and (orientation: portrait) {
+            /*竖屏*/
+            body {
+                background: pink;
+            }
+        }
+
+        @media all and (orientation: landscape) {
+            /*横屏*/
+            body {
+                background: green;
+            }
+        }
+    </style>
+
+    <style type="text/css">
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /*去掉a、input、button等点击的时候默认的蓝色的外边框和灰色的背景*/
+            -webkit-touch-callout: none; /*禁止长按a标签连接与图片弹出的菜单*/
+            -webkit-overflow-scrolling: touch; /*让页面的滚动条滚动的更加流畅*/
+            -webkit-text-size-adjust: 100%; /*关闭横竖屏切换或者缩放时候的字体大小自动的调整*/
+            -webkit-user-select: none; /*禁止用户选中页面中的文字*/
+
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif; /*在移动端选用的字体也是有技巧的 ->尽量使用无衬字体*/
+        }
+
+        header, footer, nav, section, figure, figcaption, aside, article {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<a href="tel:13041086186">立即联系我</a>
+<a href="sms:13041086186">发短信给我</a>
+
+<!--
+    在移动端的H5开发过程中,我们不管是使用CSS/JS都能禁止用户的横竖屏切换,但是我们可以检测出当前是横屏还是竖屏(CSS/JS)
+-->
+<script type="text/javascript">
+    var flag = "onorientationchange" in window,
+            event = flag ? "orientationchange" : "resize";
+    window.addEventListener(event, function () {
+        if (flag) {
+            if (Math.abs(window.orientation) === 90) {
+                //->横屏
+                alert("横");
+            } else {
+                //->竖屏
+                alert("竖");
+            }
+        }
+    }, false);
+</script>
+
+
+<!--
+ 更多的meta标签：
+ [UC 浏览器的部分私有Meta属性]
+   设置屏幕方向为横屏还是竖屏
+   <meta name="screen-orientation" content="portrait|landscape">
+
+   设置是否全屏，yes表示强制浏览器全屏
+   <meta name="full-screen" content="yes">
+
+   缩放不出滚动条
+   <meta name="viewport" content="uc-fitscreen=no|yes"/>
+   设置no后用户缩放与标准浏览器缩放一直，设置为yes后，用户缩放金放到图片和文字，不出现横向滚动条。
+
+   排版
+   <meta name="layoutmode" content="fitscreen|standard" />
+    fitscreen模式简化页面处理，适合页面阅读节省流量，standard模式和标准浏览器一致；一旦设置layoutmode meta后，用户使用浏览器提供的的排版模式选项将会无效。
+
+  夜间模式
+  <meta name="nightmode" content="enable|disable"/>
+
+  强制图片显示
+  <meta name="imagemode" content="force"/>
+  UC浏览器为了节省流量，为用户提供了无图模式，但是如果页面的图片是必不可少的，如验证码的，需要强制浏览器显示图片，可以设置imagemode， 不影响子页面。通过META设置图片加载方式会作用于整个页面，如果希望对单个图片进行设置，那么可以使用这个
+  <img src="..." show="force"/>
+
+  使用了application这种应用模式后，页面讲默认全屏，禁止长按菜单，禁止收拾，标准排版，以及强制图片显示。
+  <meta name="browsermode" content="application"/>
+
+  [QQ 浏览器x5内核定制标签说明]
+  设置屏幕方向
+  <meta name="x5-orientation" content="portrait|landscape"/>
+  设置全屏
+  <meta name="x5-fullscreen" content="true" />
+  设置屏幕模式
+  <meta name="x5-page-mode" content="app" />
+-->
+</body>
+</html>

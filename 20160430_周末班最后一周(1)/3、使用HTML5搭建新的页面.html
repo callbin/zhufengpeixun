@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>练习页面</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 12px;
+            color: #424242;
+
+            /*移动端常用的CSS公共样式*/
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+            -webkit-overflow-scrolling: touch;
+            -webkit-text-size-adjust: 100%;
+            -webkit-user-select: none;
+        }
+
+        header, footer, nav, section, figure, figcaption, aside, article {
+            display: block;
+        }
+
+        .article {
+            margin: 10px;
+        }
+
+        .header {
+            height: 80px;
+            background: lightskyblue;
+        }
+
+        .header h1, .header h2 {
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .header h2 {
+            padding: 0 5px;
+            font-size: 15px;
+            /*line-height: 20px;*/
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .article p {
+            padding-top: 10px;
+            line-height: 18px;
+        }
+
+        .figure {
+            float: left;
+            margin: 10px 10px 10px 0;
+            width: 150px;
+        }
+
+        .figure img {
+            width: 100%;
+        }
+
+        .figure .figcaption {
+            padding-top: 5px;
+            font-size: 11px;
+            color: #999;
+        }
+
+        /*媒体查询：media type、media query*/
+        @media all and (min-width: 960px) {
+            .article {
+                margin: 10px auto;
+                width: 960px;
+            }
+
+            .figure {
+                width: 300px;
+            }
+
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="js/HTML5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<article class="article">
+    <header class="header">
+        <h1>How the World Could End</h1>
+
+        <h2>Scenarios that spell the end of life as we know</h2>
+    </header>
+    <p>Right now, you're probably feeling pretty good. After all, life inthe developed world is comfortable —probably
+        more comfortable than it's been for the average human being throughout all of recorded history.</p>
+    <figure class="figure">
+        <img src="img/human_skull.jpg"/>
+        <figcaption class="figcaption">Will you be the last person standing if one of these apocalyptic scenarios plays
+            out?
+        </figcaption>
+    </figure>
+    <p>But don't get too smug. There's still plenty of horrific ways it could all fall apart. In this article, you'll
+        learn about a few of our favorites.</p>
+
+    <p>Mayan Doomsday,Skeptics suggest that the Mayan calendar simply rolls to a new 5,126-year era after 2012, and
+        doesn't actually predict a life-ending apocalypse. But given that the long-dead Mayans were wrong about
+        virtually everything else, why should we trust them on this?</p>
+
+    <p>Robot Takeover,Not quite as frightening as a Vampire Takeover or Living-Dead Takeover, a robot rebellion is still
+        a disquieting thought. We are already outnumbered by our technological gadgets, and even Bill Gates fears the
+        day his Japanese robot slave turns him over by the ankles and asks (in a suitably robotic voice) "Who's your
+        daddy now?"</p>
+</article>
+
+
+</body>
+</html>

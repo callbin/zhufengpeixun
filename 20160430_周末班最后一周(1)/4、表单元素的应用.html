@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>表单的应用</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            color: #424242;
+            /*移动端常用的CSS公共样式*/
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+            -webkit-overflow-scrolling: touch;
+            -webkit-text-size-adjust: 100%;
+            -webkit-user-select: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        .section {
+            position: relative;
+            margin: 20px;
+        }
+
+        input[type='number'], input[type='email'] {
+            padding: 0 10px 0 35px;
+            width: 100%;
+            height: 30px;
+            border: 1px solid green;
+            box-sizing: border-box; /*CSS3的盒子模型:border-box 我们设定的padding和border的值不会对整体的宽度产生影响*/
+        }
+
+        .section i {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 28px;
+            height: 28px;
+            background: red;
+        }
+
+        .section .ageTip {
+            display: block;
+            position: absolute;
+            top: 1px;
+            left: 36px;
+            height: 28px;
+            line-height: 28px;
+            color: #999;
+        }
+
+        input[type='range'] {
+            margin: 10px auto;
+            width: 100%;
+        }
+
+        /*CSS3对于HTML5中新增加表单类型的内置验证*/
+        #userEmail:valid {
+            border-color: green;
+            box-shadow: none;
+        }
+
+        #userEmail:invalid {
+            border-color: red;
+            box-shadow: 0 0 10px 0 #E31E1C;
+        }
+
+        /*------------------*/
+        .textArea {
+            margin: 10px auto;
+            padding: 10px;
+            width: 90%;
+            height: 100px;
+            border: 1px solid red;
+            box-sizing: border-box;
+            outline: none;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<section class="section">
+    <input type="number" max="65" min="18" step="1" placeholder="请输入年龄"/>
+    <i></i>
+    <!--<span class="ageTip">请输入年龄</span>-->
+</section>
+
+<section class="section">
+    <input id="userAge" type="number" value="25" disabled/>
+    <i></i>
+    <input id="rangeAge" type="range" max="65" min="18" step="1" value="25"/>
+</section>
+
+<section class="section">
+    <input id="userEmail" type="email" placeholder="请输入您常用的邮箱~"/>
+    <i></i>
+</section>
+
+<div class="textArea" contenteditable="true"></div>
+
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+    //ZEPTO中专门为移动端提供的事件：tap、singleTap、doubleTap、longTap、swipe、swipeLeft、swipeRight、swipeUp、swipeDown (在jQuery的所有版本中都是不提供的) ->ZEPTO是专门为移动端设计的类库,被称为小型的jQuery
+
+    $("#userEmail").on("blur", function () {
+        if (!this.checkValidity()) {//->返回TRUE是标准的邮件格式
+            alert("输入的邮箱不符合规则~~");
+            $(this).val("");
+        }
+    });
+
+
+    $("#rangeAge").on("input", function () {
+        $("#userAge").val($(this).val());
+    });
+
+
+    //在移动端我们的keyup、keypress、keydown行为都监听不到(移动端是一个虚拟的物理键盘)->我们需要使用input这个行为代替上述三个行为
+    //    var $userAge = $("#userAge"), $ageTip = $(".ageTip");
+    //    $ageTip.singleTap(function () {
+    //        $userAge[0].focus();
+    //    });
+    //    $userAge.on("input", function () {
+    //        var $val = $(this).val().replace(/(^ +| +$)/g, "");
+    //        $val.length > 0 ? $ageTip.css("display", "none") : $ageTip.css("display", "block");
+    //    });
+</script>
+</body>
+</html>
