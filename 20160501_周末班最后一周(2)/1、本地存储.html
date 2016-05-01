@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>本地存储</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<iframe src="https://www.baidu.com/"></iframe>
+
+
+<script type="text/javascript">
+    //->本地存储
+    //把一些相关的信息存储到本地,不管页面是否刷新,我们都可以获取到之前存储的内容
+
+    //->实现A页面和B页面之间的通信
+    //1)URL地址栏问号传参:http://kbs.sports.qq.com/kbsweb/game.htm?mid=100002:2068&type=kbs  我在B页面中获取URL后面的参数值,展示不同的数据即可
+    //->进行字符串的拆分查找：indexOf、substring、split...
+    //->使用正则
+    function queryURLParameter(url) {
+        var obj = {}, reg = /([^?&=]+)=([^?&=]+)/g;
+        var ary = reg.exec(url);
+        while (ary) {
+            obj[ary[1]] = ary[2];
+            ary = reg.exec(url);
+        }
+        return obj;
+    }
+
+    //->使用A标签处理
+    //    function queryURLParameter(url) {
+    //        var obj = {};
+    //        var link = document.createElement("a");
+    //        link.href = url;
+    //        //link.hostname//->域名
+    //        //link.pathname//->地址
+    //        //link.search//->问号后面传递的参数
+    //        console.dir(link);
+    //        return obj;
+    //    }
+    //console.log(queryURLParameter("http://kbs.sports.qq.com/kbsweb/game.htm?mid=100002:2068&type=kbs"));
+
+    //2)通过IFRAME在A页面中嵌入B页面,这样的话,A和B之间就可以通过一些内置的属性和方法进行通信了
+
+    //3)应用本地存储来进行页面之间的相互通信
+    //->cookie(兼容所有浏览器)   ==>session
+    //1)cookie存储的内容有大小的限制(每个源中最多只能存储4kb的内容)
+    //2)cookie存在过期时间,这个时间自己可以设置,但是自己设置一个时间,可能到不了这个时间就销毁了(超过4kb,后面存储的会把前面存储的挤下去,使用浏览器清理工具或者是360这样的清理工具可以把cookie清理掉)
+    //3)用户可能出于安全角度禁止存储cookie
+
+    //->localStorage(H5新增的不兼容IE6~8)  ==>sessionStorage
+    //1)存储的内容,每个源下可以存储5MB
+    //2)不存在过期时间(永久保存在本地,而且除了自己编写代码或者手动在控制台删除外,任何的清理工具都是清理不掉的)
+
+    //->不管是cookie/localStorage都是明文存储(要求对于重要的信息进行加密)
+    //有些是用可逆转的加密,对于密码类的都需要使用不可逆转的加密(MD5)
+
+
+    var num = 12;
+    num++;
+    console.log(num);
+</script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/md5.js"></script>
+<script type="text/javascript">
+    //cookie.set("userName", "姜章涛");
+
+    localStorage.setItem("userName", "姜章涛");
+    console.log(localStorage.getItem("userName"));
+    //localStorage.removeItem("userName");
+    //localStorage.clear();//->清除当前源下的所有的存储内容
+</script>
+</body>
+</html>

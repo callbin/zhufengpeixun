@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //->移动端和PC端JS方面的主要区别在于事件:移动端没有鼠标也没有固定键盘,所有PC的很多事件在移动端都不可以使用
+    //->移动端所有的操作行为都由两个事件模型模拟出来的：touch(单手指) gesture(多手指)
+
+    //[touch]
+    //touchstart、toushend、touchmove、touchcancle
+
+    //偏移超过30px的算滑动
+    //300ms内没有触发二次点击是单击,触发了是双击
+    //750ms/760ms内没有松开算是长按
+
+
+    //->移动端可以使用click事件,但是这个行为存在一个300ms的延迟:因为浏览器需要在这段时间内看一下是否存在二次点击,存在的话是双击不能触发click行为
+    //fastClick.js
+
+    //->移动端常用的TOUCH库
+    //1)ZEPTO提供的TOUCH模块:tap(点击,不管是双击还是单击)、singleTap、doubleTap、longTap、swipe、swipeUp、swipeDown、swipeLeft、swipeRight
+    //$("#menu").tap(function(){});
+    //->局限性:对于所有的方法来说都是手指离开屏幕(当前操作结束后才会触发对应的方法执行,滑动过程中是不能随时处理的)
+
+    //2)百度云TOUCH事件库
+    //3)hammer.js
+    //4)FastClick
+</script>
+<script type="text/javascript" src="js/fastClick.js"></script>
+<script type="text/javascript">
+    FastClick.attach(document.body);
+</script>
+</body>
+</html>

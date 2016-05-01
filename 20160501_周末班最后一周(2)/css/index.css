@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    color: #424242;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: 100%;
+    -webkit-user-select: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+header, footer, nav, section, figure, figcaption, aside, article {
+    display: block;
+}
+
+img {
+    border: none;
+}
+
+/*设置根级的REM值:1rem=10px*/
+html {
+    font-size: 62.5%;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.team {
+    padding: 1.5rem;
+    width: 100%;
+    height: 9.2rem;
+    box-sizing: border-box;
+}
+
+.teamInfo {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.teamInfo > div {
+    height: 100%;
+}
+
+.teamInfo > div img {
+    display: inline-block;
+    width: 3.2rem;
+    height: 100%;
+}
+
+.teamInfo > div span {
+    display: inline-block;
+    height: 100%;
+    line-height: 3rem;
+    font-size: 2rem;
+    color: #333;
+    vertical-align: top;
+}
+
+.teamInfo > div:nth-child(1) span {
+    margin-left: 1.2rem;
+}
+
+.teamInfo > div:nth-child(3) span {
+    margin-right: 1.2rem;
+}
+
+.teamInfo > div:nth-child(2) {
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.teamNum {
+    position: relative;
+    margin: .8rem 0;
+    height: .2rem;
+    background: #1c90f2;
+}
+
+.teamNum span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: .2rem;
+    background: #f82d2d;
+}
+
+.teamSup {
+    height: 1.4rem;
+}
+
+.teamSup > div {
+    position: relative;
+    float: left;
+    width: 33%;
+    height: 100%;
+    line-height: 1.4rem;
+    text-align: center;
+
+    font-size: 1.2rem;
+    color: #bbb;
+}
+
+.teamSup > div:nth-child(2) {
+    width: 34%;
+    color: #999;
+    font-size: 1.3rem;
+}
+
+.teamSup > div em {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.teamSup > div:nth-child(1) em {
+    left: 0;
+    background: url("../img/support-left.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.teamSup > div:nth-child(3) em {
+    right: 0;
+    background: url("../img/support-right.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
